@@ -1,0 +1,159 @@
+"""
+Handles state history and memory nodes
+"""
+from typing import TYPE_CHECKING
+from promptflow.src.nodes.node_base import Node
+from promptflow.src.state import State
+from promptflow.src.dialogues.node_options import NodeOptions
+
+if TYPE_CHECKING:
+    from promptflow.src.flowchart import Flowchart
+
+
+class MemoryNode(Node):
+    """
+    Stores messages in a list
+    """
+
+    node_color = "blue"
+
+    def __init__(
+        self,
+        flowchart: "Flowchart",
+        x1: int,
+        y1: int,
+        x2: int,
+        y2: int,
+        label: str,
+        **kwargs,
+    ):
+        super().__init__(
+            flowchart,
+            x1,
+            y1,
+            x2,
+            y2,
+            label,
+            **kwargs,
+        )
+        self.canvas.tag_bind(self.item, "<Double-Button-1>", self.edit_options)
+        self.options_popup = None
+
+    def memory(self, state: State) -> list[dict[str, str]]:
+        """
+        Update state history
+        """
+        state.history = state.history
+        return state.history
+
+    def run_subclass(self, state) -> str:
+        history_string = "\n".join(
+            [
+                *[
+                    f"{message['role']}: {message['content']}"
+                    for message in self.memory(state)
+                ],
+            ]
+        )
+        return history_string
+
+
+class WindowedMemoryNode(MemoryNode):
+    """
+    Like MemoryNode, but only returns the last n messages
+    """
+
+    def __init__(
+        self,
+        flowchart: "Flowchart",
+        x1: int,
+        y1: int,
+        x2: int,
+        y2: int,
+        label: str,
+        window: int,
+        **kwargs,
+    ):
+        super().__init__(
+            flowchart,
+            x1,
+            y1,
+            x2,
+            y2,
+            label,
+            **kwargs,
+        )
+        self.window = window
+
+    def memory(self, state):
+        state.history = state.history[-self.window :]
+        return state.history
+
+    def edit_options(self, event):
+        self.options_popup = NodeOptions(
+            self.canvas,
+            {"window": self.window},
+        )
+        self.canvas.wait_window(self.options_popup)
+        result = self.options_popup.result
+        # check if cancel
+        if self.options_popup.cancelled:
+            return
+        self.window = int(result["window"])
+
+    def serialize(self):
+        return super().serialize() | {"window": self.window}
+
+
+class DynamicWindowedMemoryNode(MemoryNode):
+    """
+    Given a string, will return the last n messages until the string is found
+    """
+
+    def __init__(
+        self,
+        flowchart: "Flowchart",
+        x1: int,
+        y1: int,
+        x2: int,
+        y2: int,
+        label: str,
+        target: str,
+        **kwargs,
+    ):
+        super().__init__(
+            flowchart,
+            x1,
+            y1,
+            x2,
+            y2,
+            label,
+            **kwargs,
+        )
+        self.target = target
+
+    def memory(self, state: State) -> list[dict[str, str]]:
+        """
+        Update state history
+        """
+        history = state.history
+        for i, message in enumerate(history):
+            if self.target in message["content"]:
+                history = history[i:]
+                break
+        return history
+
+    def edit_options(self, event):
+        self.options_popup = NodeOptions(
+            self.canvas,
+            {"window": self.target},
+        )
+        self.canvas.wait_window(self.options_popup)
+        result = self.options_popup.result
+        # check if cancel
+        if self.options_popup.cancelled:
+            return
+        self.target = result["target"]
+
+    def serialize(self):
+        return super().serialize() | {"target": self.target}
