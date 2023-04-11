@@ -19,7 +19,7 @@ from PIL import ImageGrab
 from promptflow.src.flowchart import Flowchart
 from promptflow.src.nodes.date_node import DateNode
 from promptflow.src.nodes.node_base import Node
-from promptflow.src.nodes.start_node import StartNode
+from promptflow.src.nodes.start_node import InitNode, StartNode
 from promptflow.src.nodes.prompt_node import PromptNode
 from promptflow.src.nodes.func_node import FuncNode
 from promptflow.src.nodes.llm_node import LLMNode
@@ -99,6 +99,9 @@ class App:
         self.add_menu = tk.Menu(self.menubar, tearoff=0)
         self.add_menu.add_command(
             label="Start", command=self.create_add_node_function(StartNode, "Start")
+        )
+        self.add_menu.add_command(
+            label="Initialize", command=self.create_add_node_function(InitNode, "Initialize")
         )
         self.add_menu.add_command(
             label="Input", command=self.create_add_node_function(InputNode, "Input")
@@ -247,6 +250,7 @@ class App:
         """Execute the flowchart."""
         self.logger.info("Running flowchart")
         init_state = self.initial_state.copy()
+        init_state = self.flowchart.initialize(init_state, self.output_console)
         final_state = self.flowchart.run(init_state, self.output_console)
         self.logger.info("Finished running flowchart")
         return final_state

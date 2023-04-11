@@ -54,4 +54,39 @@ class StartNode(Node):
             x1, y1, x2, y2, fill=self.node_color, outline="black"
         )
 
+class InitNode(Node):
+    """
+    Initialization node that is only run once at the beginning of the flowchart
+    """
+    
+    node_color = "light green"
+    
+    def __init__(
+        self,
+        flowchart: "Flowchart",
+        x1: int,
+        y1: int,
+        x2: int,
+        y2: int,
+        label: str,
+        **kwargs,
+    ):
+        # make sure there is only one init node
+        for node in flowchart.nodes:
+            if isinstance(node, InitNode):
+                raise ValueError("Only one init node is allowed")
+        
+        super().__init__(flowchart, x1, y1, x2, y2, label, **kwargs)
+        self.run_once = False
 
+    def run_subclass(self, state):
+        if not self.run_once:
+            self.run_once = True
+            return ""
+        else:
+            return None
+
+    def draw_shape(self, x1, y1, x2, y2):
+        return self.canvas.create_oval(
+            x1, y1, x2, y2, fill=self.node_color, outline="black"
+        )

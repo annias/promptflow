@@ -7,7 +7,7 @@ import tkinter as tk
 import tkinter.scrolledtext
 from typing import Any, Optional
 from promptflow.src.nodes.node_base import Node
-from promptflow.src.nodes.start_node import StartNode
+from promptflow.src.nodes.start_node import InitNode, StartNode
 from promptflow.src.nodes.func_node import FuncNode
 from promptflow.src.nodes.llm_node import LLMNode
 from promptflow.src.nodes.date_node import DateNode
@@ -104,6 +104,13 @@ class Flowchart:
         # sort by number of input connectors
         start_nodes.sort(key=lambda node: len(node.input_connectors))
         return start_nodes[0]
+    
+    @property
+    def init_node(self) -> InitNode:
+        """
+        Find and returns the single-run InitNode
+        """
+        return [node for node in self.nodes if isinstance(node, InitNode)][0]
 
     def find_node(self, node_id: str) -> Node:
         """
@@ -133,12 +140,25 @@ class Flowchart:
         self.connectors.append(connector)
         self.selected_element = connector
         self.is_dirty = True
+        
+    def initialize(self, state: State, console: tkinter.scrolledtext.ScrolledText) -> State:
+        """
+        Initialize the flowchart
+        """
+        init_node = self.init_node
+        if init_node.run_once:
+            console.insert(tk.END, "\n[System: Already initialized]\n")
+            console.see(tk.END)
+            return state
+        queue = [self.init_node]
+        return self.run(state, console, queue)
 
-    def run(self, state: State, console: tkinter.scrolledtext.ScrolledText) -> State:
+    def run(self, state: State, console: tkinter.scrolledtext.ScrolledText, queue: list[Node] = None) -> State:
         """
         Given a state, run the flowchart and update the state
         """
-        queue: list[Node] = [self.start_node]
+        if not queue:
+            queue: list[Node] = [self.start_node]
         state = state or State()
         self.is_running = True
 
