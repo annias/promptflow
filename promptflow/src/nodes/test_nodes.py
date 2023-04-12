@@ -7,6 +7,7 @@ from promptflow.src.dialogues.node_options import NodeOptions
 from promptflow.src.state import State
 from promptflow.src.nodes.node_base import Node
 from promptflow.src.text_data import TextData
+from promptflow.src.themes import monokai
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
@@ -17,7 +18,7 @@ class AssertNode(Node):
     Runs an assertion on the result of the previous node
     """
 
-    node_color = "light green"
+    node_color = monokai.comments
 
     def __init__(
         self,

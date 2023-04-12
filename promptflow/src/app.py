@@ -41,6 +41,8 @@ from promptflow.src.options import Options
 from promptflow.src.components.resizing_canvas import ResizingCanvas
 from promptflow.src.nodes.dummy_llm_node import DummyNode
 from promptflow.src.state import State
+from promptflow.src.themes import monokai
+
 
 
 class App:
@@ -71,6 +73,7 @@ class App:
             self.paned_window,
             width=options.width,
             height=options.height,
+            background=monokai.background,
         )
         self.flowchart = Flowchart(self.canvas)
         self.current_file = "Untitled"

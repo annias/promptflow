@@ -1,5 +1,7 @@
 import random
 from promptflow.src.nodes.node_base import Node
+from promptflow.src.themes import monokai
+
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -11,7 +13,7 @@ class RandomNode(Node):
     Injects a random number (0-100) into state
     """
 
-    node_color = "pink"
+    node_color = monokai.pink
 
     def __init__(
         self,

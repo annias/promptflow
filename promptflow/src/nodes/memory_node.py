@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from promptflow.src.nodes.node_base import Node
 from promptflow.src.state import State
 from promptflow.src.dialogues.node_options import NodeOptions
+from promptflow.src.themes import monokai
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
@@ -15,7 +16,7 @@ class MemoryNode(Node):
     Stores messages in a list
     """
 
-    node_color = "blue"
+    node_color = monokai.blue
 
     def __init__(
         self,

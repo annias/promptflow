@@ -13,6 +13,7 @@ from promptflow.src.state import State
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
 
+from promptflow.src.themes import monokai
 
 class Role(Enum):
     """Three types of roles for openai chat"""
@@ -27,7 +28,7 @@ class HistoryNode(Node):
     Injects history into state
     """
 
-    node_color = "pink"
+    node_color = monokai.pink
 
     def __init__(
         self,

@@ -10,6 +10,8 @@ import uuid
 import openai
 from promptflow.src.state import State
 from promptflow.src.serializable import Serializable
+from promptflow.src.themes import monokai
+
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
@@ -23,7 +25,7 @@ class Node(Serializable, ABC):
     Represents a node in the flowchart, which could be a prompt, an llm, traditional code, etc.
     """
 
-    node_color = "white"
+    node_color = monokai.white
 
     def __init__(
         self,

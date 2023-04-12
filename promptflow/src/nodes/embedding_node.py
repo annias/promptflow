@@ -18,6 +18,7 @@ from promptflow.src.dialogues.node_options import NodeOptions
 
 from promptflow.src.state import State
 from promptflow.src.nodes.node_base import Node
+from promptflow.src.themes import monokai
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
@@ -53,6 +54,8 @@ class EmbeddingNode(Node, ABC):
     """
     Base class for Embedding nodes
     """
+    
+    node_color = monokai.green
 
     def __init__(
         self,
@@ -107,8 +110,6 @@ class EmbeddingInNode(EmbeddingNode):
     Takes data from a node and puts it into an hnswlib index
     """
 
-    node_color = "light green"
-
     def run_subclass(self, state: State) -> str:
         new_id = len(self.collection.content_index)
         self.collection.content_index[new_id] = state.result
@@ -129,7 +130,6 @@ class EmbeddingQueryNode(EmbeddingNode):
     Queries an hnswlib index and returns the result
     """
 
-    node_color = "light green"
     n_results: int = 1
     result_separator: str = "\n"
     options_popup = None
@@ -219,8 +219,6 @@ class EmbeddingsIngestNode(EmbeddingNode):
     When pointed at a json file, will read all values into database
     TODO: this is a hack and only needs to be run once
     """
-
-    node_color = "light green"
 
     def __init__(
         self,

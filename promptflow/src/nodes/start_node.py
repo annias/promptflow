@@ -5,6 +5,7 @@ Also signals the start of the flowchart
 from typing import TYPE_CHECKING
 import uuid
 from promptflow.src.nodes.node_base import Node
+from promptflow.src.themes import monokai
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
@@ -15,7 +16,7 @@ class StartNode(Node):
     First node in the flowchart
     """
 
-    node_color = "light blue"
+    node_color = monokai.blue
 
     def __init__(
         self,
@@ -59,7 +60,7 @@ class InitNode(Node):
     Initialization node that is only run once at the beginning of the flowchart
     """
     
-    node_color = "light green"
+    node_color = monokai.orange
     
     def __init__(
         self,

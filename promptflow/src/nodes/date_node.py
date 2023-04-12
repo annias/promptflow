@@ -4,6 +4,7 @@ Convenience node for injecting date into state
 import datetime
 from typing import TYPE_CHECKING
 from promptflow.src.nodes.node_base import Node
+from promptflow.src.themes import monokai
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
@@ -14,7 +15,7 @@ class DateNode(Node):
     Injects date into state
     """
 
-    node_color = "pink"
+    node_color = monokai.pink
 
     def __init__(
         self,

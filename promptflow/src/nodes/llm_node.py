@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 from promptflow.src.nodes.node_base import Node
 from promptflow.src.dialogues.text_input import TextInput
 from promptflow.src.dialogues.node_options import NodeOptions
+from promptflow.src.themes import monokai
 
 import tkinter as tk
 import openai
@@ -60,7 +61,7 @@ class LLMNode(Node):
     Node that uses the OpenAI API to generate text.
     """
 
-    node_color = "green"
+    node_color = monokai.green
 
     def __init__(
         self,

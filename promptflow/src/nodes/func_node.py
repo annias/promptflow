@@ -10,6 +10,7 @@ from promptflow.src.nodes.node_base import Node
 from promptflow.src.state import State
 from promptflow.src.text_data import TextData
 from promptflow.src.dialogues.code_input import CodeInput
+from promptflow.src.themes import monokai
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
@@ -25,7 +26,7 @@ class FuncNode(Node, ABC):
     Run arbitrary Python code.
     """
 
-    node_color = "yellow"
+    node_color = monokai.yellow
 
     def __init__(
         self,
