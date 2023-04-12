@@ -38,7 +38,7 @@ from promptflow.src.nodes.embedding_node import (
 from promptflow.src.nodes.input_node import InputNode
 from promptflow.src.nodes.test_nodes import AssertNode
 from promptflow.src.options import Options
-from promptflow.src.resizing_canvas import ResizingCanvas
+from promptflow.src.components.resizing_canvas import ResizingCanvas
 from promptflow.src.nodes.dummy_llm_node import DummyNode
 from promptflow.src.state import State
 
