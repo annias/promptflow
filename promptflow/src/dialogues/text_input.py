@@ -4,6 +4,7 @@ Simple text input dialogue.
 import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.filedialog
+import tkinter.messagebox
 from typing import Callable, TYPE_CHECKING, Optional
 from promptflow.src.text_data import TextData
 
@@ -31,6 +32,9 @@ class TextInput(tk.Toplevel):
             text_data = TextData.deserialize(text_data, flowchart)
 
         self.text_data = text_data
+        
+        self.modified = False
+        self.protocol("WM_DELETE_WINDOW", self.on_close)
 
         self.title(self.text_data.label)
 
@@ -85,9 +89,8 @@ class TextInput(tk.Toplevel):
         self.label_entry.insert(0, self.text_data.label)
         self.text_entry.insert("1.0", self.text_data.text)
         # on label change, update title
-        self.label_entry.bind(
-            "<KeyRelease>", lambda event: self.title(self.label_entry.get() + " *")
-        )
+        self.text_entry.bind("<KeyRelease>", self.on_text_modified)
+        self.label_entry.bind("<KeyRelease>", self.on_label_modified)
         self.callback = lambda: None
 
     def get_text(self) -> TextData:
@@ -120,6 +123,20 @@ class TextInput(tk.Toplevel):
         Sets the callback function to be called when the save button is pressed.
         """
         self.callback = callback
+        
+    def on_text_modified(self, _: tk.Event):
+        """
+        Set the modified flag to True when the text entry is modified.
+        """
+        self.modified = True
+        self.title(self.label_entry.get() + " *")
+
+    def on_label_modified(self, _: tk.Event):
+        """
+        Set the modified flag to True when the label entry is modified.
+        """
+        self.modified = True
+        self.title(self.label_entry.get() + " *")
 
     def save(self):
         """
@@ -129,6 +146,7 @@ class TextInput(tk.Toplevel):
         self.text_data.text = self.text_entry.get("1.0", "end")
         self.text_data.label = self.label_entry.get()
         self.callback()
+        self.modified = False
         self.destroy()
 
     def read_file(self):
@@ -166,3 +184,23 @@ class TextInput(tk.Toplevel):
         ]
         self.set_text(self.text_data.text)
         self.set_label(self.text_data.label)
+
+
+    def on_close(self):
+        """
+        Check for unsaved changes before closing the window.
+        """
+        if self.modified:
+            result = tkinter.messagebox.askyesnocancel(
+                "Unsaved changes",
+                "There are unsaved changes. Do you want to save them before closing?",
+            )
+
+            if result is None:  # Cancel was pressed
+                return
+            elif result:  # Yes was pressed
+                self.save()
+            else:  # No was pressed
+                self.destroy()
+        else:
+            self.destroy()

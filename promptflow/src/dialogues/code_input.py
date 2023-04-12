@@ -32,11 +32,15 @@ class CodeInput(TextInput):
         self.text_entry.tag_configure("String", foreground="green")
         self.text_entry.tag_configure("Comment", foreground="grey")
 
-        self.text_entry.bind("<KeyRelease>", self.syntax_highlighting)
+        self.text_entry.bind("<KeyRelease>", self.on_text_modified)
 
         self.python_keywords = keyword.kwlist
 
         self.syntax_highlighting(None)
+
+    def on_text_modified(self, event: Optional[tk.Event]):
+        super().on_text_modified(event)
+        self.syntax_highlighting(event)
 
     def syntax_highlighting(self, _: Optional[tk.Event]):
         """
