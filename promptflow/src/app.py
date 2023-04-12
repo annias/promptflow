@@ -98,40 +98,40 @@ class App:
         # create an add menu for each type of node
         self.add_menu = tk.Menu(self.menubar, tearoff=0)
         self.add_menu.add_command(
-            label="Start", command=self.create_add_node_function(StartNode, "Start")
+            label="Start - First node in main loop", command=self.create_add_node_function(StartNode, "Start")
         )
         self.add_menu.add_command(
-            label="Initialize", command=self.create_add_node_function(InitNode, "Initialize")
+            label="Initialize - Run this subchart once", command=self.create_add_node_function(InitNode, "Initialize")
         )
         self.add_menu.add_command(
-            label="Input", command=self.create_add_node_function(InputNode, "Input")
+            label="Input - Pause for user input", command=self.create_add_node_function(InputNode, "Input")
         )
         self.add_menu.add_command(
-            label="Prompt", command=self.create_add_node_function(PromptNode, "Prompt")
+            label="Prompt - Format custom text", command=self.create_add_node_function(PromptNode, "Prompt")
         )
         self.add_menu.add_command(
-            label="Function",
+            label="Function - Custom Python Function",
             command=self.create_add_node_function(FuncNode, "Function"),
         )
         self.add_menu.add_command(
-            label="LLM", command=self.create_add_node_function(LLMNode, "LLM")
+            label="LLM - Pass text to LLM of choice", command=self.create_add_node_function(LLMNode, "LLM")
         )
         self.add_menu.add_command(
-            label="History",
+            label="History - Save result to chat history",
             command=self.create_add_node_function(HistoryNode, "History"),
         )
         self.add_memory_menu = tk.Menu(self.add_menu, tearoff=0)
         self.add_memory_menu.add_command(
-            label="Memory", command=self.create_add_node_function(MemoryNode, "Memory")
+            label="Memory - Save to longer running memory", command=self.create_add_node_function(MemoryNode, "Memory")
         )
         self.add_memory_menu.add_command(
-            label="Windowed Memory",
+            label="Windowed Memory - Save to memory with a window",
             command=self.create_add_node_function(
                 WindowedMemoryNode, "Windowed Memory"
             ),
         )
         self.add_memory_menu.add_command(
-            label="Dynamic Windowed Memory",
+            label="Dynamic Windowed Memory - Save to memory based on last occurance of text",
             command=self.create_add_node_function(
                 DynamicWindowedMemoryNode, "Dynamic Windowed Memory"
             ),
@@ -139,36 +139,36 @@ class App:
         self.add_menu.add_cascade(label="Memory", menu=self.add_memory_menu)
         self.embedding_menu = tk.Menu(self.add_menu, tearoff=0)
         self.embedding_menu.add_command(
-            label="Embedding In",
+            label="Embedding In - Embed result and save to hnswlib",
             command=self.create_add_node_function(EmbeddingInNode, "Embedding In"),
         )
         self.embedding_menu.add_command(
-            label="Embedding Query",
+            label="Embedding Query - Query HNSW index",
             command=self.create_add_node_function(
                 EmbeddingQueryNode, "Embedding Query"
             ),
         )
         self.embedding_menu.add_command(
-            label="Embedding Ingest",
+            label="Embedding Ingest - Read embeddings from file. Use with init node.",
             command=self.create_add_node_function(
                 EmbeddingsIngestNode, "Embedding Ingest"
             ),
         )
         self.add_menu.add_cascade(label="Embedding", menu=self.embedding_menu)
         self.add_menu.add_command(
-            label="Date", command=self.create_add_node_function(DateNode, "Date")
+            label="Date - Insert current datetime", command=self.create_add_node_function(DateNode, "Date")
         )
         self.add_menu.add_command(
-            label="Random", command=self.create_add_node_function(RandomNode, "Random")
+            label="Random - Insert a random number", command=self.create_add_node_function(RandomNode, "Random")
         )
         self.menubar.add_cascade(label="Add", menu=self.add_menu)
         self.test_menu = tk.Menu(self.add_menu, tearoff=0)
         self.test_menu.add_command(
-            label="Dummy LLM",
+            label="Dummy LLM - For testing",
             command=self.create_add_node_function(DummyNode, "Dummy LLM"),
         )
         self.test_menu.add_command(
-            label="Assert", command=self.create_add_node_function(AssertNode, "Assert")
+            label="Assert - Assert certain condition is true", command=self.create_add_node_function(AssertNode, "Assert")
         )
         self.add_menu.add_cascade(label="Test", menu=self.test_menu)
 
