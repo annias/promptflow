@@ -36,7 +36,7 @@ from promptflow.src.nodes.embedding_node import (
     EmbeddingsIngestNode,
 )
 from promptflow.src.nodes.input_node import InputNode
-from promptflow.src.nodes.test_nodes import AssertNode
+from promptflow.src.nodes.test_nodes import AssertNode, LoggingNode
 from promptflow.src.options import Options
 from promptflow.src.components.resizing_canvas import ResizingCanvas
 from promptflow.src.nodes.dummy_llm_node import DummyNode
@@ -166,6 +166,9 @@ class App:
         )
         self.menubar.add_cascade(label="Add", menu=self.add_menu)
         self.test_menu = tk.Menu(self.add_menu, tearoff=0)
+        self.test_menu.add_command(
+            label="Logging - Print string to log", command=self.create_add_node_function(LoggingNode, "Logging")
+        )
         self.test_menu.add_command(
             label="Dummy LLM - For testing",
             command=self.create_add_node_function(DummyNode, "Dummy LLM"),
