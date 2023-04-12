@@ -229,8 +229,6 @@ class App:
         self.canvas.bind("<ButtonPress-2>", self.start_pan)  # Middle mouse button press
         self.canvas.bind("<B2-Motion>", self.pan)  # Middle mouse button drag
 
-        self.draw_grid()
-
         # add the menu
         self.root.config(menu=self.menubar)
         self.logger.debug("App created")
@@ -427,22 +425,6 @@ class App:
     def pan(self, event):
         """Dragging to scroll canvas"""
         self.canvas.scan_dragto(event.x, event.y, gain=1)
-
-    def draw_grid(self, grid_size=20, grid_color="#cccccc", grid_dash=(2, 4)):
-        """Draw a grid on the canvas"""
-        self.canvas.delete("grid_line")  # Will only remove the grid_line
-        width = self.canvas.winfo_reqwidth()
-        height = self.canvas.winfo_reqheight()
-
-        for x in range(0, width, grid_size):
-            self.canvas.create_line(
-                x, 0, x, height, fill=grid_color, dash=grid_dash, tags="grid_line"
-            )
-
-        for y in range(0, height, grid_size):
-            self.canvas.create_line(
-                0, y, width, y, fill=grid_color, dash=grid_dash, tags="grid_line"
-            )
 
     def show_loading_popup(self, message: str):
         """Show the loading popup"""
