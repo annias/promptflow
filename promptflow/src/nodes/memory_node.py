@@ -72,7 +72,7 @@ class WindowedMemoryNode(MemoryNode):
         x2: int,
         y2: int,
         label: str,
-        window: int,
+        window: int=100,
         **kwargs,
     ):
         super().__init__(
@@ -119,7 +119,7 @@ class DynamicWindowedMemoryNode(MemoryNode):
         x2: int,
         y2: int,
         label: str,
-        target: str,
+        target: str="",
         **kwargs,
     ):
         super().__init__(
@@ -139,7 +139,7 @@ class DynamicWindowedMemoryNode(MemoryNode):
         """
         history = state.history
         for i, message in enumerate(history):
-            if self.target in message["content"]:
+            if eval(self.target, {}, message):
                 history = history[i:]
                 break
         return history
@@ -147,7 +147,7 @@ class DynamicWindowedMemoryNode(MemoryNode):
     def edit_options(self, event):
         self.options_popup = NodeOptions(
             self.canvas,
-            {"window": self.target},
+            {"target": self.target},
         )
         self.canvas.wait_window(self.options_popup)
         result = self.options_popup.result
