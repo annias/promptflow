@@ -7,7 +7,6 @@ import json
 import logging
 import tkinter as tk
 from tkinter import ttk
-import sv_ttk
 import tkinter.filedialog
 import tkinter.scrolledtext
 import tkinter.messagebox
@@ -56,7 +55,7 @@ class App:
         self.root = tk.Tk()
         # self.style = ttk.Style(self.root)
         # self.style.theme_use("clam")
-        sv_ttk.set_theme("dark")
+        # sv_ttk.set_theme("dark")
 
         self.loading_popup = self.show_loading_popup("Starting app...")
 
