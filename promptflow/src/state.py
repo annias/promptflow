@@ -45,3 +45,9 @@ class State(Serializable):
             "history": self.history,
             "result": self.result,
         }
+
+    def __getitem__(self, key: str) -> str:
+        """
+        Makes access in f-strings easy
+        """
+        return self.snapshot.get(key, "")
