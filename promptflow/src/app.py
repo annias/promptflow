@@ -333,6 +333,7 @@ class App:
         filename = tkinter.filedialog.askopenfilename()
         if filename:
             self.loading_popup = self.show_loading_popup("Loading flowchart...")
+            self.clear_flowchart()
             with zipfile.ZipFile(filename, "r") as archive:
                 with archive.open("flowchart.json") as loadfile:
                     data = json.load(loadfile)

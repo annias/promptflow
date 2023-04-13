@@ -37,7 +37,7 @@ class Flowchart:
     Holds the nodes and connectors of a flowchart.
     """
 
-    def __init__(self, canvas: tk.Canvas):
+    def __init__(self, canvas: tk.Canvas, init_nodes: bool = True):
         self.canvas = canvas
         self.nodes: list[Node] = []
         self.connectors: list[Connector] = []
@@ -49,15 +49,16 @@ class Flowchart:
         self.is_dirty = False
         self.is_running = False
         
-        self.add_node(InitNode(self, 10, 10, 100, 100, "Init"))
-        self.add_node(StartNode(self, 10, 210, 100, 300, "Start"))
+        if init_nodes:
+            self.add_node(InitNode(self, 10, 10, 100, 100, "Init"))
+            self.add_node(StartNode(self, 10, 210, 100, 300, "Start"))
 
     @classmethod
     def deserialize(cls, canvas: tk.Canvas, data: dict[str, Any]):
         """
         Deserialize a flowchart from a dict onto a canvas
         """
-        flowchart = cls(canvas)
+        flowchart = cls(canvas, init_nodes=False)
         for node_data in data["nodes"]:
             node = eval(node_data["classname"]).deserialize(flowchart, node_data)
             flowchart.add_node(node)
