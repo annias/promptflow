@@ -48,6 +48,9 @@ class Flowchart:
         self._partial_connector: Optional[PartialConnector] = None
         self.is_dirty = False
         self.is_running = False
+        
+        self.add_node(InitNode(self, 10, 10, 100, 100, "Init"))
+        self.add_node(StartNode(self, 10, 210, 100, 300, "Start"))
 
     @classmethod
     def deserialize(cls, canvas: tk.Canvas, data: dict[str, Any]):
