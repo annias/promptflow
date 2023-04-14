@@ -5,6 +5,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.filedialog
 import tkinter.messagebox
+import customtkinter
 from typing import Callable, TYPE_CHECKING, Optional
 from promptflow.src.text_data import TextData
 
@@ -12,7 +13,7 @@ if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
 
 
-class TextInput(tk.Toplevel):
+class TextInput(customtkinter.CTkToplevel):
     """
     A basic text editor for editing TextData
     """
@@ -38,31 +39,32 @@ class TextInput(tk.Toplevel):
 
         self.title(self.text_data.label)
 
-        self.text_select_label = tk.Label(self, text="Text data:")
+        self.text_select_label = customtkinter.CTkLabel(self, text="Text data:")
         self.text_select_label.pack()
-        self.text_select_dropdown = ttk.Combobox(
+        self.text_select_dropdown = customtkinter.CTkComboBox(
             self,
             values=list(self.flowchart.text_data_registry.keys()),
             state="readonly",
         )
-        self.text_select_dropdown.current(
-            self.text_select_dropdown["values"].index(self.text_data.label)
-            if self.text_data.label in self.flowchart.text_data_registry
-            else 0
-        )
+        self.text_select_dropdown.set(self.text_data.label)
+        # self.text_select_dropdown.current(
+        #     self.text_select_dropdown["values"].index(self.text_data.label)
+        #     if self.text_data.label in self.flowchart.text_data_registry
+        #     else 0
+        # )
         self.text_select_dropdown.bind("<<ComboboxSelected>>", self.on_text_data_select)
         self.text_select_dropdown.pack()
 
-        self.label_entry_label = tk.Label(self, text="Label:")
+        self.label_entry_label = customtkinter.CTkLabel(self, text="Label:")
         self.label_entry_label.pack()
-        self.label_entry = tk.Entry(self)
+        self.label_entry = customtkinter.CTkEntry(self)
         self.label_entry.pack()
 
-        self.scrollbar = tk.Scrollbar(self)
-        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        self.text_entry = tk.Text(self, yscrollcommand=self.scrollbar.set)
+        # self.scrollbar = customtkinter.CTkScrollbar(self)
+        # self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.text_entry = customtkinter.CTkTextbox(self)
         self.text_entry.pack(fill=tk.BOTH, expand=True)
-        self.scrollbar.config(command=self.text_entry.yview)
+        # self.scrollbar.configure(command=self.text_entry.yview)
 
         # save, open, export, cancel
         self.menu = tk.Menu(self)

@@ -3,9 +3,9 @@ Edit node options
 """
 import tkinter as tk
 from typing import Any, Optional
+import customtkinter
 
-
-class NodeOptions(tk.Toplevel):
+class NodeOptions(customtkinter.CTkToplevel):
     """
     Allow quick editing of node option parameters
     """
@@ -26,24 +26,24 @@ class NodeOptions(tk.Toplevel):
             dropdown_options = {}
 
         for index, (key, value) in enumerate(self.options_dict.items()):
-            label = tk.Label(self, text=key)
+            label = customtkinter.CTkLabel(self, text=key)
             label.grid(row=index, column=0, padx=(10, 5), pady=(5, 5), sticky="e")
 
             if key in dropdown_options:
                 var = tk.StringVar(self)
                 var.set(value)
-                option_menu = tk.OptionMenu(self, var, *dropdown_options[key])
+                option_menu = customtkinter.CTkOptionMenu(self, variable=var, values=dropdown_options[key])
                 option_menu.grid(
                     row=index, column=1, padx=(5, 10), pady=(5, 5), sticky="w"
                 )
                 self.entries[key] = var
             else:
-                entry = tk.Entry(self)
+                entry = customtkinter.CTkEntry(self)
                 entry.insert(0, value)
                 entry.grid(row=index, column=1, padx=(5, 10), pady=(5, 5), sticky="w")
                 self.entries[key] = entry
 
-        save_button = tk.Button(self, text="Save", command=self.save)
+        save_button = customtkinter.CTkButton(self, text="Save", command=self.save)
         save_button.grid(
             row=len(self.options_dict),
             column=0,
@@ -52,7 +52,7 @@ class NodeOptions(tk.Toplevel):
             sticky="e",
         )
 
-        cancel_button = tk.Button(self, text="Cancel", command=self.cancel)
+        cancel_button = customtkinter.CTkButton(self, text="Cancel", command=self.cancel)
         cancel_button.grid(
             row=len(self.options_dict),
             column=1,

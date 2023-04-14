@@ -11,7 +11,7 @@ import openai
 from promptflow.src.state import State
 from promptflow.src.serializable import Serializable
 from promptflow.src.themes import monokai
-
+import customtkinter
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
@@ -62,14 +62,16 @@ class Node(Serializable, ABC):
         self.label_item = self.canvas.create_text(center_x, center_y, text=label)
         self.canvas.tag_bind(self.label_item, "<Double-Button-1>", self.edit_label)
 
-        self.add_connector_button = tk.Button(
-            self.canvas, text="+", command=self.begin_add_connector
+        self.add_connector_button = customtkinter.CTkButton(
+            self.canvas, text="+", command=self.begin_add_connector, width=2
         )
         self.add_connector_item = self.canvas.create_window(
             center_x, center_y + 70, window=self.add_connector_button
         )
 
-        self.delete_button = tk.Button(self.canvas, text="X", command=self.delete)
+        self.delete_button = customtkinter.CTkButton(
+            self.canvas, text="X", command=self.delete, width=2
+        )
         self.delete_item = self.canvas.create_window(
             center_x + 40, center_y - 20, window=self.delete_button
         )
@@ -86,7 +88,7 @@ class Node(Serializable, ABC):
 
         self.buttons = [self.delete_button, self.add_connector_button]
 
-        self.label_entry: Optional[tk.Entry] = None
+        self.label_entry: Optional[customtkinter.CTkEntry] = None
 
     def __eq__(self, __o: object) -> bool:
         if isinstance(__o, Node):
@@ -140,7 +142,7 @@ class Node(Serializable, ABC):
         self.canvas.delete(self.label_item)
         self.items.remove(self.label_item)
         center_x, center_y = self.get_center(offset_y=-30)
-        self.label_entry = tk.Entry(self.canvas)
+        self.label_entry = customtkinter.CTkEntry(self.canvas)
         self.label_entry.insert(0, self.label)
         self.label_entry.bind("<Return>", self.finish_edit_label)
         self.label_entry.bind("<FocusOut>", self.finish_edit_label)

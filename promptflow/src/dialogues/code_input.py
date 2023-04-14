@@ -28,10 +28,12 @@ class CodeInput(TextInput):
         if text_data is None:
             text_data = {"label": "Untitled", "text": ""}
         super().__init__(parent, flowchart, text_data)
+        
+        # self.text_entry._text_color("Keyword", foreground=monokai.blue)
 
-        self.text_entry.tag_configure("Keyword", foreground=monokai.blue)
-        self.text_entry.tag_configure("String", foreground=monokai.green)
-        self.text_entry.tag_configure("Comment", foreground=monokai.comments)
+        # self.text_entry.tag_configure("Keyword", foreground=monokai.blue)
+        # self.text_entry.tag_configure("String", foreground=monokai.green)
+        # self.text_entry.tag_configure("Comment", foreground=monokai.comments)
 
         self.text_entry.bind("<KeyRelease>", self.on_text_modified)
 

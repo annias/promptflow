@@ -4,9 +4,10 @@ specify how many files with a browse field can be specified.
 """
 import tkinter as tk
 from tkinter import filedialog
+import customtkinter
 
 
-class MultiFileInput(tk.Toplevel):
+class MultiFileInput(customtkinter.CTkToplevel):
     def __init__(self, master, fields: dict[str, str]):
         super().__init__(master)
         self.title("Add Files")
@@ -15,22 +16,22 @@ class MultiFileInput(tk.Toplevel):
         self.entries = {}
 
         for index, field in enumerate(self.fields):
-            label = tk.Label(self, text=field)
+            label = customtkinter.CTkLabel(self, text=field)
             label.grid(row=index, column=0, padx=(10, 5), pady=(5, 5), sticky="e")
 
-            entry = tk.Entry(self)
+            entry = customtkinter.CTkEntry(self)
             entry.grid(row=index, column=1, padx=(5, 10), pady=(5, 5), sticky="w")
             self.entries[field] = entry
             entry.insert(0, self.fields.get(field, ""))
 
-            browse_button = tk.Button(
+            browse_button = customtkinter.CTkButton(
                 self, text="Browse", command=lambda field=field: self.browse(field)
             )
             browse_button.grid(
                 row=index, column=2, padx=(5, 10), pady=(5, 5), sticky="w"
             )
 
-        save_button = tk.Button(self, text="Save", command=self.save)
+        save_button = customtkinter.CTkButton(self, text="Save", command=self.save)
         save_button.grid(
             row=len(self.fields),
             column=0,
@@ -39,7 +40,7 @@ class MultiFileInput(tk.Toplevel):
             sticky="e",
         )
 
-        cancel_button = tk.Button(self, text="Cancel", command=self.cancel)
+        cancel_button = customtkinter.CTkButton(self, text="Cancel", command=self.cancel)
         cancel_button.grid(
             row=len(self.fields),
             column=1,

@@ -7,6 +7,7 @@ import json
 import logging
 import tkinter as tk
 from tkinter import ttk
+import customtkinter
 import tkinter.filedialog
 import tkinter.scrolledtext
 import tkinter.messagebox
@@ -52,7 +53,7 @@ class App:
     """
 
     def __init__(self, initial_state: State, options: Options):
-        self.root = tk.Tk()
+        self.root = customtkinter.CTk()
         # self.style = ttk.Style(self.root)
         # self.style.theme_use("clam")
         # sv_ttk.set_theme("dark")
@@ -78,7 +79,7 @@ class App:
         self.current_file = "Untitled"
 
         # scrolling text meant to simulate a console
-        self.output_console = tkinter.scrolledtext.ScrolledText(
+        self.output_console = customtkinter.CTkTextbox(
             self.paned_window, height=8, width=100
         )
 
@@ -183,23 +184,23 @@ class App:
         self.menubar.add_cascade(label="Help", menu=self.help_menu)
 
         # create the toolbar
-        self.toolbar = tk.Frame(self.root, bg="grey")
-        self.run_button = tk.Button(
+        self.toolbar = customtkinter.CTkFrame(self.root)
+        self.run_button = customtkinter.CTkButton(
             self.toolbar, text="Run", command=self.run_flowchart
         )
-        self.stop_button = tk.Button(
+        self.stop_button = customtkinter.CTkButton(
             self.toolbar, text="Stop", command=self.stop_flowchart
         )
-        self.serialize_button = tk.Button(
+        self.serialize_button = customtkinter.CTkButton(
             self.toolbar, text="Serialize", command=self.serialize_flowchart
         )
-        self.screenshot_button = tk.Button(
+        self.screenshot_button = customtkinter.CTkButton(
             self.toolbar, text="Screenshot", command=self.save_image
         )
-        self.clear_button = tk.Button(
+        self.clear_button = customtkinter.CTkButton(
             self.toolbar, text="Clear", command=self.clear_flowchart
         )
-        self.cost_button = tk.Button(
+        self.cost_button = customtkinter.CTkButton(
             self.toolbar, text="Cost", command=self.cost_flowchart
         )
         self.toolbar_buttons = [
@@ -435,7 +436,7 @@ class App:
     def show_loading_popup(self, message: str):
         """Show the loading popup"""
         # Create a new Toplevel widget for the loading popup
-        popup = tk.Toplevel(self.root)
+        popup = customtkinter.CTkToplevel(self.root)
         popup.title("Please wait...")
 
         # Set the popup to be a transient window of the main application
@@ -447,7 +448,7 @@ class App:
         )
 
         # Create a label with the loading message
-        label = tk.Label(popup, text=message)
+        label = customtkinter.CTkLabel(popup, text=message)
         label.pack(padx=10, pady=10)
 
         # Force Tkinter to draw the popup and process pending events
