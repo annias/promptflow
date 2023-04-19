@@ -8,6 +8,44 @@ if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
 
 
+class PGMLConnectionSingleton:
+    _instance: Optional["PGMLConnectionSingleton"] = None
+    interface: PgMLInterface
+    dbname: str
+    user: str
+    password: str
+    host: str
+    port: str
+
+    def __new__(cls) -> "PGMLConnectionSingleton":
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.dbname = "postgres"
+            cls._instance.user = "postgres"
+            cls._instance.password = "pass"
+            cls._instance.host = "localhost"
+            cls._instance.port = "5432"
+            cls._instance.interface = PgMLInterface(
+                cls._instance.dbname,
+                cls._instance.user,
+                cls._instance.password,
+                cls._instance.host,
+                cls._instance.port,
+            )
+        return cls._instance
+
+    def update(self, dbname: str, user: str, password: str, host: str, port: str):
+        self.dbname = dbname
+        self.user = user
+        self.password = password
+        self.host = host
+        self.port = port
+        self.interface = PgMLInterface(
+            self.dbname, self.user, self.password, self.host, self.port
+        )
+        self.interface.connect()
+
+
 class PGMLNode(Node):
     node_color = monokai.green
 
@@ -19,28 +57,14 @@ class PGMLNode(Node):
         x2: float,
         y2: float,
         label: str,
-        interface: Optional[PgMLInterface] = None,
         **kwargs,
     ):
-        if interface is None:
-            self.dbname = "postgres"
-            self.user = "postgres"
-            self.password = "pass"
-            self.host = "localhost"
-            self.port = "5432"
-            self.interface = PgMLInterface(
-                self.dbname, self.user, self.password, self.host, self.port
-            )
-        else:
-            self.dbname = interface.dbname
-            self.user = interface.user
-            self.password = interface.password
-            self.host = interface.host
-            self.port = interface.port
-            self.interface = interface
-            self.interface.connect()
-            
-
+        self.interface = PGMLConnectionSingleton()
+        self.dbname = self.interface.dbname
+        self.user = self.interface.user
+        self.password = self.interface.password
+        self.host = self.interface.host
+        self.port = self.interface.port
 
         super().__init__(flowchart, x1, y1, x2, y2, label, **kwargs)
 
@@ -66,11 +90,12 @@ class PGMLNode(Node):
         self.password = result["password"]
         self.host = result["host"]
         self.port = result["port"]  # maybe make an int?
-        self.interface = PgMLInterface(
-            self.dbname,
-            self.user,
-            self.password,
-            self.host,
-            self.port
+        self.interface.update(
+            self.dbname, self.user, self.password, self.host, self.port
         )
-        self.interface.connect()
+
+
+class GenerateNode(PGMLNode):
+    def run_subclass(self, state) -> str:
+        gen = self.interface.interface.generate("gpt2-instruct-dolly", state.result)[0][0]
+        return gen

@@ -1,7 +1,13 @@
 import json
 from typing import Any, Optional, Union
 import psycopg2
-from promptflow.src.pgml_interface.constants import Algorithm, Sampling, Search, Task, Strategy
+from promptflow.src.pgml_interface.constants import (
+    Algorithm,
+    Sampling,
+    Search,
+    Task,
+    Strategy,
+)
 
 
 class PgMLInterface:
@@ -29,10 +35,15 @@ class PgMLInterface:
     def _run_query(self, query: str) -> list[tuple[Any, ...]]:
         if self.connection is None or self.cursor is None:
             raise RuntimeError("Not connected to database.")
-        self.cursor.execute(query)
-        result = self.cursor.fetchall()
-        self.connection.commit()
-        return result
+        try:
+            self.cursor.execute(query)
+            result = self.cursor.fetchall()
+            self.connection.commit()
+            return result
+        except Exception as e:
+            self.cursor.execute("ROLLBACK")
+            self.connection.commit()
+            return []
 
     def train(
         self,
@@ -155,7 +166,7 @@ class PgMLInterface:
         return self._run_query(query)
 
     def predict(self, project_name: str, features: Union[str, list[float]]):
-        query = f"SELECT pgml.predict({project_name}, "
+        query = f"SELECT pgml.predict('{project_name}', "
         if isinstance(features, str):
             query += f"'{features}'"
         else:
@@ -230,6 +241,10 @@ class PgMLInterface:
             test_size => {test_size},
             test_sampling => '{test_sampling}
             );"""
+        return self._run_query(query)
+
+    def generate(self, project_name: str, string: str):
+        query = f"SELECT pgml.generate('{project_name}', '{string}') AS result;"
         return self._run_query(query)
 
     def predict_proba(self, project_name: str, features: Union[str, list[float]]):
