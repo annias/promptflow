@@ -65,6 +65,7 @@ class PGMLNode(Node):
         self.password = self.interface.password
         self.host = self.interface.host
         self.port = self.interface.port
+        self.model = "gpt2-instruct-dolly"
 
         super().__init__(flowchart, x1, y1, x2, y2, label, **kwargs)
 
@@ -79,6 +80,7 @@ class PGMLNode(Node):
                 "password": self.password,
                 "host": self.host,
                 "port": self.port,
+                "model": self.model
             },
         )
         self.canvas.wait_window(self.options_popup)
@@ -90,6 +92,7 @@ class PGMLNode(Node):
         self.password = result["password"]
         self.host = result["host"]
         self.port = result["port"]  # maybe make an int?
+        self.model = result["model"]
         self.interface.update(
             self.dbname, self.user, self.password, self.host, self.port
         )
@@ -97,5 +100,5 @@ class PGMLNode(Node):
 
 class GenerateNode(PGMLNode):
     def run_subclass(self, state) -> str:
-        gen = self.interface.interface.generate("gpt2-instruct-dolly", state.result)[0][0]
+        gen = self.interface.interface.generate(self.model, state.result)[0][0]
         return gen
