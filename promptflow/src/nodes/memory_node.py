@@ -72,7 +72,7 @@ class WindowedMemoryNode(MemoryNode):
         x2: int,
         y2: int,
         label: str,
-        window: int=100,
+        window: int = 100,
         **kwargs,
     ):
         super().__init__(
@@ -119,7 +119,7 @@ class DynamicWindowedMemoryNode(MemoryNode):
         x2: int,
         y2: int,
         label: str,
-        target: str="",
+        target: str = "",
         **kwargs,
     ):
         super().__init__(

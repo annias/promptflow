@@ -5,6 +5,7 @@ import tkinter.simpledialog
 
 from promptflow.src.nodes.node_base import Node
 
+
 class InputNode(Node):
     """
     Node that prompts the user for input

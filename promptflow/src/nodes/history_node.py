@@ -15,6 +15,7 @@ if TYPE_CHECKING:
 
 from promptflow.src.themes import monokai
 
+
 class Role(Enum):
     """Three types of roles for openai chat"""
 

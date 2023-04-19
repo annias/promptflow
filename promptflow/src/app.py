@@ -19,6 +19,7 @@ from PIL import ImageGrab
 from promptflow.src.flowchart import Flowchart
 from promptflow.src.nodes.date_node import DateNode
 from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.pgml_node import PGMLNode
 from promptflow.src.nodes.start_node import InitNode, StartNode
 from promptflow.src.nodes.prompt_node import PromptNode
 from promptflow.src.nodes.func_node import FuncNode
@@ -42,7 +43,6 @@ from promptflow.src.components.resizing_canvas import ResizingCanvas
 from promptflow.src.nodes.dummy_llm_node import DummyNode
 from promptflow.src.state import State
 from promptflow.src.themes import monokai
-
 
 
 class App:
@@ -101,23 +101,28 @@ class App:
         # create an add menu for each type of node
         self.add_menu = tk.Menu(self.menubar, tearoff=0)
         self.add_menu.add_command(
-            label="Start - First node in main loop", command=self.create_add_node_function(StartNode, "Start")
+            label="Start - First node in main loop",
+            command=self.create_add_node_function(StartNode, "Start"),
         )
         self.add_menu.add_command(
-            label="Initialize - Run this subchart once", command=self.create_add_node_function(InitNode, "Initialize")
+            label="Initialize - Run this subchart once",
+            command=self.create_add_node_function(InitNode, "Initialize"),
         )
         self.add_menu.add_command(
-            label="Input - Pause for user input", command=self.create_add_node_function(InputNode, "Input")
+            label="Input - Pause for user input",
+            command=self.create_add_node_function(InputNode, "Input"),
         )
         self.add_menu.add_command(
-            label="Prompt - Format custom text", command=self.create_add_node_function(PromptNode, "Prompt")
+            label="Prompt - Format custom text",
+            command=self.create_add_node_function(PromptNode, "Prompt"),
         )
         self.add_menu.add_command(
             label="Function - Custom Python Function",
             command=self.create_add_node_function(FuncNode, "Function"),
         )
         self.add_menu.add_command(
-            label="LLM - Pass text to LLM of choice", command=self.create_add_node_function(LLMNode, "LLM")
+            label="LLM - Pass text to LLM of choice",
+            command=self.create_add_node_function(LLMNode, "LLM"),
         )
         self.add_menu.add_command(
             label="History - Save result to chat history",
@@ -125,7 +130,8 @@ class App:
         )
         self.add_memory_menu = tk.Menu(self.add_menu, tearoff=0)
         self.add_memory_menu.add_command(
-            label="Memory - Save to longer running memory", command=self.create_add_node_function(MemoryNode, "Memory")
+            label="Memory - Save to longer running memory",
+            command=self.create_add_node_function(MemoryNode, "Memory"),
         )
         self.add_memory_menu.add_command(
             label="Windowed Memory - Save to memory with a window",
@@ -158,23 +164,30 @@ class App:
             ),
         )
         self.add_menu.add_cascade(label="Embedding", menu=self.embedding_menu)
+        self.pgml_menu = tk.Menu(self.add_menu, tearoff=0)
+        # TODO: add pgml nodes
+        self.add_menu.add_cascade(label="PGML", menu=self.pgml_menu)
         self.add_menu.add_command(
-            label="Date - Insert current datetime", command=self.create_add_node_function(DateNode, "Date")
+            label="Date - Insert current datetime",
+            command=self.create_add_node_function(DateNode, "Date"),
         )
         self.add_menu.add_command(
-            label="Random - Insert a random number", command=self.create_add_node_function(RandomNode, "Random")
+            label="Random - Insert a random number",
+            command=self.create_add_node_function(RandomNode, "Random"),
         )
         self.menubar.add_cascade(label="Add", menu=self.add_menu)
         self.test_menu = tk.Menu(self.add_menu, tearoff=0)
         self.test_menu.add_command(
-            label="Logging - Print string to log", command=self.create_add_node_function(LoggingNode, "Logging")
+            label="Logging - Print string to log",
+            command=self.create_add_node_function(LoggingNode, "Logging"),
         )
         self.test_menu.add_command(
             label="Dummy LLM - For testing",
             command=self.create_add_node_function(DummyNode, "Dummy LLM"),
         )
         self.test_menu.add_command(
-            label="Assert - Assert certain condition is true", command=self.create_add_node_function(AssertNode, "Assert")
+            label="Assert - Assert certain condition is true",
+            command=self.create_add_node_function(AssertNode, "Assert"),
         )
         self.add_menu.add_cascade(label="Test", menu=self.test_menu)
 
@@ -397,7 +410,9 @@ class App:
         When the user presses delete, delete the selected node if there is one
         """
         if self.flowchart.selected_element:
-            self.logger.info(f"Deleting selected element {self.flowchart.selected_element.label}")
+            self.logger.info(
+                f"Deleting selected element {self.flowchart.selected_element.label}"
+            )
             self.flowchart.selected_element.delete()
 
     def handle_zoom(self, event):

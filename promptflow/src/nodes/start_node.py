@@ -32,7 +32,7 @@ class StartNode(Node):
         for node in flowchart.nodes:
             if isinstance(node, StartNode):
                 raise ValueError("Only one start node is allowed")
-        
+
         super().__init__(flowchart, x1, y1, x2, y2, label, **kwargs)
 
     @staticmethod
@@ -49,19 +49,20 @@ class StartNode(Node):
 
     def run_subclass(self, state):
         return ""
-        
+
     def draw_shape(self, x1, y1, x2, y2):
         return self.canvas.create_oval(
             x1, y1, x2, y2, fill=self.node_color, outline="black"
         )
 
+
 class InitNode(Node):
     """
     Initialization node that is only run once at the beginning of the flowchart
     """
-    
+
     node_color = monokai.orange
-    
+
     def __init__(
         self,
         flowchart: "Flowchart",
@@ -76,7 +77,7 @@ class InitNode(Node):
         for node in flowchart.nodes:
             if isinstance(node, InitNode):
                 raise ValueError("Only one init node is allowed")
-        
+
         super().__init__(flowchart, x1, y1, x2, y2, label, **kwargs)
         self.run_once = False
 

@@ -40,7 +40,9 @@ class MultiFileInput(customtkinter.CTkToplevel):
             sticky="e",
         )
 
-        cancel_button = customtkinter.CTkButton(self, text="Cancel", command=self.cancel)
+        cancel_button = customtkinter.CTkButton(
+            self, text="Cancel", command=self.cancel
+        )
         cancel_button.grid(
             row=len(self.fields),
             column=1,

@@ -5,6 +5,7 @@ import tkinter as tk
 from typing import Any, Optional
 import customtkinter
 
+
 class NodeOptions(customtkinter.CTkToplevel):
     """
     Allow quick editing of node option parameters
@@ -32,7 +33,9 @@ class NodeOptions(customtkinter.CTkToplevel):
             if key in dropdown_options:
                 var = tk.StringVar(self)
                 var.set(value)
-                option_menu = customtkinter.CTkOptionMenu(self, variable=var, values=dropdown_options[key])
+                option_menu = customtkinter.CTkOptionMenu(
+                    self, variable=var, values=dropdown_options[key]
+                )
                 option_menu.grid(
                     row=index, column=1, padx=(5, 10), pady=(5, 5), sticky="w"
                 )
@@ -52,7 +55,9 @@ class NodeOptions(customtkinter.CTkToplevel):
             sticky="e",
         )
 
-        cancel_button = customtkinter.CTkButton(self, text="Cancel", command=self.cancel)
+        cancel_button = customtkinter.CTkButton(
+            self, text="Cancel", command=self.cancel
+        )
         cancel_button.grid(
             row=len(self.options_dict),
             column=1,

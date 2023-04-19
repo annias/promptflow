@@ -64,7 +64,7 @@ class Connector(Serializable):
         self.canvas.tag_bind(self.item, "<Button-3>", self.delete)
         self.canvas.tag_bind(self.item, "<Double-Button-1>", self.edit_condition)
         self.canvas.tag_bind(self.item, "<Button-1>", self.select)
-        
+
     @property
     def label(self) -> str:
         return self.condition.label
@@ -125,7 +125,7 @@ class Connector(Serializable):
 
         self.text_window = CodeInput(self.canvas, self.flowchart, self.condition)
         self.text_window.set_callback(self.update_condition)
-        
+
     def select(self, _: tk.Event):
         """
         Select the connector.

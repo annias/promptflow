@@ -33,7 +33,7 @@ class TextInput(customtkinter.CTkToplevel):
             text_data = TextData.deserialize(text_data, flowchart)
 
         self.text_data = text_data
-        
+
         self.modified = False
         self.protocol("WM_DELETE_WINDOW", self.on_close)
 
@@ -125,7 +125,7 @@ class TextInput(customtkinter.CTkToplevel):
         Sets the callback function to be called when the save button is pressed.
         """
         self.callback = callback
-        
+
     def on_text_modified(self, _: tk.Event):
         """
         Set the modified flag to True when the text entry is modified.
@@ -186,7 +186,6 @@ class TextInput(customtkinter.CTkToplevel):
         ]
         self.set_text(self.text_data.text)
         self.set_label(self.text_data.label)
-
 
     def on_close(self):
         """

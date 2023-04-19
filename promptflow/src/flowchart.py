@@ -48,7 +48,7 @@ class Flowchart:
         self._partial_connector: Optional[PartialConnector] = None
         self.is_dirty = False
         self.is_running = False
-        
+
         if init_nodes:
             self.add_node(InitNode(self, 10, 10, 100, 100, "Init"))
             self.add_node(StartNode(self, 10, 210, 100, 300, "Start"))
@@ -108,7 +108,7 @@ class Flowchart:
         # sort by number of input connectors
         start_nodes.sort(key=lambda node: len(node.input_connectors))
         return start_nodes[0]
-    
+
     @property
     def init_node(self) -> InitNode:
         """
@@ -144,8 +144,10 @@ class Flowchart:
         self.connectors.append(connector)
         self.selected_element = connector
         self.is_dirty = True
-        
-    def initialize(self, state: State, console: tkinter.scrolledtext.ScrolledText) -> State:
+
+    def initialize(
+        self, state: State, console: tkinter.scrolledtext.ScrolledText
+    ) -> State:
         """
         Initialize the flowchart
         """
@@ -157,7 +159,12 @@ class Flowchart:
         queue = [self.init_node]
         return self.run(state, console, queue)
 
-    def run(self, state: State, console: tkinter.scrolledtext.ScrolledText, queue: list[Node] = None) -> State:
+    def run(
+        self,
+        state: State,
+        console: tkinter.scrolledtext.ScrolledText,
+        queue: list[Node] = None,
+    ) -> State:
         """
         Given a state, run the flowchart and update the state
         """
