@@ -80,7 +80,7 @@ class App:
 
         # scrolling text meant to simulate a console
         self.output_console = customtkinter.CTkTextbox(
-            self.paned_window, height=8, width=100
+            self.paned_window, height=8, width=400
         )
 
         # register on close behavior

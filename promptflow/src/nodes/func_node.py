@@ -101,22 +101,3 @@ class FuncNode(Node, ABC):
         self.func = self.text_window.get_text()
         self.canvas.itemconfig(self.func_item, text=self.func.label)
         self.canvas.update()
-
-    def draw_shape(self, x1, y1, x2, y2):
-        """
-        Diamond shape
-        """
-        return self.canvas.create_polygon(
-            [
-                x1,
-                (y1 + y2) / 2,
-                (x1 + x2) / 2,
-                y2,
-                x2,
-                (y1 + y2) / 2,
-                (x1 + x2) / 2,
-                y1,
-            ],
-            fill=self.node_color,
-            outline="black",
-        )
