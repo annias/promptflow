@@ -1,4 +1,5 @@
 import json
+import uuid
 from typing import Any, Optional, Union
 import psycopg2
 from promptflow.src.pgml_interface.constants import (
@@ -44,6 +45,19 @@ class PgMLInterface:
             self.cursor.execute("ROLLBACK")
             self.connection.commit()
             return []
+
+    def _create_temp_table(
+        self, columns: list[str], types: Optional[list[str]] = None
+    ) -> bool:
+        if types is None:
+            types = ["TEXT"] * len(columns)
+        table_name = f"temp_{uuid.uuid4().hex}"
+        query = f"""CREATE TEMP TABLE {table_name} ("""
+        for column, _type in zip(columns, types):
+            query += f"{column} {_type},"
+        query = query[:-1] + ");"
+        self._run_query(query)
+        return True
 
     def train(
         self,
