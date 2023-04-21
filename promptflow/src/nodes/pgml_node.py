@@ -80,7 +80,7 @@ class PGMLNode(Node):
                 "password": self.password,
                 "host": self.host,
                 "port": self.port,
-                "model": self.model
+                "model": self.model,
             },
         )
         self.canvas.wait_window(self.options_popup)
@@ -96,6 +96,12 @@ class PGMLNode(Node):
         self.interface.update(
             self.dbname, self.user, self.password, self.host, self.port
         )
+
+
+class SelectNode(PGMLNode):
+    def run_subclass(self, state) -> str:
+        select = self.interface.interface.select(state.result)[0][0]
+        return select
 
 
 class GenerateNode(PGMLNode):

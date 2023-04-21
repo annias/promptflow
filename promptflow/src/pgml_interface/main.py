@@ -59,6 +59,13 @@ class PgMLInterface:
         self._run_query(query)
         return True
 
+    def select(self, query: str, where: Optional[str] = None) -> list[tuple[Any, ...]]:
+        query = f"SELECT * FROM ({query}) AS temp"
+        if where:
+            query += f" WHERE {where}"
+        query += ";"
+        return self._run_query(query)
+
     def train(
         self,
         project_name: str,
