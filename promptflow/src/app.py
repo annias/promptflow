@@ -54,9 +54,7 @@ class App:
 
     def __init__(self, initial_state: State, options: Options):
         self.root = customtkinter.CTk()
-        # self.style = ttk.Style(self.root)
-        # self.style.theme_use("clam")
-        # sv_ttk.set_theme("dark")
+        customtkinter.set_appearance_mode("dark")
 
         self.loading_popup = self.show_loading_popup("Starting app...")
 
@@ -98,11 +96,12 @@ class App:
         self.export_menu.add_command(label="To Mermaid", command=self.export_to_mermaid)
         self.file_menu.add_cascade(label="Export", menu=self.export_menu)
         self.menubar.add_cascade(label="File", menu=self.file_menu)
-        
+
         # edit menu for common actions
         self.edit_menu = tk.Menu(self.menubar, tearoff=0)
         self.edit_menu.add_command(
-            label="Clear", command=self.clear_flowchart,
+            label="Clear",
+            command=self.clear_flowchart,
         )
         self.menubar.add_cascade(label="Edit", menu=self.edit_menu)
 
@@ -246,6 +245,14 @@ class App:
         self.paned_window.add(self.output_console)
 
         # key bindings
+        self._create_key_bindings()
+
+        # add the menu
+        self.root.config(menu=self.menubar)
+        self.logger.debug("App created")
+        self.loading_popup.destroy()
+
+    def _create_key_bindings(self):
         self.root.bind("<Control-s>", lambda e: self.save_as())
         self.root.bind("<Control-o>", lambda e: self.load_from())
         self.root.bind("<F5>", lambda e: self.run_flowchart())
@@ -258,11 +265,6 @@ class App:
         self.canvas.bind("<5>", self.handle_zoom)  # MacOS (wheel down)
         self.canvas.bind("<ButtonPress-2>", self.start_pan)  # Middle mouse button press
         self.canvas.bind("<B2-Motion>", self.pan)  # Middle mouse button drag
-
-        # add the menu
-        self.root.config(menu=self.menubar)
-        self.logger.debug("App created")
-        self.loading_popup.destroy()
 
     @property
     def current_file(self) -> str:
@@ -495,15 +497,19 @@ class App:
         return popup
 
     def export_to_mermaid(self):
+        """
+        Print the flowchart in the mermaid flowchart language
+        """
         self.logger.info("Exporting flowchart")
         self.output_console.insert(tk.END, self.flowchart.to_mermaid())
 
     def export_console(self):
+        """
+        Write the contents console to a file
+        """
         self.logger.info("Exporting console")
         # create file dialog
-        filedialog = tkinter.filedialog.asksaveasfile(
-            mode="w", defaultextension=".txt"
-        )
+        filedialog = tkinter.filedialog.asksaveasfile(mode="w", defaultextension=".txt")
         if filedialog:
             filedialog.write(self.output_console.get("1.0", tk.END))
             filedialog.close()
