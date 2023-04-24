@@ -93,6 +93,7 @@ class App:
         self.file_menu = tk.Menu(self.menubar, tearoff=0)
         self.file_menu.add_command(label="Save Flowchart...", command=self.save_as)
         self.file_menu.add_command(label="Load Flowchart...", command=self.load_from)
+        self.file_menu.add_command(label="Save Console...", command=self.export_console)
         self.export_menu = tk.Menu(self.file_menu, tearoff=0)
         self.export_menu.add_command(label="To Mermaid", command=self.export_to_mermaid)
         self.file_menu.add_cascade(label="Export", menu=self.export_menu)
@@ -496,3 +497,13 @@ class App:
     def export_to_mermaid(self):
         self.logger.info("Exporting flowchart")
         self.output_console.insert(tk.END, self.flowchart.to_mermaid())
+
+    def export_console(self):
+        self.logger.info("Exporting console")
+        # create file dialog
+        filedialog = tkinter.filedialog.asksaveasfile(
+            mode="w", defaultextension=".txt"
+        )
+        if filedialog:
+            filedialog.write(self.output_console.get("1.0", tk.END))
+            filedialog.close()
