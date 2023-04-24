@@ -2,7 +2,7 @@ import json
 import uuid
 from typing import Any, Optional, Union
 import psycopg2
-from promptflow.src.pgml_interface.constants import (
+from promptflow.src.db_interface.pgml_constants import (
     Algorithm,
     Sampling,
     Search,
@@ -11,7 +11,7 @@ from promptflow.src.pgml_interface.constants import (
 )
 
 
-class PgMLInterface:
+class DBInterface:
     def __init__(self, dbname: str, user: str, password: str, host: str, port: str):
         self.dbname = dbname
         self.user = user
@@ -66,6 +66,8 @@ class PgMLInterface:
         query += ";"
         return self._run_query(query)
 
+
+class PgMLInterface(DBInterface):
     def train(
         self,
         project_name: str,

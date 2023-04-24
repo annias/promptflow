@@ -19,7 +19,7 @@ from PIL import ImageGrab
 from promptflow.src.flowchart import Flowchart
 from promptflow.src.nodes.date_node import DateNode
 from promptflow.src.nodes.node_base import Node
-from promptflow.src.nodes.pgml_node import PGMLNode, GenerateNode, SelectNode
+from promptflow.src.nodes.db_node import PGMLNode, GenerateNode, SelectNode
 from promptflow.src.nodes.start_node import InitNode, StartNode
 from promptflow.src.nodes.prompt_node import PromptNode
 from promptflow.src.nodes.func_node import FuncNode
@@ -164,16 +164,16 @@ class App:
             ),
         )
         self.add_menu.add_cascade(label="Embedding", menu=self.embedding_menu)
-        self.pgml_menu = tk.Menu(self.add_menu, tearoff=0)
-        self.pgml_menu.add_command(
+        self.db_menu = tk.Menu(self.add_menu, tearoff=0)
+        self.db_menu.add_command(
             label="Select - Query the PGML database",
             command=self.create_add_node_function(SelectNode, "Select"),
         )
-        self.pgml_menu.add_command(
+        self.db_menu.add_command(
             label="Generate - Generate next text from PGML model",
             command=self.create_add_node_function(GenerateNode, "Generate"),
         )
-        self.add_menu.add_cascade(label="PGML", menu=self.pgml_menu)
+        self.add_menu.add_cascade(label="Database", menu=self.db_menu)
         self.add_menu.add_command(
             label="Date - Insert current datetime",
             command=self.create_add_node_function(DateNode, "Date"),
