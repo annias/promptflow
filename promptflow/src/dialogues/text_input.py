@@ -45,6 +45,7 @@ class TextInput(customtkinter.CTkToplevel):
             self,
             values=list(self.flowchart.text_data_registry.keys()),
             state="readonly",
+            command=self.on_text_data_select,
         )
         self.text_select_dropdown.set(self.text_data.label)
         # self.text_select_dropdown.current(
@@ -52,7 +53,7 @@ class TextInput(customtkinter.CTkToplevel):
         #     if self.text_data.label in self.flowchart.text_data_registry
         #     else 0
         # )
-        self.text_select_dropdown.bind("<<ComboboxSelected>>", self.on_text_data_select)
+        # self.text_select_dropdown.bind("<<ComboboxSelected>>", self.on_text_data_select)
         self.text_select_dropdown.pack()
 
         self.label_entry_label = customtkinter.CTkLabel(self, text="Label:")
