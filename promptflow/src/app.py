@@ -97,6 +97,13 @@ class App:
         self.export_menu.add_command(label="To Mermaid", command=self.export_to_mermaid)
         self.file_menu.add_cascade(label="Export", menu=self.export_menu)
         self.menubar.add_cascade(label="File", menu=self.file_menu)
+        
+        # edit menu for common actions
+        self.edit_menu = tk.Menu(self.menubar, tearoff=0)
+        self.edit_menu.add_command(
+            label="Clear", command=self.clear_flowchart,
+        )
+        self.menubar.add_cascade(label="Edit", menu=self.edit_menu)
 
         # create an add menu for each type of node
         self.add_menu = tk.Menu(self.menubar, tearoff=0)
@@ -217,9 +224,6 @@ class App:
         self.screenshot_button = customtkinter.CTkButton(
             self.toolbar, text="Screenshot", command=self.save_image
         )
-        self.clear_button = customtkinter.CTkButton(
-            self.toolbar, text="Clear", command=self.clear_flowchart
-        )
         self.cost_button = customtkinter.CTkButton(
             self.toolbar, text="Cost", command=self.cost_flowchart
         )
@@ -228,7 +232,6 @@ class App:
             self.stop_button,
             self.serialize_button,
             self.screenshot_button,
-            self.clear_button,
             self.cost_button,
         ]
 
