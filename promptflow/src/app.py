@@ -295,8 +295,20 @@ class App:
 
     def clear_flowchart(self):
         """Clear the flowchart."""
+        # ask the user if they want to save
+        if self.flowchart.nodes and not self.flowchart.is_running:
+            save = tk.messagebox.askyesnocancel(
+                "Save?",
+                "Would you like to save before clearing?",
+                parent=self.root,
+            )
+            if save is None:
+                return
+            elif save:
+                self.save_as()
         self.logger.info("Clearing flowchart")
         self.flowchart.clear()
+        self.output_console.delete("1.0", tk.END)
 
     def cost_flowchart(self):
         """Get the approx cost to run the flowchart"""
