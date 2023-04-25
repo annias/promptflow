@@ -8,7 +8,7 @@ from promptflow.src.utils import retry_with_exponential_backoff
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.dialogues.text_input import TextInput
 from promptflow.src.dialogues.node_options import NodeOptions
 from promptflow.src.themes import monokai
@@ -56,7 +56,7 @@ completion_cost_1k = {
 }
 
 
-class LLMNode(Node):
+class LLMNode(NodeBase):
     """
     Node that uses the OpenAI API to generate text.
     """

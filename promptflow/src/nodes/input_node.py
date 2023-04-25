@@ -3,10 +3,10 @@ Nodes that get run time input from the user
 """
 import tkinter.simpledialog
 
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 
 
-class InputNode(Node):
+class InputNode(NodeBase):
     """
     Node that prompts the user for input
     """

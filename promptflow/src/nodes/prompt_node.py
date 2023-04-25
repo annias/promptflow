@@ -4,7 +4,7 @@ Holds text which gets formatted with state data
 from typing import TYPE_CHECKING, Optional
 import tkinter as tk
 from promptflow.src.dialogues.text_input import TextInput
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.state import State
 
 from promptflow.src.text_data import TextData
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
 
 
-class PromptNode(Node):
+class PromptNode(NodeBase):
     """
     Formats TextData with state data
     """

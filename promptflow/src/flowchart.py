@@ -6,7 +6,7 @@ import logging
 import tkinter as tk
 import tkinter.scrolledtext
 from typing import Any, Optional
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.nodes.start_node import InitNode, StartNode
 from promptflow.src.nodes.input_node import InputNode
 from promptflow.src.nodes.func_node import FuncNode
@@ -40,12 +40,12 @@ class Flowchart:
 
     def __init__(self, canvas: tk.Canvas, init_nodes: bool = True):
         self.canvas = canvas
-        self.nodes: list[Node] = []
+        self.nodes: list[NodeBase] = []
         self.connectors: list[Connector] = []
         self.text_data_registry: dict[str, TextData] = {}
         self.logger = logging.getLogger(__name__)
 
-        self._selected_element: Optional[Node | Connector] = None
+        self._selected_element: Optional[NodeBase | Connector] = None
         self._partial_connector: Optional[PartialConnector] = None
         self.is_dirty = False
         self.is_running = False
@@ -76,14 +76,14 @@ class Flowchart:
         return flowchart
 
     @property
-    def selected_element(self) -> Optional[Node | Connector]:
+    def selected_element(self) -> Optional[NodeBase | Connector]:
         """
         Return last touched node
         """
         return self._selected_element
 
     @selected_element.setter
-    def selected_element(self, elem: Optional[Node | Connector]):
+    def selected_element(self, elem: Optional[NodeBase | Connector]):
         self.logger.info("Selected element changed to %s", elem.label if elem else None)
         # deselect previous node
         if self._selected_element:
@@ -117,7 +117,7 @@ class Flowchart:
         """
         return [node for node in self.nodes if isinstance(node, InitNode)][0]
 
-    def find_node(self, node_id: str) -> Node:
+    def find_node(self, node_id: str) -> NodeBase:
         """
         Given a node uuid, find and return the node
         """
@@ -126,7 +126,7 @@ class Flowchart:
                 return node
         raise ValueError(f"No node with id {node_id} found")
 
-    def add_node(self, node: Node):
+    def add_node(self, node: NodeBase):
         """
         Safely insert a node into the flowchart
         """
@@ -164,13 +164,13 @@ class Flowchart:
         self,
         state: State,
         console: tkinter.scrolledtext.ScrolledText,
-        queue: list[Node] = None,
+        queue: list[NodeBase] = None,
     ) -> State:
         """
         Given a state, run the flowchart and update the state
         """
         if not queue:
-            queue: list[Node] = [self.start_node]
+            queue: list[NodeBase] = [self.start_node]
         state = state or State()
         self.is_running = True
 
@@ -180,7 +180,7 @@ class Flowchart:
                 console.insert(tk.END, "\n[System: Stopped]\n")
                 console.see(tk.END)
                 return state
-            cur_node: Node = queue.pop(0)
+            cur_node: NodeBase = queue.pop(0)
             # turn node light yellow while running
             cur_node.canvas.itemconfig(cur_node.item, fill="light yellow")
             cur_node.canvas.update()
@@ -245,7 +245,7 @@ class Flowchart:
         console.see(tk.END)
         return state
 
-    def begin_add_connector(self, node: Node):
+    def begin_add_connector(self, node: NodeBase):
         """
         Start adding a connector from the given node.
         """
@@ -269,7 +269,7 @@ class Flowchart:
             data["connectors"].append(connector.serialize())
         return data
 
-    def remove_node(self, node: Node):
+    def remove_node(self, node: NodeBase):
         """
         Remove a node and all connectors connected to it.
         """

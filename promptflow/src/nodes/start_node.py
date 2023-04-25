@@ -4,14 +4,14 @@ Also signals the start of the flowchart
 """
 from typing import TYPE_CHECKING
 import uuid
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.themes import monokai
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
 
 
-class StartNode(Node):
+class StartNode(NodeBase):
     """
     First node in the flowchart
     """
@@ -56,7 +56,7 @@ class StartNode(Node):
         )
 
 
-class InitNode(Node):
+class InitNode(NodeBase):
     """
     Initialization node that is only run once at the beginning of the flowchart
     """

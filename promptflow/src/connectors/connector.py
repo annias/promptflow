@@ -9,7 +9,7 @@ from typing import Optional, Tuple
 
 from promptflow.src.nodes.start_node import StartNode
 from promptflow.src.serializable import Serializable
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.dialogues.code_input import CodeInput
 from promptflow.src.text_data import TextData
 
@@ -28,8 +28,8 @@ class Connector(Serializable):
     def __init__(
         self,
         canvas: tk.Canvas,
-        node1: Node,
-        node2: Node,
+        node1: NodeBase,
+        node2: NodeBase,
         condition: Optional[TextData | dict] = None,
     ):
         self.canvas = canvas
@@ -80,7 +80,7 @@ class Connector(Serializable):
 
     @classmethod
     def deserialize(
-        cls, canvas: tk.Canvas, node1: Node, node2: Node, condition: TextData
+        cls, canvas: tk.Canvas, node1: NodeBase, node2: NodeBase, condition: TextData
     ):
         return cls(canvas, node1, node2, condition)
 

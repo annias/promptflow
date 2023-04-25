@@ -1,5 +1,5 @@
 import random
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.themes import monokai
 
 from typing import TYPE_CHECKING
@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
 
 
-class RandomNode(Node):
+class RandomNode(NodeBase):
     """
     Injects a random number (0-100) into state
     """

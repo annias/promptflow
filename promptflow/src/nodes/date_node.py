@@ -3,14 +3,14 @@ Convenience node for injecting date into state
 """
 import datetime
 from typing import TYPE_CHECKING
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.themes import monokai
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
 
 
-class DateNode(Node):
+class DateNode(NodeBase):
     """
     Injects date into state
     """

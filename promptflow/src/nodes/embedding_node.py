@@ -17,7 +17,7 @@ from promptflow.src.dialogues.multi_file import MultiFileInput
 from promptflow.src.dialogues.node_options import NodeOptions
 
 from promptflow.src.state import State
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.themes import monokai
 
 if TYPE_CHECKING:
@@ -50,7 +50,7 @@ class EmbeddingsDatabaseSingleton:
         return cls._instance
 
 
-class EmbeddingNode(Node, ABC):
+class EmbeddingNode(NodeBase, ABC):
     """
     Base class for Embedding nodes
     """

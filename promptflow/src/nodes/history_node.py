@@ -6,7 +6,7 @@ from enum import Enum
 from typing import TYPE_CHECKING, Optional
 
 from promptflow.src.dialogues.node_options import NodeOptions
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 
 from promptflow.src.state import State
 
@@ -24,7 +24,7 @@ class Role(Enum):
     ASSISTANT = "assistant"
 
 
-class HistoryNode(Node):
+class HistoryNode(NodeBase):
     """
     Injects history into state
     """

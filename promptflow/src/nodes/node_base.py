@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
-class Node(Serializable, ABC):
+class NodeBase(Serializable, ABC):
     """
     Represents a node in the flowchart, which could be a prompt, an llm, traditional code, etc.
     """
@@ -91,7 +91,7 @@ class Node(Serializable, ABC):
         self.label_entry: Optional[customtkinter.CTkEntry] = None
 
     def __eq__(self, __o: object) -> bool:
-        if isinstance(__o, Node):
+        if isinstance(__o, NodeBase):
             return self.id == __o.id
         return False
 
@@ -238,7 +238,7 @@ class Node(Serializable, ABC):
         for button in self.buttons:
             button.destroy()
 
-    def copy(self) -> "Node":
+    def copy(self) -> "NodeBase":
         """
         Create a copy of the node, without copying the connectors.
         """
@@ -258,7 +258,7 @@ class Node(Serializable, ABC):
         menu.add_command(label="Copy", command=self.copy)
         menu.post(event.x_root, event.y_root)
 
-    def get_children(self) -> list["Node"]:
+    def get_children(self) -> list["NodeBase"]:
         """
         Return all child nodes of this node.
         """

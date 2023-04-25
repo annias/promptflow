@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Optional
 from abc import ABC
 import tkinter as tk
 
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.state import State
 from promptflow.src.text_data import TextData
 from promptflow.src.dialogues.code_input import CodeInput
@@ -21,7 +21,7 @@ DEFAULT_FUNC_TEMPLATE = """def main(state):
 """
 
 
-class FuncNode(Node, ABC):
+class FuncNode(NodeBase, ABC):
     """
     Run arbitrary Python code.
     """

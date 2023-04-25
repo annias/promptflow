@@ -3,7 +3,7 @@ import logging
 from typing import TYPE_CHECKING, Optional
 import tkinter as tk
 
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.connectors.connector import Connector
 
 if TYPE_CHECKING:
@@ -16,7 +16,7 @@ class PartialConnector:
     Animates a line from the center of the node to the mouse position
     """
 
-    def __init__(self, flowchart: "Flowchart", node: Node):
+    def __init__(self, flowchart: "Flowchart", node: NodeBase):
         self.flowchart = flowchart
         self.logger = logging.getLogger(__name__)
         self.canvas = flowchart.canvas

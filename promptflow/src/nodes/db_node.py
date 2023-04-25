@@ -1,7 +1,7 @@
 from typing import Optional, TYPE_CHECKING
 from promptflow.src.db_interface.main import DBInterface, PgMLInterface
 from promptflow.src.dialogues.node_options import NodeOptions
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.themes import monokai
 
 if TYPE_CHECKING:
@@ -50,7 +50,7 @@ class DBConnectionSingleton:
         print("connected")
 
 
-class DBNode(Node):
+class DBNode(NodeBase):
     node_color = monokai.green
 
     def __init__(

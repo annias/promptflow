@@ -4,7 +4,7 @@ Handles undo, redo, and history of commands.
 from abc import ABC, abstractmethod
 
 from promptflow.src.flowchart import Flowchart
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.connectors.connector import Connector
 
 
@@ -31,7 +31,7 @@ class AddNodeCommand(Command):
     Handles the addition of a node to the flowchart.
     """
 
-    def __init__(self, flowchart: Flowchart, node: Node):
+    def __init__(self, flowchart: Flowchart, node: NodeBase):
         self.flowchart = flowchart
         self.node = node
 
@@ -47,7 +47,7 @@ class RemoveNodeCommand(Command):
     Handles the removal of a node from the flowchart.
     """
 
-    def __init__(self, flowchart: Flowchart, node: Node):
+    def __init__(self, flowchart: Flowchart, node: NodeBase):
         self.flowchart = flowchart
         self.node = node
 

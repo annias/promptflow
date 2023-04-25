@@ -6,7 +6,7 @@ from promptflow.src.dialogues.node_options import NodeOptions
 from promptflow.src.dialogues.text_input import TextInput
 
 from promptflow.src.state import State
-from promptflow.src.nodes.node_base import Node
+from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.text_data import TextData
 from promptflow.src.themes import monokai
 
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
 
 
-class AssertNode(Node):
+class AssertNode(NodeBase):
     """
     Runs an assertion on the result of the previous node
     """
@@ -54,7 +54,7 @@ class AssertNode(Node):
         self.assertion.text = result["Assertion"]
 
 
-class LoggingNode(Node):
+class LoggingNode(NodeBase):
     """
     Logs user-defined string to the console.
     """
