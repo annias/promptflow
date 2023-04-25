@@ -26,7 +26,7 @@ class FuncNode(NodeBase, ABC):
     Run arbitrary Python code.
     """
 
-    node_color = monokai.yellow
+    node_color = monokai.YELLOW
 
     def __init__(
         self,

@@ -80,7 +80,7 @@ class App:
             self.paned_window,
             width=options.width,
             height=options.height,
-            background=monokai.background,
+            background=monokai.BACKGROUND,
         )
         self.flowchart = Flowchart(self.canvas)
         self.current_file = "Untitled"

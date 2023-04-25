@@ -19,7 +19,7 @@ class AssertNode(NodeBase):
     Runs an assertion on the result of the previous node
     """
 
-    node_color = monokai.comments
+    node_color = monokai.COMMENTS
 
     def __init__(
         self,

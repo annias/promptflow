@@ -16,7 +16,7 @@ class MemoryNode(NodeBase):
     Stores messages in a list
     """
 
-    node_color = monokai.blue
+    node_color = monokai.BLUE
 
     def __init__(
         self,

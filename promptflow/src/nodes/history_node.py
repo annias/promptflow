@@ -29,7 +29,7 @@ class HistoryNode(NodeBase):
     Injects history into state
     """
 
-    node_color = monokai.pink
+    node_color = monokai.PINK
 
     def __init__(
         self,

@@ -51,7 +51,7 @@ class DBConnectionSingleton:
 
 
 class DBNode(NodeBase):
-    node_color = monokai.green
+    node_color = monokai.GREEN
 
     def __init__(
         self,
@@ -98,7 +98,7 @@ class DBNode(NodeBase):
 
 
 class PGMLNode(DBNode):
-    node_color = monokai.green
+    node_color = monokai.GREEN
 
     def __init__(
         self,

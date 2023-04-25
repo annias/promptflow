@@ -169,6 +169,7 @@ class Flowchart:
         """
         Given a state, run the flowchart and update the state
         """
+        self.logger.info("Running flowchart")
         if not queue:
             queue: list[NodeBase] = [self.start_node]
         state = state or State()
@@ -273,17 +274,18 @@ class Flowchart:
         """
         Remove a node and all connectors connected to it.
         """
+        self.logger.info("Removing node {node}")
         if node in self.nodes:
             self.nodes.remove(node)
         # remove all connectors connected to this node
-        for n in self.nodes:
-            for connector in n.connectors:
+        for node in self.nodes:
+            for connector in node.connectors:
                 if connector.node1 == node or connector.node2 == node:
                     connector.delete()
-                    if connector in n.input_connectors:
-                        n.input_connectors.remove(connector)
-                    if connector in n.output_connectors:
-                        n.output_connectors.remove(connector)
+                    if connector in node.input_connectors:
+                        node.input_connectors.remove(connector)
+                    if connector in node.output_connectors:
+                        node.output_connectors.remove(connector)
         for connector in self.connectors:
             if connector.node1 == node or connector.node2 == node:
                 connector.delete()
@@ -293,6 +295,7 @@ class Flowchart:
         """
         Clear the flowchart.
         """
+        self.logger.info("Clearing")
         for node in self.nodes:
             node.delete()
         self.nodes = []

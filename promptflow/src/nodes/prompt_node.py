@@ -19,7 +19,7 @@ class PromptNode(NodeBase):
     Formats TextData with state data
     """
 
-    node_color = monokai.purple
+    node_color = monokai.PURPLE
 
     def __init__(
         self,

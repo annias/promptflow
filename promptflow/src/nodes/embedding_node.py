@@ -55,7 +55,7 @@ class EmbeddingNode(NodeBase, ABC):
     Base class for Embedding nodes
     """
 
-    node_color = monokai.green
+    node_color = monokai.GREEN
 
     def __init__(
         self,

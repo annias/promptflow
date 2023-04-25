@@ -13,7 +13,7 @@ class RandomNode(NodeBase):
     Injects a random number (0-100) into state
     """
 
-    node_color = monokai.pink
+    node_color = monokai.PINK
 
     def run_subclass(self, state) -> str:
         r = random.randint(0, 100)

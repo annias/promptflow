@@ -25,8 +25,8 @@ class NodeBase(Serializable, ABC):
     Represents a node in the flowchart, which could be a prompt, an llm, traditional code, etc.
     """
 
-    node_color = monokai.white
-    SIZE_PX = 50
+    node_color = monokai.WHITE
+    size_px: int = 50  # arbitrary default size
 
     def __init__(
         self,
@@ -266,10 +266,10 @@ class NodeBase(Serializable, ABC):
         Rectangles by default
         """
         return self.canvas.create_rectangle(
-            x - self.SIZE_PX,
-            y - self.SIZE_PX,
-            x + self.SIZE_PX,
-            y + self.SIZE_PX,
+            x - self.size_px,
+            y - self.size_px,
+            x + self.size_px,
+            y + self.size_px,
             fill=self.node_color,
             outline="black",
             tags="node",

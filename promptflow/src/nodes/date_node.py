@@ -15,7 +15,7 @@ class DateNode(NodeBase):
     Injects date into state
     """
 
-    node_color = monokai.pink
+    node_color = monokai.PINK
 
     def __init__(
         self,

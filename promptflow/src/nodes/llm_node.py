@@ -61,7 +61,7 @@ class LLMNode(NodeBase):
     Node that uses the OpenAI API to generate text.
     """
 
-    node_color = monokai.green
+    node_color = monokai.GREEN
 
     def __init__(
         self,
