@@ -25,6 +25,7 @@ from promptflow.src.command import (
 
 from promptflow.src.flowchart import Flowchart
 from promptflow.src.nodes.date_node import DateNode
+from promptflow.src.nodes.http_node import HttpNode
 from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.nodes.db_node import PGMLNode, GenerateNode, SelectNode
 from promptflow.src.nodes.start_node import InitNode, StartNode
@@ -149,6 +150,10 @@ class App:
         self.add_menu.add_command(
             label="History - Save result to chat history",
             command=self.create_add_node_function(HistoryNode, "History"),
+        )
+        self.add_menu.add_command(
+            label="HTTP - Send HTTP request",
+            command=self.create_add_node_function(HttpNode, "HTTP"),
         )
         self.add_memory_menu = tk.Menu(self.add_menu, tearoff=0)
         self.add_memory_menu.add_command(

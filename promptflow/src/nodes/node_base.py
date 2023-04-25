@@ -259,17 +259,17 @@ class NodeBase(Serializable, ABC):
         """
         return [connector.node2 for connector in self.output_connectors]
 
-    def draw_shape(self, x: float, y: float):
+    def draw_shape(self, center_x: float, center_y: float):
         """
         Takes the coordinates of the top left and bottom right corners of the node
         Draws the shape of the node
         Rectangles by default
         """
         return self.canvas.create_rectangle(
-            x - self.size_px,
-            y - self.size_px,
-            x + self.size_px,
-            y + self.size_px,
+            center_x - self.size_px,
+            center_y - self.size_px,
+            center_x + self.size_px,
+            center_y + self.size_px,
             fill=self.node_color,
             outline="black",
             tags="node",
