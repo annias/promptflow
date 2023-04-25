@@ -15,26 +15,6 @@ class RandomNode(NodeBase):
 
     node_color = monokai.pink
 
-    def __init__(
-        self,
-        flowchart: "Flowchart",
-        x1: int,
-        y1: int,
-        x2: int,
-        y2: int,
-        label: str,
-        **kwargs,
-    ):
-        super().__init__(
-            flowchart,
-            x1,
-            y1,
-            x2,
-            y2,
-            label,
-            **kwargs,
-        )
-
     def run_subclass(self, state) -> str:
         r = random.randint(0, 100)
         return str(r)

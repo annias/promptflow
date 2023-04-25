@@ -21,10 +21,8 @@ class StartNode(NodeBase):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: int,
-        y1: int,
-        x2: int,
-        y2: int,
+        center_x: float,
+        center_y: float,
         label: str,
         **kwargs,
     ):
@@ -33,16 +31,14 @@ class StartNode(NodeBase):
             if isinstance(node, StartNode):
                 raise ValueError("Only one start node is allowed")
 
-        super().__init__(flowchart, x1, y1, x2, y2, label, **kwargs)
+        super().__init__(flowchart, center_x, center_y, label, **kwargs)
 
     @staticmethod
     def deserialize(flowchart: "Flowchart", data: dict):
         return StartNode(
             flowchart,
-            data["x1"],
-            data["y1"],
-            data["x2"],
-            data["y2"],
+            data["center_x"],
+            data["center_y"],
             data["label"],
             id=data.get("id", str(uuid.uuid4())),
         )
@@ -50,9 +46,14 @@ class StartNode(NodeBase):
     def run_subclass(self, state):
         return ""
 
-    def draw_shape(self, x1, y1, x2, y2):
+    def draw_shape(self, x: int, y: int):
         return self.canvas.create_oval(
-            x1, y1, x2, y2, fill=self.node_color, outline="black"
+            x - self.SIZE_PX,
+            y - self.SIZE_PX,
+            x + self.SIZE_PX,
+            y + self.SIZE_PX,
+            fill=self.node_color,
+            outline="black",
         )
 
 
@@ -66,10 +67,8 @@ class InitNode(NodeBase):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: int,
-        y1: int,
-        x2: int,
-        y2: int,
+        center_x: float,
+        center_y: float,
         label: str,
         **kwargs,
     ):
@@ -78,7 +77,7 @@ class InitNode(NodeBase):
             if isinstance(node, InitNode):
                 raise ValueError("Only one init node is allowed")
 
-        super().__init__(flowchart, x1, y1, x2, y2, label, **kwargs)
+        super().__init__(flowchart, center_x, center_y, label, **kwargs)
         self.run_once = False
 
     def run_subclass(self, state):
@@ -88,7 +87,12 @@ class InitNode(NodeBase):
         else:
             return None
 
-    def draw_shape(self, x1, y1, x2, y2):
+    def draw_shape(self, x: int, y: int):
         return self.canvas.create_oval(
-            x1, y1, x2, y2, fill=self.node_color, outline="black"
+            x - self.SIZE_PX,
+            y - self.SIZE_PX,
+            x + self.SIZE_PX,
+            y + self.SIZE_PX,
+            fill=self.node_color,
+            outline="black",
         )

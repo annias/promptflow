@@ -51,8 +51,8 @@ class Flowchart:
         self.is_running = False
 
         if init_nodes:
-            self.add_node(InitNode(self, 10, 10, 100, 100, "Init"))
-            self.add_node(StartNode(self, 10, 210, 100, 300, "Start"))
+            self.add_node(InitNode(self, 70, 100, "Init"))
+            self.add_node(StartNode(self, 70, 300, "Start"))
 
     @classmethod
     def deserialize(cls, canvas: tk.Canvas, data: dict[str, Any]):

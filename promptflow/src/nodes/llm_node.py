@@ -66,10 +66,8 @@ class LLMNode(NodeBase):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: float,
-        y1: float,
-        x2: float,
-        y2: float,
+        center_x: float,
+        center_y: float,
         label: str,
         system_prompt: Optional[TextData | dict] = None,
         model: str = Model.gpt35turbo.value,
@@ -85,10 +83,8 @@ class LLMNode(NodeBase):
 
         self.model_var = tk.StringVar(value=model)
         self.model = model
-        super().__init__(flowchart, x1, y1, x2, y2, label, **kwargs)
+        super().__init__(flowchart, center_x, center_y, label, **kwargs)
         # create the prompt
-        center_x = (x1 + x2) / 2
-        center_y = (y1 + y2) / 2 + 10
         if system_prompt is None:
             system_prompt = {"label": "System Prompt", "text": ""}
         if isinstance(system_prompt, dict):
@@ -96,7 +92,7 @@ class LLMNode(NodeBase):
         self.system_prompt: TextData = system_prompt
 
         self.system_prompt_item = self.canvas.create_text(
-            center_x, center_y, text=self.system_prompt.label
+            center_x, center_y + 20, text=self.system_prompt.label
         )
         self.items.extend([self.system_prompt_item])
         self.canvas.tag_bind(

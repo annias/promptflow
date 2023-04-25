@@ -31,18 +31,14 @@ class FuncNode(NodeBase, ABC):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: int,
-        y1: int,
-        x2: int,
-        y2: int,
+        center_x: float,
+        center_y: float,
         label: str,
         func: Optional[TextData] = None,
         **kwargs,
     ):
-        super().__init__(flowchart, x1, y1, x2, y2, label, **kwargs)
+        super().__init__(flowchart, center_x, center_y, label, **kwargs)
         self.func = func
-        center_x = (x1 + x2) / 2
-        center_y = (y1 + y2) / 2 + 10
         if not self.func:
             self.func = TextData("func", DEFAULT_FUNC_TEMPLATE, flowchart)
         if isinstance(func, dict):
@@ -51,7 +47,9 @@ class FuncNode(NodeBase, ABC):
             self.func.text = DEFAULT_FUNC_TEMPLATE
         # convert function to string
         self.functext = self.func.label
-        self.func_item = self.canvas.create_text(center_x, center_y, text=self.functext)
+        self.func_item = self.canvas.create_text(
+            center_x, center_y + 20, text=self.functext
+        )
         self.items.append(self.func_item)
         self.canvas.tag_bind(self.func_item, "<Double-Button-1>", self.edit_func)
         self.bind_drag()

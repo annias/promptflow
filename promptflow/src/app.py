@@ -416,7 +416,7 @@ class App:
         """
 
         def add_node():
-            node = node_class(self.flowchart, 100, 100, 200, 200, name)
+            node = node_class(self.flowchart, 100, 100, name)
             self.flowchart.add_node(node)
 
         return add_node

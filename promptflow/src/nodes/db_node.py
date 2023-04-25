@@ -56,10 +56,8 @@ class DBNode(NodeBase):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: float,
-        y1: float,
-        x2: float,
-        y2: float,
+        center_x: float,
+        center_y: float,
         label: str,
         **kwargs,
     ):
@@ -70,7 +68,7 @@ class DBNode(NodeBase):
         self.host = self.interface.host
         self.port = self.interface.port
 
-        super().__init__(flowchart, x1, y1, x2, y2, label, **kwargs)
+        super().__init__(flowchart, center_x, center_y, label, **kwargs)
 
         self.options_popup: Optional[NodeOptions] = None
 
@@ -105,15 +103,13 @@ class PGMLNode(DBNode):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: float,
-        y1: float,
-        x2: float,
-        y2: float,
+        center_x: float,
+        center_y: float,
         label: str,
         **kwargs,
     ):
         self.interface = DBConnectionSingleton(PgMLInterface)
-        super().__init__(flowchart, x1, y1, x2, y2, label, **kwargs)
+        super().__init__(flowchart, center_x, center_y, label, **kwargs)
         self.model = "gpt2-instruct-dolly"
 
     def edit_options(self, event):

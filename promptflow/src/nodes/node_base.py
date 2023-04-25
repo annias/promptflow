@@ -26,14 +26,13 @@ class NodeBase(Serializable, ABC):
     """
 
     node_color = monokai.white
+    SIZE_PX = 50
 
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: float,
-        y1: float,
-        x2: float,
-        y2: float,
+        center_x: float,
+        center_y: float,
         label: str,
         **kwargs,
     ):
@@ -43,7 +42,7 @@ class NodeBase(Serializable, ABC):
         self.id: str = kwargs.get("id") or str(uuid.uuid1())
         self.canvas = flowchart.canvas
 
-        self.item = self.draw_shape(x1, y1, x2, y2)
+        self.item = self.draw_shape(center_x, center_y)
         self.canvas.tag_bind(self.item, "<ButtonPress-1>", self.start_drag)
         self.canvas.tag_bind(self.item, "<ButtonRelease-1>", self.stop_drag)
         self.canvas.tag_bind(self.item, "<B1-Motion>", self.on_drag)
@@ -55,10 +54,8 @@ class NodeBase(Serializable, ABC):
         self.visited = False  # Add a visited attribute to keep track of visited nodes
 
         # create the label
-        center_x = (x1 + x2) / 2
-        center_y = (y1 + y2) / 2 - 30
-        self.x = center_x
-        self.y = center_y
+        self.center_x = center_x
+        self.center_y = center_y
         self.label_item = self.canvas.create_text(center_x, center_y, text=label)
         self.canvas.tag_bind(self.label_item, "<Double-Button-1>", self.edit_label)
 
@@ -176,20 +173,20 @@ class NodeBase(Serializable, ABC):
         updating the node's x and y coordinates.
         """
         self.flowchart.selected_element = self
-        self.x = event.x
-        self.y = event.y
+        self.center_x = event.x
+        self.center_y = event.y
 
     def on_drag(self, event: tk.Event):
         """
         Continuously update the node's position while dragging.
         Update all connectors to follow the node.
         """
-        delta_x = event.x - self.x
-        delta_y = event.y - self.y
+        delta_x = event.x - self.center_x
+        delta_y = event.y - self.center_y
         for item in self.items:
             self.canvas.move(item, delta_x, delta_y)
-        self.x = event.x
-        self.y = event.y
+        self.center_x = event.x
+        self.center_y = event.y
         for connector in self.connectors:
             connector.update()
 
@@ -218,10 +215,8 @@ class NodeBase(Serializable, ABC):
         return {
             "id": self.id,
             "label": self.label,
-            "x1": self.canvas.coords(self.item)[0],
-            "y1": self.canvas.coords(self.item)[1],
-            "x2": self.canvas.coords(self.item)[2],
-            "y2": self.canvas.coords(self.item)[3],
+            "center_x": self.center_x,
+            "center_y": self.center_y,
             "classname": self.__class__.__name__,
         }
 
@@ -264,14 +259,20 @@ class NodeBase(Serializable, ABC):
         """
         return [connector.node2 for connector in self.output_connectors]
 
-    def draw_shape(self, x1: float, y1: float, x2: float, y2: float):
+    def draw_shape(self, x: float, y: float):
         """
         Takes the coordinates of the top left and bottom right corners of the node
         Draws the shape of the node
         Rectangles by default
         """
         return self.canvas.create_rectangle(
-            x1, y1, x2, y2, fill=self.node_color, outline="black", tags="node"
+            x - self.SIZE_PX,
+            y - self.SIZE_PX,
+            x + self.SIZE_PX,
+            y + self.SIZE_PX,
+            fill=self.node_color,
+            outline="black",
+            tags="node",
         )
 
     def bind_drag(self):

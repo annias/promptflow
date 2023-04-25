@@ -24,32 +24,26 @@ class PromptNode(NodeBase):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: int,
-        y1: int,
-        x2: int,
-        y2: int,
+        center_x: float,
+        center_y: float,
         label: str,
         prompt: Optional[TextData | dict] = None,
         **kwargs,
     ):
         super().__init__(
             flowchart,
-            x1,
-            y1,
-            x2,
-            y2,
+            center_x,
+            center_y,
             label,
             **kwargs,
         )
-        center_x = (x1 + x2) / 2
-        center_y = (y1 + y2) / 2 + 10
         if prompt is None:
             prompt = TextData("Prompt", "", self.flowchart)
         if isinstance(prompt, dict):
             prompt = TextData.deserialize(prompt, self.flowchart)
         self.prompt = prompt
         self.prompt_item = self.canvas.create_text(
-            center_x, center_y - 20, text=self.prompt.label
+            center_x, center_y + 20, text=self.prompt.label
         )
         self.items.extend([self.prompt_item])
         self.canvas.tag_bind(self.prompt_item, "<Double-Button-1>", self.edit_prompt)
@@ -92,10 +86,8 @@ class PromptNode(NodeBase):
     def deserialize(cls, flowchart: "Flowchart", data: dict) -> "PromptNode":
         return cls(
             flowchart,
-            data["x1"],
-            data["y1"],
-            data["x2"],
-            data["y2"],
+            data["center_x"],
+            data["center_y"],
             data["label"],
             prompt=data["prompt"],
             id=data["id"],

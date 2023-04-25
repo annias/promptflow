@@ -60,19 +60,15 @@ class EmbeddingNode(NodeBase, ABC):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: float,
-        y1: float,
-        x2: float,
-        y2: float,
+        center_x: float,
+        center_y: float,
         label: str,
         **kwargs,
     ):
         super().__init__(
             flowchart,
-            x1,
-            y1,
-            x2,
-            y2,
+            center_x,
+            center_y,
             label,
             **kwargs,
         )
@@ -137,19 +133,15 @@ class EmbeddingQueryNode(EmbeddingNode):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: float,
-        y1: float,
-        x2: float,
-        y2: float,
+        center_x: float,
+        center_y: float,
         label: str,
         **kwargs,
     ):
         super().__init__(
             flowchart,
-            x1,
-            y1,
-            x2,
-            y2,
+            center_x,
+            center_y,
             label,
             **kwargs,
         )
@@ -223,19 +215,15 @@ class EmbeddingsIngestNode(EmbeddingNode):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: float,
-        y1: float,
-        x2: float,
-        y2: float,
+        center_x: float,
+        center_y: float,
         label: str,
         **kwargs,
     ):
         super().__init__(
             flowchart,
-            x1,
-            y1,
-            x2,
-            y2,
+            center_x,
+            center_y,
             label,
             **kwargs,
         )

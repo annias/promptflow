@@ -21,19 +21,15 @@ class MemoryNode(NodeBase):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: int,
-        y1: int,
-        x2: int,
-        y2: int,
+        center_x: float,
+        center_y: float,
         label: str,
         **kwargs,
     ):
         super().__init__(
             flowchart,
-            x1,
-            y1,
-            x2,
-            y2,
+            center_x,
+            center_y,
             label,
             **kwargs,
         )
@@ -67,20 +63,16 @@ class WindowedMemoryNode(MemoryNode):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: int,
-        y1: int,
-        x2: int,
-        y2: int,
+        center_x: float,
+        center_y: float,
         label: str,
         window: int = 100,
         **kwargs,
     ):
         super().__init__(
             flowchart,
-            x1,
-            y1,
-            x2,
-            y2,
+            center_x,
+            center_y,
             label,
             **kwargs,
         )
@@ -114,20 +106,16 @@ class DynamicWindowedMemoryNode(MemoryNode):
     def __init__(
         self,
         flowchart: "Flowchart",
-        x1: int,
-        y1: int,
-        x2: int,
-        y2: int,
+        center_x: float,
+        center_y: float,
         label: str,
         target: str = "",
         **kwargs,
     ):
         super().__init__(
             flowchart,
-            x1,
-            y1,
-            x2,
-            y2,
+            center_x,
+            center_y,
             label,
             **kwargs,
         )
