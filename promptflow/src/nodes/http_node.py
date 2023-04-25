@@ -3,6 +3,7 @@ Interface for http requests
 """
 from enum import Enum
 from typing import Any, Callable
+import json
 import requests
 from promptflow.src.dialogues.node_options import NodeOptions
 
@@ -64,7 +65,11 @@ class HttpNode(NodeBase):
         """
         Sends a http request
         """
-        response = request_functions[self.request_type](self.url)
+        try:
+            data = json.loads(state.result)
+        except json.decoder.JSONDecodeError:
+            return "Invalid JSON"
+        response = request_functions[self.request_type](self.url, json=data)
         state.result = response.text
         return response.text
 
