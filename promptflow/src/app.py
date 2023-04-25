@@ -15,6 +15,13 @@ import os
 from typing import Optional
 import zipfile
 from PIL import ImageGrab
+from promptflow.src.command import (
+    CommandManager,
+    AddConnectionCommand,
+    RemoveConnectionCommand,
+    AddNodeCommand,
+    RemoveNodeCommand,
+)
 
 from promptflow.src.flowchart import Flowchart
 from promptflow.src.nodes.date_node import DateNode
@@ -55,6 +62,8 @@ class App:
     def __init__(self, initial_state: State, options: Options):
         self.root = customtkinter.CTk()
         customtkinter.set_appearance_mode("dark")
+
+        self.command_manager = CommandManager()  # todo
 
         self.loading_popup = self.show_loading_popup("Starting app...")
 
@@ -99,6 +108,12 @@ class App:
 
         # edit menu for common actions
         self.edit_menu = tk.Menu(self.menubar, tearoff=0)
+        self.edit_menu.add_command(
+            label="Undo", command=self.command_manager.undo, accelerator="Ctrl+Z"
+        )
+        self.edit_menu.add_command(
+            label="Redo", command=self.command_manager.redo, accelerator="Ctrl+Y"
+        )
         self.edit_menu.add_command(
             label="Clear",
             command=self.clear_flowchart,
