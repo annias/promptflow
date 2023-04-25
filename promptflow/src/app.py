@@ -137,7 +137,7 @@ class App:
         )
         self.add_memory_menu = tk.Menu(self.add_menu, tearoff=0)
         self.add_memory_menu.add_command(
-            label="Memory - Save to longer running memory",
+            label="Memory - Modify history",
             command=self.create_add_node_function(MemoryNode, "Memory"),
         )
         self.add_memory_menu.add_command(
