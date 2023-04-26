@@ -28,6 +28,7 @@ from promptflow.src.nodes.date_node import DateNode
 from promptflow.src.nodes.http_node import HttpNode
 from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.nodes.db_node import PGMLNode, GenerateNode, SelectNode
+from promptflow.src.nodes.regex_node import RegexNode, TagNode
 from promptflow.src.nodes.start_node import InitNode, StartNode
 from promptflow.src.nodes.prompt_node import PromptNode
 from promptflow.src.nodes.func_node import FuncNode
@@ -173,6 +174,16 @@ class App:
             ),
         )
         self.add_menu.add_cascade(label="Memory", menu=self.add_memory_menu)
+        self.regex_menu = tk.Menu(self.add_menu, tearoff=0)
+        self.regex_menu.add_command(
+            label="Regex - Match text with regex",
+            command=self.create_add_node_function(RegexNode, "Regex"),
+        )
+        self.regex_menu.add_command(
+            label="Tag - Extract text between tags",
+            command=self.create_add_node_function(TagNode, "Tag"),
+        )
+        self.add_menu.add_cascade(label="Regex", menu=self.regex_menu)
         self.embedding_menu = tk.Menu(self.add_menu, tearoff=0)
         self.embedding_menu.add_command(
             label="Embedding In - Embed result and save to hnswlib",
