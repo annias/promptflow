@@ -49,7 +49,7 @@ class HistoryNode(NodeBase):
         self.role_var = tk.StringVar(value=kwargs.get("role", Role.USER.value))
         self.role_item = self.canvas.create_text(
             center_x,
-            center_y,
+            center_y + 20,
             text=self.role_var.get(),
             font=("Arial", 10),
             fill="black",

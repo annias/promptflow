@@ -138,7 +138,7 @@ class NodeBase(Serializable, ABC):
         """
         self.canvas.delete(self.label_item)
         self.items.remove(self.label_item)
-        center_x, center_y = self.get_center(offset_y=-30)
+        center_x, center_y = self.get_center()
         self.label_entry = customtkinter.CTkEntry(self.canvas)
         self.label_entry.insert(0, self.label)
         self.label_entry.bind("<Return>", self.finish_edit_label)
@@ -154,7 +154,7 @@ class NodeBase(Serializable, ABC):
             return
         self.label = self.label_entry.get()
         self.label_entry.destroy()
-        center_x, center_y = self.get_center(offset_y=-30)
+        center_x, center_y = self.get_center()
         self.label_item = self.canvas.create_text(center_x, center_y, text=self.label)
         self.items.append(self.label_item)
         self.canvas.tag_bind(self.label_item, "<Double-Button-1>", self.edit_label)
