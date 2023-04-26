@@ -70,7 +70,6 @@ class HttpNode(NodeBase):
         except json.decoder.JSONDecodeError:
             return "Invalid JSON"
         response = request_functions[self.request_type](self.url, json=data)
-        state.result = response.text
         return response.text
 
     def edit_options(self, event):
