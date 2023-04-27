@@ -35,3 +35,5 @@ Input: what is a coconut?
 
 [System: Done]
 ```
+
+This is just a simple chatbot; for a more complex example, see [Usage](working-with-llms), which incorporates the [History](History) node. It should also go without saying this approach is not a good way to censor users, as they can easily get around it. It's just an example of how to use conditions.
