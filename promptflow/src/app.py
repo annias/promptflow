@@ -66,6 +66,8 @@ class App:
         customtkinter.set_appearance_mode("dark")
 
         self.command_manager = CommandManager()  # todo
+        
+        self.zoom_level = 1.0
 
         self.loading_popup = self.show_loading_popup("Starting app...")
 
@@ -430,6 +432,10 @@ class App:
         def add_node():
             node = node_class(self.flowchart, 100, 100, name)
             self.flowchart.add_node(node)
+            # scale node
+            for item in node.items:
+                self.canvas.scale(item, 0, 0, self.zoom_level, self.zoom_level)
+                
 
         return add_node
 
@@ -491,6 +497,7 @@ class App:
 
         self.canvas.scale("all", event.x, event.y, zoom_scale, zoom_scale)
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        self.zoom_level *= zoom_scale
 
     def start_pan(self, event):
         """Begining drag to scroll canvas"""
