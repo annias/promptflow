@@ -158,10 +158,6 @@ class App:
         )
         self.add_memory_menu = tk.Menu(self.add_menu, tearoff=0)
         self.add_memory_menu.add_command(
-            label="Memory - Modify history",
-            command=self.create_add_node_function(MemoryNode, "Memory"),
-        )
-        self.add_memory_menu.add_command(
             label="Windowed Memory - Save to memory with a window",
             command=self.create_add_node_function(
                 WindowedMemoryNode, "Windowed Memory"

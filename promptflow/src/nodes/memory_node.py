@@ -1,6 +1,7 @@
 """
 Handles state history and memory nodes
 """
+from abc import ABC
 from typing import TYPE_CHECKING
 from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.state import State
@@ -11,7 +12,7 @@ if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
 
 
-class MemoryNode(NodeBase):
+class MemoryNode(NodeBase, ABC):
     """
     Stores messages in a list
     """
