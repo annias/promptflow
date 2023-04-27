@@ -167,3 +167,28 @@ Allows the flowchart to make HTTP requests. Double-click the node to edit the re
 ## RandomNumber
 
 Returns a random number between `min` and `max`. Double-click the node to edit the `min` and `max` values.
+
+(Regex)=
+## Regex
+
+Runs a regex on the `state.result`. Double-click the node to edit the regex. Returns the first extracted group.
+
+(TagRegex)=
+### Tag
+
+Like the [`Regex`](Regex) node, but extracts text inbetween tags. For example, if the `state.result` is `Hello <name>World</name>`, adding `start=<name>` and `end=</name>` would return `World`. Double-click the node to edit the start and end tags.
+
+(Test)=
+## Test Nodes
+
+Nodes for performing tests on the flowchart
+
+(Assert)=
+### Assert
+
+Assert a Python expression. Double-click the node to edit the expression.
+
+(Logging)=
+### Logging
+
+Logs the output at a certain step. Useful for debugging. Double-click the node to edit the message. The string is a Python f-string, similar to [`Prompt`](Prompt).
