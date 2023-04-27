@@ -154,3 +154,16 @@ Takes data from a node and puts it into an hnswlib index.
 ### EmbeddingQuery
 
 Queries an hnswlib index and returns the result. Double click to edit the nubmer of results returned, as well as as the separator between results.
+
+(Http)=
+## HTTP
+
+Allows the flowchart to make HTTP requests. Double-click the node to edit the request type (GET, POST, etc), the URL, and the request body. **The `state.result` will be put into the `json` parameter.**
+
+![image](../screenshots/docs/http_options.png)
+
+
+(RandomNumber)=
+## RandomNumber
+
+Returns a random number between `min` and `max`. Double-click the node to edit the `min` and `max` values.
