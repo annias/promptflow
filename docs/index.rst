@@ -19,8 +19,8 @@ deal with complicated logic.
 How it works
 ------------
 PromptFlow is based on a visual flowchart editor that allows you to 
-create nodes and connections between them. Each node can be a Prompt,
-a Python function, or an LLM. Connections between nodes represent
+create nodes and connections between them. Each node can be a :ref:`Prompt`,
+a Python function, or an :ref:`LLM`. Connections between nodes represent
 conditional logic, and allow you to specify the flow of your program.
 
 When you run your flowchart, PromptFlow will execute each node in the
