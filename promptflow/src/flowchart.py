@@ -111,11 +111,14 @@ class Flowchart:
         return start_nodes[0]
 
     @property
-    def init_node(self) -> InitNode:
+    def init_node(self) -> Optional[InitNode]:
         """
         Find and returns the single-run InitNode
         """
-        return [node for node in self.nodes if isinstance(node, InitNode)][0]
+        try:
+            return [node for node in self.nodes if isinstance(node, InitNode)][0]
+        except IndexError:
+            return None
 
     def find_node(self, node_id: str) -> NodeBase:
         """
@@ -152,12 +155,12 @@ class Flowchart:
         """
         Initialize the flowchart
         """
-        init_node = self.init_node
-        if init_node.run_once:
+        init_node: Optional[InitNode] = self.init_node
+        if not init_node or init_node.run_once:
             console.insert(tk.END, "\n[System: Already initialized]\n")
             console.see(tk.END)
             return state
-        queue = [self.init_node]
+        queue: list[NodeBase] = [self.init_node]
         return self.run(state, console, queue)
 
     def run(
