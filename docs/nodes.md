@@ -128,3 +128,8 @@ The Select node selects a single row from the database. The query is `state.resu
 #### Generate
 
 The Generate node uses a pgml model to complete a prompt. The prompt is `state.result`, so you can use the result of a previous node to select a row. `model` can be selected by double-clicking the node.
+
+(DummyLLM)=
+## DummyLLM
+
+You don't always want to hit the LLM API, as it can be expensive. The DummyLLM node allows you to test your flowchart without hitting the API. 
