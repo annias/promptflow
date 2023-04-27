@@ -249,7 +249,7 @@ class EmbeddingsIngestNode(EmbeddingNode):
             {
                 "Rows": self.rows,
                 "Bin File (.bin)": self.filename,
-                "CSV File (.csv)": self.label_file
+                "CSV File (.csv)": self.label_file,
             },
         )
         self.canvas.wait_window(self.options_popup)

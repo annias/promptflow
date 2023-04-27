@@ -49,7 +49,7 @@ class DateNode(NodeBase):
             self.canvas,
             {
                 "datetime_format": self.datetime_format,
-            }
+            },
         )
         self.canvas.wait_window(self.options_popup)
         result = self.options_popup.result

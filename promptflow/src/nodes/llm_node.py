@@ -89,7 +89,6 @@ class LLMNode(NodeBase):
         self.text_window: Optional[TextInput] = None
         self.options_popup: Optional[NodeOptions] = None
 
-
     def edit_options(self, event: tk.Event):
         """
         Create a menu to edit the prompt.
@@ -210,9 +209,7 @@ class LLMNode(NodeBase):
         # count the number of tokens
         enc = tiktoken.encoding_for_model(self.model)
         prompt_tokens = enc.encode(state.result.format(state=state))
-        max_completion_tokens = (
-            self.max_tokens - len(prompt_tokens)
-        )
+        max_completion_tokens = self.max_tokens - len(prompt_tokens)
         prompt_cost = prompt_cost_1k[self.model] * len(prompt_tokens) / 1000
         completion_cost = completion_cost_1k[self.model] * max_completion_tokens / 1000
         total = prompt_cost + completion_cost
