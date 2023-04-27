@@ -230,30 +230,34 @@ class EmbeddingsIngestNode(EmbeddingNode):
         self.filename = kwargs.get("filename", "")
         self.label_file = kwargs.get("label_file", "")
         self.options_popup = None
+        self.rows = kwargs.get("rows", [])
 
     def run_subclass(self, state: State) -> str:
         self.collection.index.load_index(self.filename)
         with open(self.label_file, "r") as f:
-            csv_reader = csv.DictReader(f, fieldnames=["rule", "decision", "carriers"])
+            csv_reader = csv.DictReader(f, fieldnames=self.rows)
             self.collection.content_index = {}
             for i, row in enumerate(csv_reader):
                 self.collection.content_index[i] = {
-                    "rule": row["rule"],
-                    "decision": row["decision"],
-                    "carriers": row["carriers"],
+                    row_name: row for row_name in self.rows if row_name in row.keys()
                 }
         return state.result
 
     def edit_options(self, event):
         self.options_popup = MultiFileInput(
             self.canvas,
-            {"Bin File (.bin)": self.filename, "CSV File (.csv)": self.label_file},
+            {
+                "Rows": self.rows,
+                "Bin File (.bin)": self.filename,
+                "CSV File (.csv)": self.label_file
+            },
         )
         self.canvas.wait_window(self.options_popup)
         result = self.options_popup.result
         # check if cancel
         if self.options_popup.cancelled:
             return
+        self.rows = result["Rows"].split(",")
         self.filename = result["Bin File (.bin)"]
         self.label_file = result["CSV File (.csv)"]
 

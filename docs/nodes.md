@@ -133,3 +133,24 @@ The Generate node uses a pgml model to complete a prompt. The prompt is `state.r
 ## DummyLLM
 
 You don't always want to hit the LLM API, as it can be expensive. The DummyLLM node allows you to test your flowchart without hitting the API. 
+
+(Embedding)=
+## Embedding
+
+Text embeddings are useful for many tasks, such as clustering, classification, and search. The Embedding node allows you to use [Instructor](https://huggingface.co/hkunlp/instructor-large) to embed text, as well as [hnswlib](https://github.com/nmslib/hnswlib) to search the embeddings.
+
+(EmbeddingIngest)=
+### EmbeddingIngest
+
+When pointed at a json file, will read all values into database. Usually linked to the [`Init`](Init) node. Double-click the node to point the node to the `.bin` file, and a json file with mappings between the indices and the corresponding values (usually strings).
+
+
+(EmbeddingIn)=
+### EmbeddingIn
+
+Takes data from a node and puts it into an hnswlib index.
+
+(EmbeddingQuery)=
+### EmbeddingQuery
+
+Queries an hnswlib index and returns the result. Double click to edit the nubmer of results returned, as well as as the separator between results.
