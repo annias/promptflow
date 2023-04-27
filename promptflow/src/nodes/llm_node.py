@@ -69,7 +69,6 @@ class LLMNode(NodeBase):
         center_x: float,
         center_y: float,
         label: str,
-        system_prompt: Optional[TextData | dict] = None,
         model: str = Model.gpt35turbo.value,
         **kwargs,
     ):
@@ -84,43 +83,12 @@ class LLMNode(NodeBase):
         self.model_var = tk.StringVar(value=model)
         self.model = model
         super().__init__(flowchart, center_x, center_y, label, **kwargs)
-        # create the prompt
-        if system_prompt is None:
-            system_prompt = {"label": "System Prompt", "text": ""}
-        if isinstance(system_prompt, dict):
-            system_prompt = TextData.deserialize(system_prompt, self.flowchart)
-        self.system_prompt: TextData = system_prompt
-
-        self.system_prompt_item = self.canvas.create_text(
-            center_x, center_y + 20, text=self.system_prompt.label
-        )
-        self.items.extend([self.system_prompt_item])
-        self.canvas.tag_bind(
-            self.system_prompt_item, "<Double-Button-1>", self.edit_system_prompt
-        )
         self.canvas.tag_bind(self.item, "<Double-Button-1>", self.edit_options)
         self.canvas.update()
         self.bind_drag()
         self.text_window: Optional[TextInput] = None
         self.options_popup: Optional[NodeOptions] = None
 
-    def edit_system_prompt(self, _: tk.Event):
-        """
-        Create a text input window to edit the system prompt.
-        """
-        self.text_window = TextInput(self.canvas, self.flowchart, self.system_prompt)
-        self.text_window.set_callback(self.save_system_prompt)
-
-    def save_system_prompt(self):
-        """
-        Write the system prompt to the canvas.
-        """
-        if self.text_window is None:
-            self.logger.error("text_window is None")
-            return
-        self.system_prompt = self.text_window.get_text()
-        self.canvas.itemconfig(self.system_prompt_item, text=self.system_prompt.label)
-        self.text_window.destroy()
 
     def edit_options(self, event: tk.Event):
         """
@@ -158,17 +126,13 @@ class LLMNode(NodeBase):
         self.frequency_penalty = float(result["frequency_penalty"])
 
     @retry_with_exponential_backoff
-    def _chat_completion(self, prompt: str, system_message: str, state: State) -> str:
+    def _chat_completion(self, prompt: str, state: State) -> str:
         """
         Simple wrapper around the OpenAI API to generate text.
         """
         messages = [
             *state.history,
-            # {"role": "system", "content": system_message},
-            # {"role": "user", "content": prompt},
         ]
-        if system_message or len(messages) == 0:
-            messages.append({"role": "system", "content": system_message})
         if prompt:
             messages.append({"role": "user", "content": prompt})
         completion = openai.ChatCompletion.create(
@@ -185,14 +149,13 @@ class LLMNode(NodeBase):
         return completion["choices"][0]["message"]["content"]  # type: ignore
 
     @retry_with_exponential_backoff
-    def _completion(self, prompt: str, system_message: str, state: State) -> str:
+    def _completion(self, prompt: str, state: State) -> str:
         """
         Simple wrapper around the OpenAI API to generate text.
         """
         # todo this history is really opinionated
         history = "\n".join(
             [
-                system_message,
                 *[
                     f"{message['role']}: {message['content']}"
                     for message in state.history
@@ -218,18 +181,16 @@ class LLMNode(NodeBase):
         Format the prompt and run the OpenAI API.
         """
         prompt = state.result
-        system_message = self.system_prompt.text.format(state=state)
         self.logger.info(f"Running LLMNode with prompt: {prompt}")
         if self.model in chat_models:
-            completion = self._chat_completion(prompt, system_message, state)
+            completion = self._chat_completion(prompt, state)
         else:
-            completion = self._completion(prompt, system_message, state)
+            completion = self._completion(prompt, state)
         self.logger.info(f"Result of LLMNode is {completion}")  # type: ignore
         return completion  # type: ignore
 
     def serialize(self):
         return super().serialize() | {
-            "system_prompt": self.system_prompt.serialize(),
             "model": self.model_var.get(),
         }
 
@@ -249,14 +210,10 @@ class LLMNode(NodeBase):
         # count the number of tokens
         enc = tiktoken.encoding_for_model(self.model)
         prompt_tokens = enc.encode(state.result.format(state=state))
-        system_prompt_tokens = enc.encode(self.system_prompt.text.format(state=state))
         max_completion_tokens = (
-            self.max_tokens - len(prompt_tokens) - len(system_prompt_tokens)
+            self.max_tokens - len(prompt_tokens)
         )
         prompt_cost = prompt_cost_1k[self.model] * len(prompt_tokens) / 1000
-        system_prompt_cost = (
-            prompt_cost_1k[self.model] * len(system_prompt_tokens) / 1000
-        )
         completion_cost = completion_cost_1k[self.model] * max_completion_tokens / 1000
-        total = prompt_cost + system_prompt_cost + completion_cost
+        total = prompt_cost + completion_cost
         return total
