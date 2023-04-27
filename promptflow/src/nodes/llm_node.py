@@ -18,8 +18,6 @@ import openai
 import os
 import enum
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
 
 class Model(enum.Enum):
     # manually add these as they become available
@@ -179,6 +177,7 @@ class LLMNode(NodeBase):
         """
         Format the prompt and run the OpenAI API.
         """
+        openai.api_key = os.getenv("OPENAI_API_KEY")
         prompt = state.result
         self.logger.info(f"Running LLMNode with prompt: {prompt}")
         if self.model in chat_models:
