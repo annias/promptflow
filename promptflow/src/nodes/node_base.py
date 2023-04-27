@@ -68,7 +68,7 @@ class NodeBase(Serializable, ABC):
         )
 
         self.delete_button = customtkinter.CTkButton(
-            self.canvas, text="x", command=self.delete, width=38,
+            self.canvas, text="x", command=lambda: self.delete(show_confirmation=True), width=38,
             corner_radius=4, border_width=2, border_color="black", 
         )
         self.delete_item = self.canvas.create_window(
@@ -222,10 +222,15 @@ class NodeBase(Serializable, ABC):
             "classname": self.__class__.__name__,
         }
 
-    def delete(self):
+    def delete(self, show_confirmation: bool = False):
         """
         Delete the node and all connectors attached to it.
         """
+        if show_confirmation:
+            if not tk.messagebox.askyesno(
+                "Delete Node", f"Are you sure you want to delete {self.label}?"
+            ):
+                return
         self.logger.info(f"Deleting node {self.label}")
         self.flowchart.remove_node(self)
         for item in self.items:
