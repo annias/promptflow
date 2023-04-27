@@ -25,6 +25,7 @@ from promptflow.src.command import (
 
 from promptflow.src.flowchart import Flowchart
 from promptflow.src.nodes.date_node import DateNode
+from promptflow.src.nodes.env_node import EnvNode, ManualEnvNode
 from promptflow.src.nodes.http_node import HttpNode
 from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.nodes.db_node import PGMLNode, GenerateNode, SelectNode
@@ -66,7 +67,7 @@ class App:
         customtkinter.set_appearance_mode("dark")
 
         self.command_manager = CommandManager()  # todo
-        
+
         self.zoom_level = 1.0
 
         self.loading_popup = self.show_loading_popup("Starting app...")
@@ -134,6 +135,16 @@ class App:
             label="Initialize - Run this subchart once",
             command=self.create_add_node_function(InitNode, "Initialize"),
         )
+        self.envvars_menu = tk.Menu(self.add_menu, tearoff=0)
+        self.envvars_menu.add_command(
+            label=".env - Load environment variables from .env file",
+            command=self.create_add_node_function(EnvNode, ".env"),
+        )
+        self.envvars_menu.add_command(
+            label="Manual - Manually set environment variables",
+            command=self.create_add_node_function(ManualEnvNode, "Manual"),
+        )
+        self.add_menu.add_cascade(label="Environment Variables", menu=self.envvars_menu)
         self.add_menu.add_command(
             label="Input - Pause for user input",
             command=self.create_add_node_function(InputNode, "Input"),
@@ -435,7 +446,6 @@ class App:
             # scale node
             for item in node.items:
                 self.canvas.scale(item, 0, 0, self.zoom_level, self.zoom_level)
-                
 
         return add_node
 

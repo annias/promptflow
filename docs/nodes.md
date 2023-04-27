@@ -13,6 +13,19 @@ The Init node is run once and only once at the beginning of the flowchart. It is
 
 The Start node is the beginning of your flowchart. It will *always* run first, and can be connected to any other node in your flowchart.
 
+(EnvVars)=
+## EnvVars
+
+The EnvVars node allows you to set environment variables.
+
+### EnvNode
+
+Loads a `.env` file. Double-click to set the path to the `.env` file.
+
+### ManualEnvNode
+
+Sets a single environment variable. Double-click to set the key and value.
+
 (Input)=
 ## Input
 
