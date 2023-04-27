@@ -1,3 +1,4 @@
+from abc import ABC
 from typing import Optional, TYPE_CHECKING
 from promptflow.src.db_interface.main import DBInterface, PgMLInterface
 from promptflow.src.dialogues.node_options import NodeOptions
@@ -50,7 +51,7 @@ class DBConnectionSingleton:
         print("connected")
 
 
-class DBNode(NodeBase):
+class DBNode(NodeBase, ABC):
     node_color = monokai.GREEN
 
     def __init__(

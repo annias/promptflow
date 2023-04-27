@@ -106,3 +106,25 @@ The DynamicWindowedMemory node saves the last `n` results of the [`History`](His
 ## Date
 
 Outputs the current date and time. Useful for injecting into a [`Prompt`](Prompt) node. Double-click the node to edit the date format.
+
+(Database)=
+## Database
+
+Connects to a database and runs a query. Double-click the node to edit the database connection parameters:
+
+![image](../screenshots/docs/db_options.png)
+
+(Select)=
+### Select
+
+The Select node selects a single row from the database. The query is `state.result`, so you can use the result of a previous node to select a row. 
+
+(PGML)=
+### PGML Support
+
+[PostgresML](https://postgresml.org/) is supported by PromptFlow. Currently, only the `generate` function is supported.
+
+(Generate)=
+#### Generate
+
+The Generate node uses a pgml model to complete a prompt. The prompt is `state.result`, so you can use the result of a previous node to select a row. `model` can be selected by double-clicking the node.
