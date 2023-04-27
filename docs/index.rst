@@ -44,3 +44,4 @@ Contents
 .. toctree::
 
    usage
+   nodes

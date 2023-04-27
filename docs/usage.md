@@ -1,4 +1,4 @@
-
+(Usage)=
 # Usage
 
 ## Creating a flowchart
@@ -7,25 +7,25 @@ When you first start the program, you'll see this screen:
 
 ![image](../screenshots/readme/blank.png)
 
-The `Init` node is run once and only once. Use it for any initialization code you need to run before your flowchart starts, such as connecting to Databasese or ingesting embeddings files.
+The [`Init`](Init) node is run once and only once. Use it for any initialization code you need to run before your flowchart starts, such as connecting to Databasese or ingesting embeddings files.
 
-The `Start` node is the beginning of your flowchart. It will *always* run first, and can be connected to any other node in your flowchart. 
+The [`Start`](Start) node is the beginning of your flowchart. It will *always* run first, and can be connected to any other node in your flowchart. 
 
 ### Creating a node
 
-To create a node, click the `Add` menu in the top left corner, and select the type of node you want to create. The node will be dropped into the flowchart. For example, let's add an `Input` node, which pauses the flowchart and waits for user input:
+To create a node, click the `Add` menu in the top left corner, and select the type of node you want to create. The node will be dropped into the flowchart. For example, let's add an [`Input`](Input) node, which pauses the flowchart and waits for user input:
 
 ![image](../screenshots/readme/input.png)
 
 Left-click and drag the input node to move it to a better spot.
 
-To add it to the flow, left-click the `+` button under the `Start` node, and then left-click the `Input` node. You should see a connection between the two nodes:
+To add it to the flow, left-click the `+` button under the [`Start`](Start) node, and then left-click the [`Input`](Input) node. You should see a connection between the two nodes:
 
 ![image](../screenshots/readme/connector.png)
 
 ### Running the flowchart
 
-To run the flowchart, press the `Run` button in the top left corner. You should see the `Init` node run, followed by the `Start` node. The flowchart will pause at the `Input` node, waiting for you to enter some text:
+To run the flowchart, press the `Run` button in the top left corner. You should see the [`Init`](Init) node run, followed by the [`Start`](Start) node. The flowchart will pause at the [`Input`](Input) node, waiting for you to enter some text:
 
 ![image](../screenshots/readme/run.png)
 
@@ -34,15 +34,16 @@ Enter some text, hit `Ok`, and the program should exit.
 Congratulations, you've created your first flowchart!
 
 
+(working-with-llms)=
 ## Working with LLMs
 
-To use an LLM, we'll introduce 3 nodes- the LLM, Prompt, and History Nodes. Let's make a chat with a caveman. First, build the following flowchart:
+To use an LLM, we'll introduce 3 nodes- the [`LLM`](LLM), [`Prompt`](Prompt), and [`History`](History) Nodes. Let's make a chat with a caveman. First, build the following flowchart:
 
 ![image](../screenshots/readme/caveman1.png)
 
 Note the cycle at the end of the chart. This will allow us to carry on our conversation with the caveman.
 
-Next, we need to give our AI a prompt to act as a caveman. Double click on the lower `Prompt` label on the Prompt node to open the prompt editor. Fill out the `Label` and `Prompt` as follows:
+Next, we need to give our AI a prompt to act as a caveman. Double click on the lower [`Prompt`](Prompt) label on the Prompt node to open the prompt editor. Fill out the `Label` and [`Prompt`](Prompt) as follows:
 
 ![image](../screenshots/readme/caveman2.png)
 
