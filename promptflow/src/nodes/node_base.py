@@ -56,7 +56,7 @@ class NodeBase(Serializable, ABC):
         # create the label
         self.center_x = center_x
         self.center_y = center_y
-        self.label_item = self.canvas.create_text(center_x, center_y, text=label)
+        self.label_item = self.canvas.create_text(center_x, center_y, text=label, fill="black")
         self.canvas.tag_bind(self.label_item, "<Double-Button-1>", self.edit_label)
 
         self.add_connector_button = customtkinter.CTkButton(
@@ -157,7 +157,7 @@ class NodeBase(Serializable, ABC):
         self.label = self.label_entry.get()
         self.label_entry.destroy()
         center_x, center_y = self.get_center()
-        self.label_item = self.canvas.create_text(center_x, center_y, text=self.label)
+        self.label_item = self.canvas.create_text(center_x, center_y, text=self.label, fill="black")
         self.items.append(self.label_item)
         self.canvas.tag_bind(self.label_item, "<Double-Button-1>", self.edit_label)
         self.bind_drag()
