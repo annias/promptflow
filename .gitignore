@@ -1,3 +1,5 @@
 .mypy_cache
+*.sw[a-z]
 .vscode
 __pycache__
+run_promptflow.sh

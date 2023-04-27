@@ -242,19 +242,19 @@ class App:
         # create the toolbar
         self.toolbar = customtkinter.CTkFrame(self.root)
         self.run_button = customtkinter.CTkButton(
-            self.toolbar, text="Run", command=self.run_flowchart
+            self.toolbar, text="Run", command=self.run_flowchart, border_width=2, border_color="black"
         )
         self.stop_button = customtkinter.CTkButton(
-            self.toolbar, text="Stop", command=self.stop_flowchart
+            self.toolbar, text="Stop", command=self.stop_flowchart, border_width=2, border_color="black"
         )
         self.serialize_button = customtkinter.CTkButton(
-            self.toolbar, text="Serialize", command=self.serialize_flowchart
+            self.toolbar, text="Serialize", command=self.serialize_flowchart, border_width=2, border_color="black"
         )
         self.screenshot_button = customtkinter.CTkButton(
-            self.toolbar, text="Screenshot", command=self.save_image
+            self.toolbar, text="Screenshot", command=self.save_image, border_width=2, border_color="black"
         )
         self.cost_button = customtkinter.CTkButton(
-            self.toolbar, text="Cost", command=self.cost_flowchart
+            self.toolbar, text="Cost", command=self.cost_flowchart, border_width=2, border_color="black"
         )
         self.toolbar_buttons = [
             self.run_button,

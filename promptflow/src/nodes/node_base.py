@@ -60,19 +60,19 @@ class NodeBase(Serializable, ABC):
         self.canvas.tag_bind(self.label_item, "<Double-Button-1>", self.edit_label)
 
         self.add_connector_button = customtkinter.CTkButton(
-            self.canvas, text="+", command=self.begin_add_connector, width=1,
-            corner_radius=0, border_width=2, border_color="black",
+            self.canvas, text="+", command=self.begin_add_connector, width=38,
+            corner_radius=4, border_width=2, border_color="black",
         )
         self.add_connector_item = self.canvas.create_window(
-            center_x, center_y + 70, window=self.add_connector_button
+            center_x + 23, center_y + 68, window=self.add_connector_button
         )
 
         self.delete_button = customtkinter.CTkButton(
-            self.canvas, text="X", command=self.delete, width=2,
-            corner_radius=0, border_width=2, border_color="black", 
+            self.canvas, text="x", command=self.delete, width=38,
+            corner_radius=4, border_width=2, border_color="black", 
         )
         self.delete_item = self.canvas.create_window(
-            center_x + 40, center_y - 20, window=self.delete_button
+            center_x - 23, center_y + 68, window=self.delete_button
         )
 
         self.items = [
