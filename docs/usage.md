@@ -7,9 +7,9 @@ When you first start the program, you'll see this screen:
 
 ![image](../screenshots/readme/blank.png)
 
-The [`Init`](Init) node is run once and only once. Use it for any initialization code you need to run before your flowchart starts, such as connecting to Databasese or ingesting embeddings files.
+The [`Init`](Init) node is run once and only once. Use it for any initialization code you need to run before your flowchart starts, such as connecting to Databases or ingesting embedding files.
 
-The [`Start`](Start) node is the beginning of your flowchart. It will *always* run first, and can be connected to any other node in your flowchart. 
+The [`Start`](Start) node is the beginning of your flowchart. It will *always* run first, and can be connected to any other node in your flowchart with a [`Connector`](Connector).
 
 ### Creating a node
 
@@ -19,7 +19,7 @@ To create a node, click the `Add` menu in the top left corner, and select the ty
 
 Left-click and drag the input node to move it to a better spot.
 
-To add it to the flow, left-click the `+` button under the [`Start`](Start) node, and then left-click the [`Input`](Input) node. You should see a connection between the two nodes:
+To add it to the flow, left-click the `+` button under the [`Start`](Start) node, and then left-click the [`Input`](Input) node. You should see a [`Connector`](Connector) between the two nodes:
 
 ![image](../screenshots/readme/connector.png)
 

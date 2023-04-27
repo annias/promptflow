@@ -1,6 +1,6 @@
 # Nodes
 
-Nodes are the primary building blocks of a Flowchart. They are the individual components that make up a flowchart. Nodes are connected by edges, and each node has a specific function.
+Nodes are the primary building blocks of a Flowchart. They are the individual components that make up a flowchart. Nodes are connected by [Connectors](Connector), and each node has a specific function.
 
 (Init)=
 ## Init

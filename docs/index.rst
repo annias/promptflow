@@ -45,3 +45,4 @@ Contents
 
    usage
    nodes
+   connectors
