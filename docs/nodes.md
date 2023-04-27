@@ -31,6 +31,8 @@ Outputs an f-string style formatted string. You can edit the prompt text by doub
 
 For a simple example of Prompt Node usage, see [Usage](working-with-llms).
 
+### Usage
+
 To inject the result of the previous node, use `{state.result}`. For example:
 
 ```text
@@ -98,3 +100,9 @@ The WindowedMemory node saves the last `n` results of the [`History`](History) n
 ### DynamicWindowedMemory
 
 The DynamicWindowedMemory node saves the last `n` results of the [`History`](History) node since a target string has appeared in the history. This is useful for LLMs, which have token limits. Double-click the node to edit the window size and target string.
+
+
+(Date)=
+## Date
+
+Outputs the current date and time. Useful for injecting into a [`Prompt`](Prompt) node. Double-click the node to edit the date format.
