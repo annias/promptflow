@@ -83,3 +83,18 @@ def main(state: State):
     import json
     return json.loads(state.result)["field"]
 ```
+
+(Memory)=
+## Memory
+
+The [`History`](History) node saves to an "infinite" memory, which isn't feasible for LLMs, which have token limits. The Memory node allows you to apply various memory strategies to the history. 
+
+(WindowedMemory)=
+### WindowedMemory
+
+The WindowedMemory node saves the last `n` results of the [`History`](History) node. This is useful for LLMs, which have token limits. Double-click the node to edit the window size.
+
+(DynamicWindowedMemory)=
+### DynamicWindowedMemory
+
+The DynamicWindowedMemory node saves the last `n` results of the [`History`](History) node since a target string has appeared in the history. This is useful for LLMs, which have token limits. Double-click the node to edit the window size and target string.
