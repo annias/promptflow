@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 class RandomNode(NodeBase):
     """
-    Injects a random number (0-100) into state
+    Injects a random number (min-max) into state
     """
 
     node_color = monokai.PINK
