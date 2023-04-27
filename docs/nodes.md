@@ -47,3 +47,39 @@ Connecting the following flowchart would allow the user to program any "personal
 Call to a Large Language Model. Currently restricted to OpenAI's API. Double-click to edit the LLM parameters.
 
 ![image](../screenshots/docs/llm_options.png)
+
+
+(Function)=
+## Function
+
+Run an arbitrary Python function. The default function signature is:
+
+```python
+def main(state: State):
+    return True
+```
+
+The signature of `State` is as follows:
+
+```python
+class State(Serializable):
+    """
+    Holds state for flowchart flow
+    Wraps a dict[str, str]
+    """
+
+    def __init__(self, **kwargs):
+        self.snapshot: dict[str, str] = kwargs.get("state", {})
+        self.history: list[dict[str, str]] = kwargs.get("history", [])
+        self.result: str = kwargs.get("result", "")
+```
+
+Where `snapshot` is a dictionary of all the results of previous nodes, `history` is a list of all the results of previous [`History`](History) nodes, and `result` is the result of the previous node.
+
+Right now, any `imports` need to go inside the `main` function. For example, lets create a JSON extractor, which gets a field from a JSON string:
+
+```python
+def main(state: State):
+    import json
+    return json.loads(state.result)["field"]
+```
