@@ -179,6 +179,7 @@ class Connector(Serializable):
             points[1] + (points[3] - points[1]) / 2,
             text=self.condition.label,
             tags="connector_label",
+            fill="black",
         )
         # draw filled box behind text
         filled_box = self.canvas.create_rectangle(
