@@ -50,7 +50,6 @@ from promptflow.src.nodes.embedding_node import (
 from promptflow.src.nodes.input_node import InputNode
 from promptflow.src.nodes.test_nodes import AssertNode, LoggingNode
 from promptflow.src.options import Options
-from promptflow.src.components.resizing_canvas import ResizingCanvas
 from promptflow.src.nodes.dummy_llm_node import DummyNode
 from promptflow.src.state import State
 from promptflow.src.themes import monokai
@@ -87,8 +86,8 @@ class App:
 
         # Build the core components
 
-        self.paned_window = tk.PanedWindow(self.root, orient=tk.HORIZONTAL)
-        self.canvas = ResizingCanvas(
+        self.paned_window = tk.PanedWindow(self.root, orient=tk.HORIZONTAL, sashwidth=5)
+        self.canvas = tk.Canvas(
             self.paned_window,
             width=options.width,
             height=options.height,
