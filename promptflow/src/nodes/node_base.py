@@ -56,20 +56,32 @@ class NodeBase(Serializable, ABC):
         # create the label
         self.center_x = center_x
         self.center_y = center_y
-        self.label_item = self.canvas.create_text(center_x, center_y, text=label, fill="black")
+        self.label_item = self.canvas.create_text(
+            center_x, center_y, text=label, fill="black"
+        )
         self.canvas.tag_bind(self.label_item, "<Double-Button-1>", self.edit_label)
 
         self.add_connector_button = customtkinter.CTkButton(
-            self.canvas, text="+", command=self.begin_add_connector, width=38,
-            corner_radius=4, border_width=2, border_color="black",
+            self.canvas,
+            text="+",
+            command=self.begin_add_connector,
+            width=38,
+            corner_radius=4,
+            border_width=2,
+            border_color="black",
         )
         self.add_connector_item = self.canvas.create_window(
             center_x + 23, center_y + 68, window=self.add_connector_button
         )
 
         self.delete_button = customtkinter.CTkButton(
-            self.canvas, text="x", command=lambda: self.delete(show_confirmation=True), width=38,
-            corner_radius=4, border_width=2, border_color="black", 
+            self.canvas,
+            text="x",
+            command=lambda: self.delete(show_confirmation=True),
+            width=38,
+            corner_radius=4,
+            border_width=2,
+            border_color="black",
         )
         self.delete_item = self.canvas.create_window(
             center_x - 23, center_y + 68, window=self.delete_button
@@ -157,7 +169,9 @@ class NodeBase(Serializable, ABC):
         self.label = self.label_entry.get()
         self.label_entry.destroy()
         center_x, center_y = self.get_center()
-        self.label_item = self.canvas.create_text(center_x, center_y, text=self.label, fill="black")
+        self.label_item = self.canvas.create_text(
+            center_x, center_y, text=self.label, fill="black"
+        )
         self.items.append(self.label_item)
         self.canvas.tag_bind(self.label_item, "<Double-Button-1>", self.edit_label)
         self.bind_drag()

@@ -23,13 +23,13 @@ class RandomNode(NodeBase):
         r = random.randint(self.min, self.max)
         return str(r)
 
-    def edit_options(self, event):  
+    def edit_options(self, event):
         self.option_popup = NodeOptions(
             self.canvas,
             {
                 "min": self.min,
                 "max": self.max,
-            }
+            },
         )
         self.canvas.wait_window(self.option_popup)
         result = self.option_popup.result
