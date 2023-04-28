@@ -331,6 +331,11 @@ class App:
         self.canvas.bind("<5>", self.handle_zoom)  # MacOS (wheel down)
         self.canvas.bind("<ButtonPress-2>", self.start_pan)  # Middle mouse button press
         self.canvas.bind("<B2-Motion>", self.pan)  # Middle mouse button drag
+        self.canvas.bind("<Button-1>", self.print_coords)  # Left mouse button click
+        
+    def print_coords(self, event):
+        """Print the coordinates of the mouse click"""
+        self.logger.debug(str((self.canvas.canvasx(event.x), self.canvas.canvasy(event.y))))
 
     @property
     def current_file(self) -> str:
