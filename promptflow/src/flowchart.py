@@ -281,14 +281,14 @@ class Flowchart:
         if node in self.nodes:
             self.nodes.remove(node)
         # remove all connectors connected to this node
-        for node in self.nodes:
-            for connector in node.connectors:
+        for other_node in self.nodes:
+            for connector in other_node.connectors:
                 if connector.node1 == node or connector.node2 == node:
                     connector.delete()
-                    if connector in node.input_connectors:
-                        node.input_connectors.remove(connector)
-                    if connector in node.output_connectors:
-                        node.output_connectors.remove(connector)
+                    if connector in other_node.input_connectors:
+                        other_node.input_connectors.remove(connector)
+                    if connector in other_node.output_connectors:
+                        other_node.output_connectors.remove(connector)
         for connector in self.connectors:
             if connector.node1 == node or connector.node2 == node:
                 connector.delete()
