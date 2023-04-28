@@ -144,6 +144,15 @@ class Flowchart:
         """
         Safely insert a connector into the flowchart
         """
+        # check for duplicate connectors
+        for other_connector in self.connectors:
+            if (
+                connector.node1 == other_connector.node1
+                and connector.node2 == other_connector.node2
+            ):
+                connector.delete()
+                self.logger.debug("Duplicate connector found, ignoring...")
+                return
         self.logger.debug(f"Adding connector {connector}")
         self.connectors.append(connector)
         self.selected_element = connector
