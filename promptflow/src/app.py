@@ -11,6 +11,7 @@ import customtkinter
 import tkinter.filedialog
 import tkinter.scrolledtext
 import tkinter.messagebox
+from PIL import Image, ImageTk
 import os
 from typing import Optional
 import zipfile
@@ -65,6 +66,9 @@ class App:
     def __init__(self, initial_state: State, options: Options):
         self.root = customtkinter.CTk()
         customtkinter.set_appearance_mode("dark")
+        ico = Image.open("promptflow/res/Logo_2.png")
+        photo = ImageTk.PhotoImage(ico)
+        self.root.wm_iconphoto(False, photo)
 
         self.command_manager = CommandManager()  # todo
 
