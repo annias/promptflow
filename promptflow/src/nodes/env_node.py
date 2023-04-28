@@ -55,6 +55,15 @@ class ManualEnvNode(NodeBase):
     key: str = ""
     val: str = ""
     options_popup: NodeOptions = None
+    
+    def __init__(
+        self,
+        *args,
+        **kwargs,
+    ):
+        super().__init__(*args, **kwargs)
+        self.key = kwargs.get("key", "")
+        self.val = kwargs.get("val", "")
 
     def run_subclass(self, state) -> str:
         os.environ[self.key] = self.val
