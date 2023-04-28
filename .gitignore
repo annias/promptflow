@@ -3,3 +3,4 @@
 .vscode
 __pycache__
 run_promptflow.sh
+*.egg-info

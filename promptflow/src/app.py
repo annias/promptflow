@@ -65,8 +65,11 @@ class App:
 
     def __init__(self, initial_state: State, options: Options):
         self.root = customtkinter.CTk()
+        self.root.title("PromptFlow")
         customtkinter.set_appearance_mode("dark")
-        ico = Image.open("promptflow/res/Logo_2.png")
+        ico_dir = os.path.dirname(__file__)
+        ico_path = os.path.join(ico_dir, "../res/Logo_2.png")
+        ico = Image.open(ico_path)
         photo = ImageTk.PhotoImage(ico)
         self.root.wm_iconphoto(False, photo)
 
