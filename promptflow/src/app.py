@@ -324,6 +324,7 @@ class App:
         self.root.bind("<F5>", lambda e: self.run_flowchart())
         self.root.bind("<Control-r>", lambda e: self.run_flowchart())
         self.root.bind("<Delete>", lambda e: self.delete_selected_element())
+        self.root.bind("<BackSpace>", lambda e: self.delete_selected_element())
         self.canvas.bind("<MouseWheel>", self.handle_zoom)  # Windows
         self.canvas.bind("<Button-4>", self.handle_zoom)  # Linux (wheel up)
         self.canvas.bind("<Button-5>", self.handle_zoom)  # Linux (wheel down)
