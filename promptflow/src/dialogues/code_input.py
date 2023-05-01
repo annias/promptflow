@@ -27,7 +27,7 @@ class CodeInput(TextInput):
     ):
         self.python_keywords = keyword.kwlist
         if text_data is None:
-            text_data = {"label": "Untitled", "text": ""}
+            text_data = {"label": "Untitled.py", "text": ""}
         super().__init__(parent, flowchart, text_data)
 
         # self.text_entry._text_color("Keyword", foreground=monokai.blue)

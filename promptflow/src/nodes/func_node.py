@@ -40,7 +40,7 @@ class FuncNode(NodeBase, ABC):
         super().__init__(flowchart, center_x, center_y, label, **kwargs)
         self.func = func
         if not self.func:
-            self.func = TextData("func", DEFAULT_FUNC_TEMPLATE, flowchart)
+            self.func = TextData("func.py", DEFAULT_FUNC_TEMPLATE, flowchart)
         if isinstance(func, dict):
             self.func = TextData.deserialize(func, self.flowchart)
         if self.func.text == "":

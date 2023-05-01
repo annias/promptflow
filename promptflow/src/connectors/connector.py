@@ -17,7 +17,7 @@ DEFAULT_COND_TEMPLATE = """def main(state):
 \treturn True
 """
 
-DEFAULT_COND_NAME = "Untitled"
+DEFAULT_COND_NAME = "Untitled.py"
 
 
 class Connector(Serializable):
