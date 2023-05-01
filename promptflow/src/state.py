@@ -14,7 +14,7 @@ class State(Serializable):
     """
 
     def __init__(self, **kwargs):
-        self.snapshot: dict[str, str] = kwargs.get("state", {})
+        self.snapshot: dict[str, str] = kwargs.get("snapshot", {})
         self.history: list[dict[str, str]] = kwargs.get("history", [])
         self.result: str = kwargs.get("result", "")
 
@@ -30,7 +30,7 @@ class State(Serializable):
         Create a new State object with a copy of the snapshot and history
         """
         return State(
-            state=self.snapshot.copy(),
+            snapshot=self.snapshot.copy(),
             history=self.history.copy(),
             result=self.result,
         )
