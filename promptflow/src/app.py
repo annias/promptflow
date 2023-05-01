@@ -63,7 +63,7 @@ class App:
     """
 
     def __init__(self, initial_state: State, options: Options):
-        self.root = customtkinter.CTk()
+        self.root = customtkinter.CTk(className="PromptFlow")
         self.root.title("PromptFlow")
         customtkinter.set_appearance_mode("dark")
         ico_dir = os.path.dirname(__file__)
