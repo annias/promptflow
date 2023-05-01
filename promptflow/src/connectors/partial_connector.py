@@ -46,10 +46,11 @@ class PartialConnector:
         try:
             for node in self.flowchart.nodes:
                 if node.item == self.canvas.find_overlapping(x, y, x, y)[0]:
-                    self.flowchart.add_connector(
-                        Connector(self.canvas, self.node, node)
-                    )
-                    break
+                    if not self.check_exists(node):
+                        self.flowchart.add_connector(
+                            Connector(self.canvas, self.node, node)
+                        )
+                        break
         except IndexError:
             self.logger.debug("No node found at this position")
         self.canvas.unbind("<Button-1>")
@@ -57,3 +58,14 @@ class PartialConnector:
     def delete(self, _: Optional[tk.Event]):
         """Delete the line"""
         self.canvas.delete(self.item)
+
+    def check_exists(self, node: NodeBase) -> bool:
+        """
+        Check if a connector already exists between source and given
+        nodes
+        """
+        for connector in self.flowchart.connectors:
+            if connector.node1 == self.node and connector.node2 == node:
+                self.logger.debug("Connector already exists")
+                return True
+        return False
