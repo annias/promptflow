@@ -55,7 +55,7 @@ class ManualEnvNode(NodeBase):
     key: str = ""
     val: str = ""
     options_popup: NodeOptions = None
-    
+
     def __init__(
         self,
         *args,

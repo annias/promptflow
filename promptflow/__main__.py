@@ -4,6 +4,7 @@ from promptflow.src.app import App
 from promptflow.src.state import State
 from promptflow.src.options import Options
 
+
 def main():
     state = State()
 
@@ -15,6 +16,7 @@ def main():
     app = App(initial_state=state, options=options)
 
     app.run()
+
 
 if __name__ == "__main__":
     main()

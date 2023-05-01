@@ -28,7 +28,7 @@ class AssertNode(NodeBase):
         center_y: float,
         label: str,
         assertion: Optional[TextData] = None,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(flowchart, center_x, center_y, label, **kwargs)
         if assertion is None:
@@ -66,7 +66,7 @@ class LoggingNode(NodeBase):
         center_y: float,
         label: str,
         debug_str: Optional[TextData] = None,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(flowchart, center_x, center_y, label, **kwargs)
         if debug_str is None:
