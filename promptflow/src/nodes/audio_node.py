@@ -11,7 +11,9 @@ import elevenlabs
 import numpy as np
 import sounddevice as sd
 from promptflow.src.dialogues.node_options import NodeOptions
+from promptflow.src.dialogues.text_input import TextInput
 from promptflow.src.nodes.node_base import NodeBase
+from promptflow.src.text_data import TextData
 
 key = os.getenv("ELEVENLABS_API_KEY")
 if key:
@@ -136,6 +138,38 @@ class WhispersNode(AudioInputNode):
     Uses OpenAI's Whispers API to transcribe audio
     """
 
+    prompt: TextData
+    options_popup: Optional[NodeOptions] = None
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.prompt = kwargs.get(
+            "prompt", TextData("Whisper Prompt", "", self.flowchart)
+        )
+        self.prompt_item = self.canvas.create_text(
+            self.center_x, self.center_y + 20, text=self.prompt.label, fill="black"
+        )
+        self.items.extend([self.prompt_item])
+        self.canvas.tag_bind(self.prompt_item, "<Double-Button-1>", self.edit_options)
+        self.text_window: Optional[TextInput] = None
+        self.bind_drag()
+        self.bind_mouseover()
+
+    def edit_options(self, event):
+        self.text_window = TextInput(self.canvas, self.flowchart, self.prompt)
+        self.text_window.set_callback(self.save_prompt)
+
+    def save_prompt(self):
+        """
+        Write the prompt to the canvas.
+        """
+        if self.text_window is None:
+            self.logger.warning("No text window to save")
+            return
+        self.prompt = self.text_window.get_text()
+        self.canvas.itemconfig(self.prompt_item, text=self.prompt.label)
+        self.text_window.destroy()
+
     def run_subclass(self, state) -> str:
         super().run_subclass(state)
         transcript = openai.Audio.translate(
@@ -150,9 +184,16 @@ class WhispersNode(AudioInputNode):
         # get length of file in minutes
         with wave.open(self.audio_input_interface.filename, "rb") as wav_file:
             sample_rate = wav_file.getframerate()
-            audio_data = np.frombuffer(wav_file.readframes(wav_file.getnframes()), dtype="int32")
+            audio_data = np.frombuffer(
+                wav_file.readframes(wav_file.getnframes()), dtype="int32"
+            )
             duration = len(audio_data) / sample_rate
             return duration / 60 * price_per_minute
+
+    def serialize(self):
+        return super().serialize() | {
+            "prompt": self.prompt.serialize(),
+        }
 
 
 class ElevenLabsNode(AudioOutputNode):
