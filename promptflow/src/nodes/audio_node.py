@@ -125,6 +125,19 @@ class WhispersNode(AudioInputNode):
             "whisper-1", open(self.audio_input_interface.filename, "rb")
         )
         return transcript["text"]
+    
+    def cost(self, state):
+        if not self.audio_input_interface:
+            return 0
+        price_per_minute = 0.006
+        # get length of file in minutes
+        with wave.open(self.audio_input_interface.filename, "rb") as wf:
+            sample_rate = wf.getframerate()
+            audio_data = np.frombuffer(
+                wf.readframes(wf.getnframes()), dtype="int32"
+            )
+            duration = len(audio_data) / sample_rate
+            return duration / 60 * price_per_minute
 
 
 class ElevenLabsNode(AudioOutputNode):
