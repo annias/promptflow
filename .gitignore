@@ -1,4 +1,5 @@
 .mypy_cache
+*.wav
 *.pyc
 *.sw[a-z]
 .vscode
