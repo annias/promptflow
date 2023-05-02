@@ -194,3 +194,7 @@ class ElevenLabsNode(AudioOutputNode):
             "voice": self.voice,
             "model": self.model,
         }
+
+    def cost(self, state):
+        # overage is $0.30 per 1000 characters
+        return 0.30 * len(state.result) / 1000
