@@ -62,10 +62,11 @@ class AudioInputInterface(customtkinter.CTkToplevel):
         if self.recording:
             duration = 1  # Record in 1-second chunks
             sample_rate = 44100
+            device_info = sd.query_devices(sd.default.device)
             recording = sd.rec(
                 int(duration * sample_rate),
                 samplerate=sample_rate,
-                channels=2,
+                channels=device_info["max_input_channels"] // 32,
                 dtype="int16",
                 blocking=True,
             )
