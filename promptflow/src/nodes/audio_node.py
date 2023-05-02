@@ -124,6 +124,11 @@ class WhispersNode(AudioInputNode):
 class ElevenLabsNode(AudioOutputNode):
     voice: str = "Bella"
     model: str = "eleven_monolingual_v1"
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.voice = kwargs.get("voice", self.voice)
+        self.model = kwargs.get("model", self.model)
 
     def run_subclass(self, state) -> str:
         audio = elevenlabs.generate(
@@ -146,3 +151,9 @@ class ElevenLabsNode(AudioOutputNode):
             return
         self.voice = self.options_popup.result["Voice"]
         self.model = self.options_popup.result["Model"]
+        
+    def serialize(self):
+        return super().serialize() | {
+            "voice": self.voice,
+            "model": self.model,
+        }
