@@ -1,15 +1,19 @@
 from abc import ABC
 from typing import Optional
+import wave
 import customtkinter
 import openai
-import wave
+import elevenlabs
 import numpy as np
 import sounddevice as sd
-from promptflow.src.flowchart import Flowchart
+from promptflow.src.dialogues.node_options import NodeOptions
 from promptflow.src.nodes.node_base import NodeBase
 
 
 class AudioInputInterface(customtkinter.CTkToplevel):
+    """
+    Popup window for recording audio
+    """
     def __init__(self, master):
         super().__init__(master)
         self.title("Audio Input")
@@ -31,6 +35,9 @@ class AudioInputInterface(customtkinter.CTkToplevel):
         self.playback_button.pack()
 
     def start(self):
+        """
+        Start recording audio
+        """
         if not self.recording:
             self.recording = True
             self.audio_data = []
@@ -38,6 +45,9 @@ class AudioInputInterface(customtkinter.CTkToplevel):
             self.record()
 
     def record(self):
+        """
+        Record audio in 1-second chunks
+        """
         if self.recording:
             duration = 1  # Record in 1-second chunks
             sample_rate = 44100
@@ -55,6 +65,9 @@ class AudioInputInterface(customtkinter.CTkToplevel):
             self.master.after(1, self.record)
 
     def stop(self):
+        """
+        Finish recording audio and save to file
+        """
         if self.recording:
             self.recording = False
             self.start_button.configure(text="Start")
@@ -68,6 +81,9 @@ class AudioInputInterface(customtkinter.CTkToplevel):
                 wf.writeframes(np.concatenate(self.audio_data).tobytes())
 
     def playback(self):
+        """
+        Play back the audio file
+        """
         if not self.recording:
             with wave.open(self.filename, "rb") as wf:
                 sample_rate = wf.getframerate()
@@ -93,7 +109,7 @@ class AudioInputNode(AudioNode, ABC):
 
 
 class AudioOutputNode(AudioNode, ABC):
-    pass
+    options_popup: Optional[NodeOptions] = None
 
 
 class WhispersNode(AudioInputNode):
@@ -103,3 +119,30 @@ class WhispersNode(AudioInputNode):
             "whisper-1", open(self.audio_input_interface.filename, "rb")
         )
         return transcript["text"]
+
+
+class ElevenLabsNode(AudioOutputNode):
+    voice: str = "Bella"
+    model: str = "eleven_monolingual_v1"
+
+    def run_subclass(self, state) -> str:
+        audio = elevenlabs.generate(
+            text=state.result,
+            voice="Bella",
+            model="eleven_monolingual_v1"
+        )
+        elevenlabs.play(audio)
+        
+    def edit_options(self, event):
+        self.options_popup = NodeOptions(
+            self.canvas,
+            {
+                "Voice": self.voice,
+                "Model": self.model,
+            }
+        )
+        self.canvas.wait_window(self.options_popup)
+        if self.options_popup.cancelled:
+            return
+        self.voice = self.options_popup.result["Voice"]
+        self.model = self.options_popup.result["Model"]

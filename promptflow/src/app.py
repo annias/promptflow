@@ -25,7 +25,7 @@ from promptflow.src.command import (
 )
 
 from promptflow.src.flowchart import Flowchart
-from promptflow.src.nodes.audio_node import WhispersNode
+from promptflow.src.nodes.audio_node import ElevenLabsNode, WhispersNode
 from promptflow.src.nodes.date_node import DateNode
 from promptflow.src.nodes.env_node import EnvNode, ManualEnvNode
 from promptflow.src.nodes.http_node import HttpNode
@@ -257,6 +257,10 @@ class App:
         self.audio_menu.add_command(
             label="Whisper Audio Input - Record audio",
             command=self.create_add_node_function(WhispersNode, "Whisper Audio Input"),
+        )
+        self.audio_menu.add_command(
+            label="ElevenLabs Audio Output - Text-to-speech",
+            command=self.create_add_node_function(ElevenLabsNode, "ElevenLabs Audio Output"),
         )
         self.add_menu.add_cascade(label="Audio", menu=self.audio_menu)
 
