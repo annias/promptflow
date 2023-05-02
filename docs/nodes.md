@@ -206,3 +206,14 @@ Assert a Python expression. Double-click the node to edit the expression.
 ### Logging
 
 Logs the output at a certain step. Useful for debugging. Double-click the node to edit the message. The string is a Python f-string, similar to [`Prompt`](Prompt).
+
+(Audio)=
+## Audio
+
+### Whisper Speech-to-Text
+
+Uses [Whisper](https://platform.openai.com/docs/guides/speech-to-text) to convert speech to text. Uses the OpenAI API. Simmilar to the [`Input`](Input) node.
+
+### ElevenLabs Text-to-Speech
+
+Uses [ElevenLabs](https://beta.elevenlabs.io/) to convert text to speech. Uses the ElevenLabs API.
