@@ -51,8 +51,9 @@ class FuncNode(NodeBase, ABC):
             center_x, center_y + 20, text=self.functext, fill="black"
         )
         self.items.append(self.func_item)
-        self.canvas.tag_bind(self.func_item, "<Double-Button-1>", self.edit_func)
+        self.canvas.tag_bind(self.func_item, "<Double-Button-1>", self.edit_options)
         self.bind_drag()
+        self.bind_mouseover()
         self.text_window: Optional[CodeInput] = None
 
     def run_subclass(self, state: State):
@@ -86,7 +87,7 @@ class FuncNode(NodeBase, ABC):
         node.func = TextData(data["func"]["label"], data["func"]["text"], flowchart)
         return node
 
-    def edit_func(self, _: tk.Event):
+    def edit_options(self, _: tk.Event):
         """Start editing the function."""
         self.text_window = CodeInput(self.canvas, self.flowchart, self.func)
         self.text_window.set_callback(self.save_func)

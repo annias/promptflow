@@ -95,6 +95,7 @@ class NodeBase(Serializable, ABC):
         ]
 
         self.bind_drag()
+        self.bind_mouseover()
         self.canvas.tag_bind(self.item, "<Double-Button-1>", self.edit_options)
 
         self.buttons = [self.delete_button, self.add_connector_button]
@@ -146,6 +147,37 @@ class NodeBase(Serializable, ABC):
         ) / 2 + offset_y
         return center_x, center_y
 
+    def bind_mouseover(self):
+        """
+        Binds the mouseover events to all the node's items
+        """
+        self.canvas.tag_bind(self.item, "<Enter>", self.on_mouseover)
+        self.canvas.tag_bind(self.item, "<Leave>", self.on_mouseleave)
+        for item in self.items:
+            self.canvas.tag_bind(item, "<Enter>", self.on_mouseover)
+            self.canvas.tag_bind(item, "<Leave>", self.on_mouseleave)
+
+    def on_mouseover(self, _: tk.Event):
+        """
+        Darken the color of the node when the mouse is over it.
+        """
+        shade = 0.2
+        cur_tuple = self.canvas.itemcget(self.item, "fill")
+        cur_tuple = tuple(int(cur_tuple[i : i + 2], 16) for i in (1, 3, 5))
+        color = "#" + "".join(
+            [hex(int(cur_tuple[i] * (1 - shade)))[2:] for i in range(3)]
+        )
+        self.canvas.itemconfig(self.item, fill=color)
+        # make cursor a hand
+        self.canvas.configure(cursor="hand2")
+
+    def on_mouseleave(self, _: tk.Event):
+        """
+        Restore the color of the node when the mouse leaves it.
+        """
+        self.canvas.itemconfig(self.item, fill=self.node_color)
+        self.canvas.configure(cursor="arrow")
+
     def edit_label(self, _: tk.Event):
         """
         Start editing the label of the node.
@@ -175,6 +207,7 @@ class NodeBase(Serializable, ABC):
         self.items.append(self.label_item)
         self.canvas.tag_bind(self.label_item, "<Double-Button-1>", self.edit_label)
         self.bind_drag()
+        self.bind_mouseover()
 
     def begin_add_connector(self):
         """

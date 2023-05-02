@@ -84,6 +84,7 @@ class LLMNode(NodeBase):
         self.canvas.tag_bind(self.item, "<Double-Button-1>", self.edit_options)
         self.canvas.update()
         self.bind_drag()
+        self.bind_mouseover()
         self.text_window: Optional[TextInput] = None
         self.options_popup: Optional[NodeOptions] = None
 

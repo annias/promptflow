@@ -56,6 +56,7 @@ class HistoryNode(NodeBase):
         )
         self.items.append(self.role_item)
         self.bind_drag()
+        self.bind_mouseover()
         self.canvas.tag_bind(self.role_item, "<Double-Button-1>", self.edit_options)
         self.options_popup: Optional[NodeOptions] = None
 

@@ -260,7 +260,9 @@ class App:
         )
         self.audio_menu.add_command(
             label="ElevenLabs Audio Output - Text-to-speech",
-            command=self.create_add_node_function(ElevenLabsNode, "ElevenLabs Audio Output"),
+            command=self.create_add_node_function(
+                ElevenLabsNode, "ElevenLabs Audio Output"
+            ),
         )
         self.add_menu.add_cascade(label="Audio", menu=self.audio_menu)
 

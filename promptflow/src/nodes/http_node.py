@@ -59,7 +59,11 @@ class HttpNode(NodeBase):
             fill="black",
         )
         self.items.append(self.request_type_item)
+        self.canvas.tag_bind(
+            self.request_type_item, "<Double-Button-1>", self.edit_options
+        )
         self.bind_drag()
+        self.bind_mouseover()
 
     def run_subclass(self, state: State) -> str:
         """

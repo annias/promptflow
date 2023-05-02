@@ -31,6 +31,8 @@ class RegexNode(NodeBase):
         )
         self.items.append(self.regex_item)
         self.bind_drag()
+        self.bind_mouseover()
+
         self.options_popup = None
 
     def run_subclass(self, state) -> str:
@@ -72,7 +74,10 @@ class TagNode(NodeBase):
             fill="black",
         )
         self.items.append(self.tags_item)
+        self.canvas.tag_bind(self.tags_item, "<Double-Button-1>", self.edit_options)
         self.bind_drag()
+        self.bind_mouseover()
+
         self.options_popup = None
 
     def run_subclass(self, state) -> str:

@@ -19,6 +19,7 @@ class AudioInputInterface(customtkinter.CTkToplevel):
     """
     Popup window for recording audio
     """
+
     def __init__(self, master):
         super().__init__(master)
         self.title("Audio Input")
@@ -129,7 +130,7 @@ class WhispersNode(AudioInputNode):
 class ElevenLabsNode(AudioOutputNode):
     voice: str = "Bella"
     model: str = "eleven_monolingual_v1"
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.voice = kwargs.get("voice", self.voice)
@@ -137,27 +138,25 @@ class ElevenLabsNode(AudioOutputNode):
 
     def run_subclass(self, state) -> str:
         audio = elevenlabs.generate(
-            text=state.result,
-            voice="Bella",
-            model="eleven_monolingual_v1"
+            text=state.result, voice="Bella", model="eleven_monolingual_v1"
         )
         elevenlabs.play(audio)
         return state.result
-        
+
     def edit_options(self, event):
         self.options_popup = NodeOptions(
             self.canvas,
             {
                 "Voice": self.voice,
                 "Model": self.model,
-            }
+            },
         )
         self.canvas.wait_window(self.options_popup)
         if self.options_popup.cancelled:
             return
         self.voice = self.options_popup.result["Voice"]
         self.model = self.options_popup.result["Model"]
-        
+
     def serialize(self):
         return super().serialize() | {
             "voice": self.voice,

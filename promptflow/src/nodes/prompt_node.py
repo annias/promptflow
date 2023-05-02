@@ -46,10 +46,11 @@ class PromptNode(NodeBase):
             center_x, center_y + 20, text=self.prompt.label, fill="black"
         )
         self.items.extend([self.prompt_item])
-        self.canvas.tag_bind(self.prompt_item, "<Double-Button-1>", self.edit_prompt)
+        self.canvas.tag_bind(self.prompt_item, "<Double-Button-1>", self.edit_options)
 
         self.text_window: Optional[TextInput] = None
         self.bind_drag()
+        self.bind_mouseover()
 
     def run_subclass(self, state: State) -> str:
         """
@@ -59,7 +60,7 @@ class PromptNode(NodeBase):
         state.result = prompt
         return prompt
 
-    def edit_prompt(self, _: tk.Event):
+    def edit_options(self, _: tk.Event):
         """
         Create a text input window to edit the prompt.
         """
