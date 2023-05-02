@@ -1,3 +1,6 @@
+"""
+Handles all audio-related nodes
+"""
 from abc import ABC
 import os
 from typing import Optional
@@ -100,10 +103,16 @@ class AudioInputInterface(customtkinter.CTkToplevel):
 
 
 class AudioNode(NodeBase, ABC):
-    pass
+    """
+    Base class for handling audio
+    """
 
 
 class AudioInputNode(AudioNode, ABC):
+    """
+    Node for recording audio
+    """
+
     audio_input_interface: Optional[AudioInputInterface] = None
     data: Optional[list[float]] = None
 
@@ -115,32 +124,42 @@ class AudioInputNode(AudioNode, ABC):
 
 
 class AudioOutputNode(AudioNode, ABC):
+    """
+    Node that plays back audio in some way
+    """
+
     options_popup: Optional[NodeOptions] = None
 
 
 class WhispersNode(AudioInputNode):
+    """
+    Uses OpenAI's Whispers API to transcribe audio
+    """
+
     def run_subclass(self, state) -> str:
         super().run_subclass(state)
         transcript = openai.Audio.translate(
             "whisper-1", open(self.audio_input_interface.filename, "rb")
         )
         return transcript["text"]
-    
+
     def cost(self, state):
         if not self.audio_input_interface:
             return 0
         price_per_minute = 0.006
         # get length of file in minutes
-        with wave.open(self.audio_input_interface.filename, "rb") as wf:
-            sample_rate = wf.getframerate()
-            audio_data = np.frombuffer(
-                wf.readframes(wf.getnframes()), dtype="int32"
-            )
+        with wave.open(self.audio_input_interface.filename, "rb") as wav_file:
+            sample_rate = wav_file.getframerate()
+            audio_data = np.frombuffer(wav_file.readframes(wav_file.getnframes()), dtype="int32")
             duration = len(audio_data) / sample_rate
             return duration / 60 * price_per_minute
 
 
 class ElevenLabsNode(AudioOutputNode):
+    """
+    Uses ElevenLabs API to generate realistic speech
+    """
+
     voice: str = "Bella"
     model: str = "eleven_monolingual_v1"
 
