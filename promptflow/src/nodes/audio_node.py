@@ -1,4 +1,5 @@
 from abc import ABC
+import os
 from typing import Optional
 import wave
 import customtkinter
@@ -8,6 +9,10 @@ import numpy as np
 import sounddevice as sd
 from promptflow.src.dialogues.node_options import NodeOptions
 from promptflow.src.nodes.node_base import NodeBase
+
+key = os.getenv("ELEVENLABS_API_KEY")
+if key:
+    elevenlabs.set_api_key(key)
 
 
 class AudioInputInterface(customtkinter.CTkToplevel):
