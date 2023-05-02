@@ -137,6 +137,7 @@ class ElevenLabsNode(AudioOutputNode):
             model="eleven_monolingual_v1"
         )
         elevenlabs.play(audio)
+        return state.result
         
     def edit_options(self, event):
         self.options_popup = NodeOptions(
