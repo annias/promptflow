@@ -44,6 +44,11 @@ class AudioInputInterface(customtkinter.CTkToplevel):
             self, text="Playback", command=self.playback
         )
         self.playback_button.pack(pady=10, padx=10)
+        
+        self.continue_button = customtkinter.CTkButton(
+            self, text="Continue", command=self.destroy
+        )
+        self.continue_button.pack(pady=10, padx=10)
 
     def start(self):
         """
