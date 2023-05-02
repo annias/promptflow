@@ -65,7 +65,7 @@ class HttpNode(NodeBase):
         self.bind_drag()
         self.bind_mouseover()
 
-    def run_subclass(self, state: State) -> str:
+    def run_subclass(self, state: State, console) -> str:
         """
         Sends a http request
         """

@@ -60,7 +60,7 @@ class HistoryNode(NodeBase):
         self.canvas.tag_bind(self.role_item, "<Double-Button-1>", self.edit_options)
         self.options_popup: Optional[NodeOptions] = None
 
-    def run_subclass(self, state: State) -> str:
+    def run_subclass(self, state: State, console) -> str:
         """
         Injects date into state
         """

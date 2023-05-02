@@ -141,12 +141,12 @@ class PGMLNode(DBNode):
 
 
 class SelectNode(DBNode):
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console) -> str:
         select = self.interface.interface.select(state.result)[0][0]
         return select
 
 
 class GenerateNode(PGMLNode):
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console) -> str:
         gen = self.interface.interface.generate(self.model, state.result)[0][0]
         return gen

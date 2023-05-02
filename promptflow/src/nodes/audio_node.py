@@ -44,7 +44,7 @@ class AudioInputInterface(customtkinter.CTkToplevel):
             self, text="Playback", command=self.playback
         )
         self.playback_button.pack(pady=10, padx=10)
-        
+
         self.continue_button = customtkinter.CTkButton(
             self, text="Continue", command=self.destroy
         )
@@ -124,7 +124,7 @@ class AudioInputNode(AudioNode, ABC):
     audio_input_interface: Optional[AudioInputInterface] = None
     data: Optional[list[float]] = None
 
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console) -> str:
         # show audio input interface
         self.audio_input_interface = AudioInputInterface(self.flowchart.canvas)
         self.canvas.wait_window(self.audio_input_interface)
@@ -176,8 +176,8 @@ class WhispersNode(AudioInputNode):
         self.canvas.itemconfig(self.prompt_item, text=self.prompt.label)
         self.text_window.destroy()
 
-    def run_subclass(self, state) -> str:
-        super().run_subclass(state)
+    def run_subclass(self, state, console) -> str:
+        super().run_subclass(state, console)
         transcript = openai.Audio.translate(
             "whisper-1", open(self.audio_input_interface.filename, "rb")
         )
@@ -215,7 +215,7 @@ class ElevenLabsNode(AudioOutputNode):
         self.voice = kwargs.get("voice", self.voice)
         self.model = kwargs.get("model", self.model)
 
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console) -> str:
         audio = elevenlabs.generate(
             text=state.result, voice="Bella", model="eleven_monolingual_v1"
         )

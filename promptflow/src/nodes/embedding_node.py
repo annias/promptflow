@@ -106,7 +106,7 @@ class EmbeddingInNode(EmbeddingNode):
     Takes data from a node and puts it into an hnswlib index
     """
 
-    def run_subclass(self, state: State) -> str:
+    def run_subclass(self, state: State, console) -> str:
         new_id = len(self.collection.content_index)
         self.collection.content_index[new_id] = state.result
         self.collection.index.add_items(
@@ -167,7 +167,7 @@ class EmbeddingQueryNode(EmbeddingNode):
         print("query time", time.process_time() - st)
         return output
 
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console) -> str:
         results = self.query(
             query_embeddings=self.embeddings(state.result),
             n_results=self.n_results,
@@ -232,7 +232,7 @@ class EmbeddingsIngestNode(EmbeddingNode):
         self.options_popup = None
         self.rows = kwargs.get("rows", [])
 
-    def run_subclass(self, state: State) -> str:
+    def run_subclass(self, state: State, console) -> str:
         self.collection.index.load_index(self.filename)
         with open(self.label_file, "r") as f:
             csv_reader = csv.DictReader(f, fieldnames=self.rows)

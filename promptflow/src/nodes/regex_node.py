@@ -35,7 +35,7 @@ class RegexNode(NodeBase):
 
         self.options_popup = None
 
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console) -> str:
         """
         Runs the regex on the state
         """
@@ -80,7 +80,7 @@ class TagNode(NodeBase):
 
         self.options_popup = None
 
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console) -> str:
         """
         Extracts the text in-between the start and end tags from the state
         """

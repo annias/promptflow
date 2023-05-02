@@ -36,7 +36,7 @@ class AssertNode(NodeBase):
         self.assertion = assertion
         self.options_popup: Optional[NodeOptions] = None
 
-    def run_subclass(self, state: State) -> str:
+    def run_subclass(self, state: State, console) -> str:
         assert eval(self.assertion.text, globals(), state.snapshot), "Assertion failed"
         return state.result
 
@@ -74,7 +74,7 @@ class LoggingNode(NodeBase):
         self.debug_str = debug_str
         self.canvas.tag_bind(self.item, "<Double-Button-1>", self.edit_string)
 
-    def run_subclass(self, state: State) -> str:
+    def run_subclass(self, state: State, console) -> str:
         debug_str = self.debug_str.text.format(state=state)
         self.logger.info(debug_str)
         return state.result  # return the result of the previous node

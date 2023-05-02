@@ -26,7 +26,7 @@ class EnvNode(NodeBase):
         super().__init__(*args, **kwargs)
         self.filename = kwargs.get("filename", ".env")
 
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console) -> str:
         load_dotenv(self.filename)
 
     def edit_options(self, event):
@@ -65,7 +65,7 @@ class ManualEnvNode(NodeBase):
         self.key = kwargs.get("key", "")
         self.val = kwargs.get("val", "")
 
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console) -> str:
         os.environ[self.key] = self.val
         return state.result
 

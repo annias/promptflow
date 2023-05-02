@@ -11,7 +11,7 @@ class InputNode(NodeBase):
     Node that prompts the user for input
     """
 
-    def run_subclass(self, state):
+    def run_subclass(self, state, console):
         return tkinter.simpledialog.askstring(
             self.label, "Enter a value for this input:"
         )

@@ -245,18 +245,18 @@ class NodeBase(Serializable, ABC):
         """
 
     @abstractmethod
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console: tk.scrolledtext.ScrolledText) -> str:
         """
         Code that will be run when the node is executed.
         """
 
-    def run_node(self, state: State) -> str:
+    def run_node(self, state: State, console: tk.scrolledtext.ScrolledText) -> str:
         """
         Run the node and all nodes connected to it
         Handles setting the snapshot and returning the output.
         """
         state.snapshot[self.label] = state.snapshot.get(self.label, "")
-        output: str = self.run_subclass(state)
+        output: str = self.run_subclass(state, console)
         state.snapshot[self.label] = output
         return output
 

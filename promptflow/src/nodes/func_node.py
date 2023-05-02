@@ -56,7 +56,7 @@ class FuncNode(NodeBase, ABC):
         self.bind_mouseover()
         self.text_window: Optional[CodeInput] = None
 
-    def run_subclass(self, state: State):
+    def run_subclass(self, state: State, console):
         """
         Evaluate the Python function and return the result.
         """

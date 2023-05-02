@@ -19,7 +19,7 @@ class RandomNode(NodeBase):
     max: int = 100
     option_popup: NodeOptions = None
 
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console) -> str:
         r = random.randint(self.min, self.max)
         return str(r)
 

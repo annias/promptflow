@@ -44,7 +44,7 @@ class MemoryNode(NodeBase, ABC):
         state.history = state.history
         return state.history
 
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console) -> str:
         history_string = "\n".join(
             [
                 *[

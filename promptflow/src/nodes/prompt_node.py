@@ -52,7 +52,7 @@ class PromptNode(NodeBase):
         self.bind_drag()
         self.bind_mouseover()
 
-    def run_subclass(self, state: State) -> str:
+    def run_subclass(self, state: State, console) -> str:
         """
         Formats TextData with state data
         """

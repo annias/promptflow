@@ -174,7 +174,7 @@ class LLMNode(NodeBase):
         )
         return completion["choices"][0]["text"]  # type: ignore
 
-    def run_subclass(self, state: State):
+    def run_subclass(self, state: State, console):
         """
         Format the prompt and run the OpenAI API.
         """

@@ -193,7 +193,7 @@ class Flowchart:
             cur_node.canvas.update()
             self.logger.info(f"Running node {cur_node.label}")
             try:
-                output = cur_node.run_node(state)
+                output = cur_node.run_node(state, console)
             except Exception as node_err:
                 self.logger.error(f"Error running node {cur_node.label}: {node_err}")
                 if console:

@@ -36,7 +36,7 @@ class DateNode(NodeBase):
         self.options_popup = None
         self.datetime_format = "%m/%d/%Y, %H:%M:%S"
 
-    def run_subclass(self, state) -> str:
+    def run_subclass(self, state, console) -> str:
         """
         Injects date into state
         """

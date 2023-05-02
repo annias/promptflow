@@ -43,7 +43,7 @@ class StartNode(NodeBase):
             id=data.get("id", str(uuid.uuid4())),
         )
 
-    def run_subclass(self, state):
+    def run_subclass(self, state, console):
         return ""
 
     def draw_shape(self, x: int, y: int):
@@ -80,7 +80,7 @@ class InitNode(NodeBase):
         super().__init__(flowchart, center_x, center_y, label, **kwargs)
         self.run_once = False
 
-    def run_subclass(self, state):
+    def run_subclass(self, state, console):
         if not self.run_once:
             self.run_once = True
             return ""
