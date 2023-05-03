@@ -53,10 +53,12 @@ class HttpNode(NodeBase):
         self.options_popup: NodeOptions = None
         self.request_type_item = self.canvas.create_text(
             self.center_x,
-            self.center_y + 20,
+            self.center_y + 30,
             text=self.request_type.upper(),
             font=("Arial", 10),
             fill="black",
+            width=self.size_px * 2,
+            justify="center",
         )
         self.items.append(self.request_type_item)
         self.canvas.tag_bind(

@@ -24,10 +24,12 @@ class RegexNode(NodeBase):
         self.regex = kwargs.get("regex", "")
         self.regex_item = self.canvas.create_text(
             self.center_x,
-            self.center_y + 20,
+            self.center_y + 30,
             text=self.regex,
             font=("Arial", 10),
             fill="black",
+            width=self.size_px * 2,
+            justify="center",
         )
         self.items.append(self.regex_item)
         self.bind_drag()
@@ -68,10 +70,12 @@ class TagNode(NodeBase):
         self.end_tag = kwargs.get("end_tag", "")
         self.tags_item = self.canvas.create_text(
             self.center_x,
-            self.center_y + 20,
+            self.center_y + 30,
             text=f"{self.start_tag}...{self.end_tag}",
             font=("Arial", 10),
             fill="black",
+            width=self.size_px * 2,
+            justify="center",
         )
         self.items.append(self.tags_item)
         self.canvas.tag_bind(self.tags_item, "<Double-Button-1>", self.edit_options)

@@ -33,7 +33,7 @@ class AudioInputInterface(customtkinter.CTkToplevel):
         self.audio_data = []
         self.filename = "out.wav"
         self.elapsed_time = 0
-        
+
         self.time_label = customtkinter.CTkLabel(self, text="0:00")
         self.time_label.pack(pady=10, padx=10)
 
@@ -171,7 +171,12 @@ class WhispersNode(AudioInputNode):
             "prompt", TextData("Whisper Prompt", "", self.flowchart)
         )
         self.prompt_item = self.canvas.create_text(
-            self.center_x, self.center_y + 20, text=self.prompt.label, fill="black"
+            self.center_x,
+            self.center_y + 30,
+            text=self.prompt.label,
+            fill="black",
+            width=self.size_px * 2,
+            justify="center",
         )
         self.items.extend([self.prompt_item])
         self.canvas.tag_bind(self.prompt_item, "<Double-Button-1>", self.edit_options)

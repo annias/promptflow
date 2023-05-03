@@ -48,7 +48,12 @@ class FuncNode(NodeBase, ABC):
         # convert function to string
         self.functext = self.func.label
         self.func_item = self.canvas.create_text(
-            center_x, center_y + 20, text=self.functext, fill="black"
+            center_x,
+            center_y + 30,
+            text=self.functext,
+            fill="black",
+            width=self.size_px * 2,
+            justify="center",
         )
         self.items.append(self.func_item)
         self.canvas.tag_bind(self.func_item, "<Double-Button-1>", self.edit_options)

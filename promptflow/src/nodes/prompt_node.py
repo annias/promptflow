@@ -43,7 +43,12 @@ class PromptNode(NodeBase):
             prompt = TextData.deserialize(prompt, self.flowchart)
         self.prompt = prompt
         self.prompt_item = self.canvas.create_text(
-            center_x, center_y + 20, text=self.prompt.label, fill="black"
+            center_x,
+            center_y + 30,
+            text=self.prompt.label,
+            fill="black",
+            width=self.size_px * 2,
+            justify="center",
         )
         self.items.extend([self.prompt_item])
         self.canvas.tag_bind(self.prompt_item, "<Double-Button-1>", self.edit_options)

@@ -49,10 +49,12 @@ class HistoryNode(NodeBase):
         self.role_var = tk.StringVar(value=kwargs.get("role", Role.USER.value))
         self.role_item = self.canvas.create_text(
             center_x,
-            center_y + 20,
+            center_y + 30,
             text=self.role_var.get(),
             font=("Arial", 10),
             fill="black",
+            width=self.size_px * 2,
+            justify="center",
         )
         self.items.append(self.role_item)
         self.bind_drag()

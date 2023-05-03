@@ -58,7 +58,12 @@ class NodeBase(Serializable, ABC):
         self.center_x = center_x
         self.center_y = center_y
         self.label_item = self.canvas.create_text(
-            center_x, center_y, text=label, fill="black"
+            center_x,
+            center_y,
+            text=label,
+            fill="black",
+            width=self.size_px * 2,
+            justify="center",
         )
         self.canvas.tag_bind(self.label_item, "<Double-Button-1>", self.edit_label)
 
@@ -131,7 +136,7 @@ class NodeBase(Serializable, ABC):
     @label.setter
     def label(self, label: str):
         self._label = label
-        self.canvas.itemconfig(self.label_item, text=label)
+        self.canvas.itemconfig(self.label_item, text=label, width=self.size_px * 2)
 
     def get_center(
         self, offset_x: float = 0, offset_y: float = 0
@@ -204,8 +209,14 @@ class NodeBase(Serializable, ABC):
         self.label_entry.destroy()
         center_x, center_y = self.get_center()
         self.label_item = self.canvas.create_text(
-            center_x, center_y, text=self.label, fill="black"
+            center_x,
+            center_y,
+            text=self.label,
+            fill="black",
+            width=self.size_px * 2,
+            justify="center",
         )
+        self.canvas.itemconfig(self.label_item, width=self.size_px * 2)
         self.items.append(self.label_item)
         self.canvas.tag_bind(self.label_item, "<Double-Button-1>", self.edit_label)
         self.bind_drag()
