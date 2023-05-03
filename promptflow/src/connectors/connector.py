@@ -65,6 +65,8 @@ class Connector(Serializable):
         self.canvas.tag_bind(self.item, "<Button-3>", self.delete)
         self.canvas.tag_bind(self.item, "<Double-Button-1>", self.edit_condition)
         self.canvas.tag_bind(self.item, "<Button-1>", self.select)
+        self.canvas.tag_bind(self.item, "<Enter>", lambda _: self.canvas.configure(cursor="hand2"))
+        self.canvas.tag_bind(self.item, "<Leave>", lambda _: self.canvas.configure(cursor="arrow"))
 
     @property
     def label(self) -> str:
