@@ -32,6 +32,10 @@ class AudioInputInterface(customtkinter.CTkToplevel):
         self.recording = False
         self.audio_data = []
         self.filename = "out.wav"
+        self.elapsed_time = 0
+        
+        self.time_label = customtkinter.CTkLabel(self, text="0:00")
+        self.time_label.pack(pady=10, padx=10)
 
         self.start_button = customtkinter.CTkButton(
             self, text="Start", command=self.start
@@ -59,7 +63,18 @@ class AudioInputInterface(customtkinter.CTkToplevel):
             self.recording = True
             self.audio_data = []
             self.start_button.configure(text="Recording...")
+            self.update_timer()
             self.record()
+
+    def update_timer(self):
+        """
+        Update timer label
+        """
+        if self.recording:
+            self.elapsed_time += 1
+            minutes, seconds = divmod(self.elapsed_time, 60)
+            self.time_label.configure(text=f"{minutes}:{seconds:02d}")
+            self.master.after(1000, self.update_timer)
 
     def record(self):
         """
