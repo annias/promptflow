@@ -5,6 +5,7 @@ from abc import ABC
 import os
 from typing import Optional
 import wave
+import tkinter as tk
 import customtkinter
 import openai
 import elevenlabs
@@ -126,8 +127,10 @@ class AudioInputNode(AudioNode, ABC):
 
     def run_subclass(self, state, console) -> str:
         # show audio input interface
-        self.audio_input_interface = AudioInputInterface(self.flowchart.canvas)
-        self.canvas.wait_window(self.audio_input_interface)
+        root = tk.Tk()
+        root.withdraw()
+        self.audio_input_interface = AudioInputInterface(root)
+        root.wait_window(self.audio_input_interface)
         self.data = self.audio_input_interface.audio_data
 
 

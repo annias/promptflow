@@ -258,6 +258,7 @@ class NodeBase(Serializable, ABC):
         state.snapshot[self.label] = state.snapshot.get(self.label, "")
         output: str = self.run_subclass(state, console)
         state.snapshot[self.label] = output
+        state.result = output
         return output
 
     def serialize(self):

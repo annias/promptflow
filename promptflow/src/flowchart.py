@@ -5,6 +5,8 @@ from __future__ import annotations
 import logging
 import tkinter as tk
 import tkinter.scrolledtext
+import threading
+from queue import Queue
 from typing import Any, Optional
 from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.nodes.start_node import InitNode, StartNode
@@ -158,42 +160,57 @@ class Flowchart:
         """
         Initialize the flowchart
         """
+        self.is_running = True
         init_node: Optional[InitNode] = self.init_node
         if not init_node or init_node.run_once:
             console.insert(tk.END, "\n[System: Already initialized]\n")
             console.see(tk.END)
             return state
-        queue: list[NodeBase] = [self.init_node]
+        queue: list[NodeBase] = Queue()
+        queue.put(init_node)
         return self.run(state, console, queue)
 
     def run(
         self,
         state: State,
         console: tkinter.scrolledtext.ScrolledText,
-        queue: list[NodeBase] = None,
+        queue: Queue[NodeBase] = None,
     ) -> State:
         """
         Given a state, run the flowchart and update the state
         """
         self.logger.info("Running flowchart")
         if not queue:
-            queue: list[NodeBase] = [self.start_node]
+            queue = Queue()
+            queue.put(self.start_node)
+            self.is_running = True
+        if queue.empty() and not self.is_running:
+            queue.put(self.start_node)
+            self.is_running = True
         state = state or State()
-        self.is_running = True
 
-        while queue:
+        if not queue.empty():
             if not self.is_running:
                 self.reset_node_colors()
                 console.insert(tk.END, "\n[System: Stopped]\n")
                 console.see(tk.END)
+                self.is_running = False
                 return state
-            cur_node: NodeBase = queue.pop(0)
+            cur_node: NodeBase = queue.get()
             # turn node light yellow while running
             cur_node.canvas.itemconfig(cur_node.item, fill="light yellow")
             cur_node.canvas.update()
             self.logger.info(f"Running node {cur_node.label}")
             try:
-                output = cur_node.run_node(state, console)
+                thread = threading.Thread(
+                    target=cur_node.run_node,
+                    args=(state, console),
+                )
+                thread.start()
+                while thread.is_alive():
+                    self.canvas.update()
+                thread.join()
+                output = state.result
             except Exception as node_err:
                 self.logger.error(f"Error running node {cur_node.label}: {node_err}")
                 if console:
@@ -201,7 +218,7 @@ class Flowchart:
                         tk.END, f"[ERROR]{cur_node.label}: {node_err}" + "\n"
                     )
                     console.see(tk.END)
-                break
+                return state
             if console:
                 console.insert(tk.END, f"{cur_node.label}: {output}" + "\n")
                 console.see(tk.END)
@@ -214,9 +231,10 @@ class Flowchart:
                 self.logger.info(
                     f"Node {cur_node.label} output is None, stopping execution"
                 )
-                break
-
-            state.result = output
+                self.reset_node_colors()
+                console.insert(tk.END, "\n[System: Done]\n")
+                console.see(tk.END)
+                return state
 
             for connector in cur_node.output_connectors:
                 if connector.condition.text.strip():
@@ -242,15 +260,18 @@ class Flowchart:
                 else:
                     cond = True
                 if cond:
-                    if connector.node2 not in queue:
-                        queue.append(connector.node2)
-                        break
+                    # if connector.node2 not in queue:
+                    if queue.queue.count(connector.node2) == 0:
+                        queue.put(connector.node2)
+                        self.canvas.master.after(0, self.run, state, console, queue)
                     self.logger.info(f"Added node {connector.node2.label} to queue")
 
-        self.reset_node_colors()
-        console.insert(tk.END, "\n[System: Done]\n")
-        console.see(tk.END)
-        return state
+        if queue.empty():
+            self.reset_node_colors()
+            console.insert(tk.END, "\n[System: Done]\n")
+            console.see(tk.END)
+            self.is_running = False
+            return state
 
     def begin_add_connector(self, node: NodeBase):
         """

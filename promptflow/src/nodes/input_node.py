@@ -12,6 +12,9 @@ class InputNode(NodeBase):
     """
 
     def run_subclass(self, state, console):
+        # since we're multithreaded, we need to send a message to the main thread
+        root = tkinter.Tk()
+        root.withdraw()
         return tkinter.simpledialog.askstring(
-            self.label, "Enter a value for this input:", parent=self.canvas
+            self.label, "Enter a value for this input:", parent=root
         )
