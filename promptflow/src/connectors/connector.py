@@ -12,6 +12,7 @@ from promptflow.src.serializable import Serializable
 from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.dialogues.code_input import CodeInput
 from promptflow.src.text_data import TextData
+from promptflow.src.themes import monokai
 
 DEFAULT_COND_TEMPLATE = """def main(state):
 \treturn True
@@ -183,13 +184,38 @@ class Connector(Serializable):
         )
         # draw filled box behind text
         filled_box = self.canvas.create_rectangle(
-            self.canvas.bbox(self.condition_label), fill="white"
+            self.canvas.bbox(self.condition_label), fill=monokai.WHITE
         )
         self.canvas.tag_lower(filled_box, self.condition_label)
         self.canvas.tag_bind(self.condition_label, "<Button-3>", self.delete)
         self.canvas.tag_bind(self.condition_label, "<Button-1>", self.edit_condition)
         self.canvas.tag_bind(filled_box, "<Button-1>", self.edit_condition)
+        self.canvas.tag_bind(filled_box, "<Enter>", self.on_mouseover)
+        self.canvas.tag_bind(self.condition_label, "<Enter>", self.on_mouseover)
+        self.canvas.tag_bind(filled_box, "<Leave>", self.on_mouseleave)
+        self.canvas.tag_bind(self.condition_label, "<Leave>", self.on_mouseleave)
         return filled_box
+
+    def on_mouseover(self, _: tk.Event):
+        """
+        Shade the connector's condition label when the mouse hovers over it.
+        """
+        shade = 0.2
+        cur_tuple = self.canvas.itemcget(self.filled_box, "fill")
+        cur_tuple = tuple(int(cur_tuple[i : i + 2], 16) for i in (1, 3, 5))
+        color = "#" + "".join(
+            [hex(int(cur_tuple[i] * (1 - shade)))[2:] for i in range(3)]
+        )
+        self.canvas.itemconfig(self.filled_box, fill=color)
+        # make cursor a hand
+        self.canvas.configure(cursor="hand2")
+
+    def on_mouseleave(self, _: tk.Event):
+        """
+        Restore the connector's condition label when the mouse leaves it.
+        """
+        self.canvas.itemconfig(self.filled_box, fill=monokai.WHITE)
+        self.canvas.configure(cursor="arrow")
 
     def arc_line(
         self, x1: float, y1: float, x2: float, y2: float
