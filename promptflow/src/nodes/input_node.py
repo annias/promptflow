@@ -13,5 +13,5 @@ class InputNode(NodeBase):
 
     def run_subclass(self, state, console):
         return tkinter.simpledialog.askstring(
-            self.label, "Enter a value for this input:"
+            self.label, "Enter a value for this input:", parent=self.canvas
         )
