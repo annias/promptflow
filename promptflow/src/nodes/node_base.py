@@ -26,6 +26,7 @@ class NodeBase(Serializable, ABC):
     """
 
     node_color = monokai.WHITE
+    prev_color = node_color
     size_px: int = 50  # arbitrary default size
 
     def __init__(
@@ -161,6 +162,7 @@ class NodeBase(Serializable, ABC):
         """
         Darken the color of the node when the mouse is over it.
         """
+        self.prev_color = self.canvas.itemcget(self.item, "fill")
         shade = 0.2
         cur_tuple = self.canvas.itemcget(self.item, "fill")
         cur_tuple = tuple(int(cur_tuple[i : i + 2], 16) for i in (1, 3, 5))
@@ -175,7 +177,7 @@ class NodeBase(Serializable, ABC):
         """
         Restore the color of the node when the mouse leaves it.
         """
-        self.canvas.itemconfig(self.item, fill=self.node_color)
+        self.canvas.itemconfig(self.item, fill=self.prev_color)
         self.canvas.configure(cursor="arrow")
 
     def edit_label(self, _: tk.Event):

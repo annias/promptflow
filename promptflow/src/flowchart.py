@@ -198,7 +198,7 @@ class Flowchart:
                 return state
             cur_node: NodeBase = queue.get()
             # turn node light yellow while running
-            cur_node.canvas.itemconfig(cur_node.item, fill="light yellow")
+            cur_node.canvas.itemconfig(cur_node.item, fill="#ffffcc")
             cur_node.canvas.update()
             self.logger.info(f"Running node {cur_node.label}")
             try:
@@ -224,7 +224,7 @@ class Flowchart:
                 console.see(tk.END)
             self.logger.info(f"Node {cur_node.label} output: {output}")
             # turn node light green
-            cur_node.canvas.itemconfig(cur_node.item, fill="light green")
+            cur_node.canvas.itemconfig(cur_node.item, fill="#ccffcc")
             cur_node.canvas.update()
 
             if output is None:
