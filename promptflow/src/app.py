@@ -330,6 +330,9 @@ class App:
 
         # add the menu
         self.root.config(menu=self.menubar)
+        # wait for UI to draw
+        self.root.update()
+
         self.logger.debug("App created")
         self.loading_popup.destroy()
 
