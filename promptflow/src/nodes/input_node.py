@@ -1,7 +1,8 @@
 """
 Nodes that get run time input from the user
 """
-import tkinter.simpledialog
+import tkinter
+import customtkinter
 
 from promptflow.src.nodes.node_base import NodeBase
 
@@ -15,6 +16,5 @@ class InputNode(NodeBase):
         # since we're multithreaded, we need to send a message to the main thread
         root = tkinter.Tk()
         root.withdraw()
-        return tkinter.simpledialog.askstring(
-            self.label, "Enter a value for this input:", parent=root
-        )
+        dialog = customtkinter.CTkInputDialog(text="Enter a value for this input:", title=self.label)
+        return dialog.get_input()
