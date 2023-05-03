@@ -17,4 +17,6 @@ class InputNode(NodeBase):
         # root = self.canvas.winfo_toplevel()
         # root.withdraw()
         dialog = customtkinter.CTkInputDialog(text="Enter a value for this input:", title=self.label)
-        return dialog.get_input()
+        response = dialog.get_input()
+        dialog.after(1, dialog.destroy)
+        return response
