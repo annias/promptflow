@@ -498,6 +498,9 @@ class App:
             # scale node
             for item in node.items:
                 self.canvas.scale(item, 0, 0, self.zoom_level, self.zoom_level)
+            for button in node.buttons:
+                button.configure(width=button.cget("width") * self.zoom_level)
+                button.configure(height=button.cget("height") * self.zoom_level)
 
         return add_node
 
@@ -558,6 +561,11 @@ class App:
                 zoom_scale = 0.9
 
         self.canvas.scale("all", event.x, event.y, zoom_scale, zoom_scale)
+        for node in self.flowchart.nodes:
+            for button in node.buttons:
+                button.configure(width=button.cget("width") * zoom_scale)
+                button.configure(height=button.cget("height") * zoom_scale)
+                # button.cget("font").configure(size=int(button.cget("font").cget("size") * zoom_scale))
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
         self.zoom_level *= zoom_scale
 
