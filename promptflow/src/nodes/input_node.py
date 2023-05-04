@@ -14,9 +14,12 @@ class InputNode(NodeBase):
 
     def run_subclass(self, state, console):
         # since we're multithreaded, we need to send a message to the main thread
-        # root = self.canvas.winfo_toplevel()
-        # root.withdraw()
-        dialog = customtkinter.CTkInputDialog(text="Enter a value for this input:", title=self.label)
-        response = dialog.get_input()
-        dialog.after(1, dialog.destroy)
-        return response
+        root = tkinter.Tk()
+        root.withdraw()
+        # dialog = customtkinter.CTkInputDialog(text="Enter a value for this input:", title=self.label)
+        dialog = tkinter.simpledialog.askstring(
+            prompt="Enter a value for this input:", title=self.label, parent=root
+        )
+        # response = dialog.get_input()
+        # dialog.after(1, dialog.destroy)
+        return dialog

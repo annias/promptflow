@@ -205,6 +205,7 @@ class Flowchart:
                 thread = threading.Thread(
                     target=cur_node.run_node,
                     args=(state, console),
+                    daemon=True,
                 )
                 thread.start()
                 while thread.is_alive():
