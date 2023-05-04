@@ -263,6 +263,9 @@ class NodeBase(Serializable, ABC):
         Code that will be run when the node is executed.
         """
 
+    def before(self, state: State, console: tk.scrolledtext.ScrolledText) -> None:
+        pass
+
     def run_node(self, state: State, console: tk.scrolledtext.ScrolledText) -> str:
         """
         Run the node and all nodes connected to it

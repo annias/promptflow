@@ -12,14 +12,20 @@ class InputNode(NodeBase):
     Node that prompts the user for input
     """
 
+    def before(self, state, console):
+        dialog = customtkinter.CTkInputDialog(text="Enter a value for this input:", title=self.label)
+        return dialog.get_input()
+
     def run_subclass(self, state, console):
+        console.insert(tkinter.INSERT, "No shot")
+        return ""
         # since we're multithreaded, we need to send a message to the main thread
-        root = tkinter.Tk()
-        root.withdraw()
+        #root = tkinter.Tk()
+        #root.withdraw()
         # dialog = customtkinter.CTkInputDialog(text="Enter a value for this input:", title=self.label)
-        dialog = tkinter.simpledialog.askstring(
-            prompt="Enter a value for this input:", title=self.label, parent=root
-        )
-        # response = dialog.get_input()
-        # dialog.after(1, dialog.destroy)
-        return dialog
+        #dialog = tkinter.simpledialog.askstring(
+        #    prompt="Enter a value for this input:", title=self.label, parent=root
+        #)
+        ## response = dialog.get_input()
+        ## dialog.after(1, dialog.destroy)
+        #return dialog

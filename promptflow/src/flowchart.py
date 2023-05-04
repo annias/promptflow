@@ -201,6 +201,7 @@ class Flowchart:
             cur_node.canvas.itemconfig(cur_node.item, fill="#ffffcc")
             cur_node.canvas.update()
             self.logger.info(f"Running node {cur_node.label}")
+            cur_node.before(state, console) 
             try:
                 thread = threading.Thread(
                     target=cur_node.run_node,
