@@ -18,3 +18,7 @@ class Options(BaseModel, Serializable):
     @classmethod
     def deserialize(cls, *args, **kwargs) -> "Options":
         return cls(*args, **kwargs)
+
+    def save(self, path: str):
+        with open(path, "w") as options_file:
+            options_file.write(self.json())

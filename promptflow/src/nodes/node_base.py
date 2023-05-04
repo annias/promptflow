@@ -7,11 +7,11 @@ import os
 from abc import ABC, abstractmethod
 import logging
 import uuid
+import customtkinter
 import openai
 from promptflow.src.state import State
 from promptflow.src.serializable import Serializable
 from promptflow.src.themes import monokai
-import customtkinter
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart

@@ -106,12 +106,12 @@ class AudioInputInterface(customtkinter.CTkToplevel):
             self.start_button.configure(text="Start")
 
             # Save the audio data to a file
-            with wave.open(self.filename, "wb") as wf:
+            with wave.open(self.filename, "wb") as wavefile:
                 sample_rate = 44100
-                wf.setnchannels(2)
-                wf.setsampwidth(2)
-                wf.setframerate(sample_rate)
-                wf.writeframes(np.concatenate(self.audio_data).tobytes())
+                wavefile.setnchannels(2)
+                wavefile.setsampwidth(2)
+                wavefile.setframerate(sample_rate)
+                wavefile.writeframes(np.concatenate(self.audio_data).tobytes())
 
     def playback(self):
         """

@@ -54,6 +54,7 @@ from promptflow.src.options import Options
 from promptflow.src.nodes.dummy_llm_node import DummyNode
 from promptflow.src.state import State
 from promptflow.src.themes import monokai
+from promptflow.src.dialogues.app_options import AppOptions
 
 
 class App:
@@ -66,6 +67,7 @@ class App:
     def __init__(self, initial_state: State, options: Options):
         self.root = customtkinter.CTk(className="PromptFlow")
         self.root.title("PromptFlow")
+        self.options = options
         customtkinter.set_appearance_mode("dark")
         ico_dir = os.path.dirname(__file__)
         ico_path = os.path.join(ico_dir, "../res/Logo_2.png")
@@ -129,6 +131,10 @@ class App:
         self.edit_menu.add_command(
             label="Clear",
             command=self.clear_flowchart,
+        )
+        self.edit_menu.add_command(
+            label="Options...",
+            command=self.edit_options,
         )
         self.menubar.add_cascade(label="Edit", menu=self.edit_menu)
 
@@ -407,6 +413,13 @@ class App:
         self.logger.info("Clearing flowchart")
         self.flowchart.clear()
         self.output_console.delete("1.0", tk.END)
+
+    def edit_options(self):
+        """
+        Show the options popup
+        """
+        options_popup = AppOptions(self.canvas, self.options)
+        self.canvas.wait_window(options_popup)
 
     def cost_flowchart(self):
         """Get the approx cost to run the flowchart"""
