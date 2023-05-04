@@ -3,7 +3,7 @@ Handles all audio-related nodes
 """
 from abc import ABC
 import os
-from typing import Optional
+from typing import Any, Optional
 import wave
 import tkinter as tk
 import customtkinter
@@ -14,6 +14,7 @@ import sounddevice as sd
 from promptflow.src.dialogues.node_options import NodeOptions
 from promptflow.src.dialogues.text_input import TextInput
 from promptflow.src.nodes.node_base import NodeBase
+from promptflow.src.state import State
 from promptflow.src.text_data import TextData
 
 key = os.getenv("ELEVENLABS_API_KEY")
@@ -140,13 +141,15 @@ class AudioInputNode(AudioNode, ABC):
     audio_input_interface: Optional[AudioInputInterface] = None
     data: Optional[list[float]] = None
 
-    def run_subclass(self, state, console) -> str:
-        # show audio input interface
-        root = tk.Tk()
-        root.withdraw()
-        self.audio_input_interface = AudioInputInterface(root)
-        root.wait_window(self.audio_input_interface)
+    def before(self, state: State, console: tk.scrolledtext.ScrolledText) -> Any:
+        self.audio_input_interface = AudioInputInterface(self.canvas)
+        self.canvas.wait_window(self.audio_input_interface)
         self.data = self.audio_input_interface.audio_data
+
+    def run_subclass(
+        self, before_result: Any, state, console: tk.scrolledtext.ScrolledText
+    ) -> str:
+        pass
 
 
 class AudioOutputNode(AudioNode, ABC):
@@ -199,8 +202,10 @@ class WhispersNode(AudioInputNode):
         self.canvas.itemconfig(self.prompt_item, text=self.prompt.label)
         self.text_window.destroy()
 
-    def run_subclass(self, state, console) -> str:
-        super().run_subclass(state, console)
+    def run_subclass(
+        self, before_result: Any, state, console: tk.scrolledtext.ScrolledText
+    ) -> str:
+        super().run_subclass(before_result, state, console)
         transcript = openai.Audio.translate(
             "whisper-1", open(self.audio_input_interface.filename, "rb")
         )
@@ -238,7 +243,9 @@ class ElevenLabsNode(AudioOutputNode):
         self.voice = kwargs.get("voice", self.voice)
         self.model = kwargs.get("model", self.model)
 
-    def run_subclass(self, state, console) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tk.scrolledtext.ScrolledText
+    ) -> str:
         audio = elevenlabs.generate(
             text=state.result, voice="Bella", model="eleven_monolingual_v1"
         )

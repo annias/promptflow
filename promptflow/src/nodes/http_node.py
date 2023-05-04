@@ -2,6 +2,7 @@
 Interface for http requests
 """
 from enum import Enum
+import tkinter
 from typing import Any, Callable
 import json
 import requests
@@ -67,7 +68,9 @@ class HttpNode(NodeBase):
         self.bind_drag()
         self.bind_mouseover()
 
-    def run_subclass(self, state: State, console) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tkinter.scrolledtext.ScrolledText
+    ) -> str:
         """
         Sends a http request
         """

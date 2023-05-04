@@ -3,7 +3,7 @@ Manages writing history to state
 """
 import tkinter as tk
 from enum import Enum
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from promptflow.src.dialogues.node_options import NodeOptions
 from promptflow.src.nodes.node_base import NodeBase
@@ -62,7 +62,9 @@ class HistoryNode(NodeBase):
         self.canvas.tag_bind(self.role_item, "<Double-Button-1>", self.edit_options)
         self.options_popup: Optional[NodeOptions] = None
 
-    def run_subclass(self, state: State, console) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tk.scrolledtext.ScrolledText
+    ) -> str:
         """
         Injects date into state
         """

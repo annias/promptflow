@@ -1,9 +1,10 @@
 import random
+import tkinter
 from promptflow.src.dialogues.node_options import NodeOptions
 from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.themes import monokai
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
@@ -19,7 +20,9 @@ class RandomNode(NodeBase):
     max: int = 100
     option_popup: NodeOptions = None
 
-    def run_subclass(self, state, console) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tkinter.scrolledtext.ScrolledText
+    ) -> str:
         r = random.randint(self.min, self.max)
         return str(r)
 

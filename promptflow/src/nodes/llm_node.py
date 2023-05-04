@@ -174,7 +174,9 @@ class LLMNode(NodeBase):
         )
         return completion["choices"][0]["text"]  # type: ignore
 
-    def run_subclass(self, state: State, console):
+    def run_subclass(
+        self, before_result: Any, state, console: tk.scrolledtext.ScrolledText
+    ) -> str:
         """
         Format the prompt and run the OpenAI API.
         """

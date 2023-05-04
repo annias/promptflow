@@ -2,7 +2,8 @@
 Handles state history and memory nodes
 """
 from abc import ABC
-from typing import TYPE_CHECKING
+import tkinter
+from typing import TYPE_CHECKING, Any
 from promptflow.src.nodes.node_base import NodeBase
 from promptflow.src.state import State
 from promptflow.src.dialogues.node_options import NodeOptions
@@ -44,7 +45,9 @@ class MemoryNode(NodeBase, ABC):
         state.history = state.history
         return state.history
 
-    def run_subclass(self, state, console) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tkinter.scrolledtext.ScrolledText
+    ) -> str:
         history_string = "\n".join(
             [
                 *[

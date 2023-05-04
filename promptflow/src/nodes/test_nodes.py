@@ -1,7 +1,8 @@
 """
 Nodes for performing tests on the model.
 """
-from typing import TYPE_CHECKING, Optional
+import tkinter
+from typing import TYPE_CHECKING, Optional, Any
 from promptflow.src.dialogues.node_options import NodeOptions
 from promptflow.src.dialogues.text_input import TextInput
 
@@ -36,7 +37,9 @@ class AssertNode(NodeBase):
         self.assertion = assertion
         self.options_popup: Optional[NodeOptions] = None
 
-    def run_subclass(self, state: State, console) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tkinter.scrolledtext.ScrolledText
+    ) -> str:
         assert eval(self.assertion.text, globals(), state.snapshot), "Assertion failed"
         return state.result
 
@@ -74,7 +77,9 @@ class LoggingNode(NodeBase):
         self.debug_str = debug_str
         self.canvas.tag_bind(self.item, "<Double-Button-1>", self.edit_string)
 
-    def run_subclass(self, state: State, console) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tkinter.scrolledtext.ScrolledText
+    ) -> str:
         debug_str = self.debug_str.text.format(state=state)
         self.logger.info(debug_str)
         return state.result  # return the result of the previous node

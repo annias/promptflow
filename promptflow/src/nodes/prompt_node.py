@@ -1,7 +1,7 @@
 """
 Holds text which gets formatted with state data
 """
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Optional
 import tkinter as tk
 from promptflow.src.dialogues.text_input import TextInput
 from promptflow.src.nodes.node_base import NodeBase
@@ -57,7 +57,9 @@ class PromptNode(NodeBase):
         self.bind_drag()
         self.bind_mouseover()
 
-    def run_subclass(self, state: State, console) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tk.scrolledtext.ScrolledText
+    ) -> str:
         """
         Formats TextData with state data
         """

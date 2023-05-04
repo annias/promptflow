@@ -2,6 +2,8 @@
 Initialize environmental variables using .env
 """
 import os
+import tkinter
+from typing import Any
 
 from dotenv import load_dotenv
 from promptflow.src.dialogues.multi_file import MultiFileInput
@@ -26,7 +28,9 @@ class EnvNode(NodeBase):
         super().__init__(*args, **kwargs)
         self.filename = kwargs.get("filename", ".env")
 
-    def run_subclass(self, state, console) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tkinter.scrolledtext.ScrolledText
+    ) -> str:
         load_dotenv(self.filename)
 
     def edit_options(self, event):
@@ -65,7 +69,9 @@ class ManualEnvNode(NodeBase):
         self.key = kwargs.get("key", "")
         self.val = kwargs.get("val", "")
 
-    def run_subclass(self, state, console) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tkinter.scrolledtext.ScrolledText
+    ) -> str:
         os.environ[self.key] = self.val
         return state.result
 

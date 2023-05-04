@@ -1,5 +1,6 @@
 from abc import ABC
-from typing import Optional, TYPE_CHECKING
+import tkinter
+from typing import Any, Optional, TYPE_CHECKING
 from promptflow.src.db_interface.main import DBInterface, PgMLInterface
 from promptflow.src.dialogues.node_options import NodeOptions
 from promptflow.src.nodes.node_base import NodeBase
@@ -141,12 +142,16 @@ class PGMLNode(DBNode):
 
 
 class SelectNode(DBNode):
-    def run_subclass(self, state, console) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tkinter.scrolledtext.ScrolledText
+    ) -> str:
         select = self.interface.interface.select(state.result)[0][0]
         return select
 
 
 class GenerateNode(PGMLNode):
-    def run_subclass(self, state, console) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tkinter.scrolledtext.ScrolledText
+    ) -> str:
         gen = self.interface.interface.generate(self.model, state.result)[0][0]
         return gen

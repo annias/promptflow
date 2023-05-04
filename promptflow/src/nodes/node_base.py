@@ -1,7 +1,7 @@
 """
 Base class for all nodes
 """
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Optional
 import tkinter as tk
 import os
 from abc import ABC, abstractmethod
@@ -258,21 +258,27 @@ class NodeBase(Serializable, ABC):
         """
 
     @abstractmethod
-    def run_subclass(self, state, console: tk.scrolledtext.ScrolledText) -> str:
+    def run_subclass(
+        self, before_result: Any, state, console: tk.scrolledtext.ScrolledText
+    ) -> str:
         """
         Code that will be run when the node is executed.
         """
 
-    def before(self, state: State, console: tk.scrolledtext.ScrolledText) -> None:
-        pass
+    def before(self, state: State, console: tk.scrolledtext.ScrolledText) -> Any:
+        """
+        Blocking method called before main node execution.
+        """
 
-    def run_node(self, state: State, console: tk.scrolledtext.ScrolledText) -> str:
+    def run_node(
+        self, before_result: Any, state: State, console: tk.scrolledtext.ScrolledText
+    ) -> str:
         """
         Run the node and all nodes connected to it
         Handles setting the snapshot and returning the output.
         """
         state.snapshot[self.label] = state.snapshot.get(self.label, "")
-        output: str = self.run_subclass(state, console)
+        output: str = self.run_subclass(before_result, state, console)
         state.snapshot[self.label] = output
         state.result = output
         return output

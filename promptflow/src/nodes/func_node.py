@@ -2,7 +2,7 @@
 Node to run arbitrary Python code.
 """
 
-from typing import TYPE_CHECKING, Optional
+from typing import Any, TYPE_CHECKING, Optional
 from abc import ABC
 import tkinter as tk
 
@@ -61,7 +61,9 @@ class FuncNode(NodeBase, ABC):
         self.bind_mouseover()
         self.text_window: Optional[CodeInput] = None
 
-    def run_subclass(self, state: State, console):
+    def run_subclass(
+        self, before_result: Any, state, console: tk.scrolledtext.ScrolledText
+    ) -> str:
         """
         Evaluate the Python function and return the result.
         """
