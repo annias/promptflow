@@ -6,6 +6,8 @@ PromptFlow is a tool that allows you to create executable flowcharts that link L
 
 ![screenshot](screenshots/readme/heroscreenshot.png)
 
+Join our Discord: [https://discord.gg/EPfy9nye](https://discord.gg/EPfy9nye)
+
 ## How it works
 
 PromptFlow is based on a visual flowchart editor that allows you to create nodes and connections between them. Each node can be a Prompt, a Python function, or an LLM. Connections between nodes represent conditional logic, and allow you to specify the flow of your program.
@@ -34,7 +36,9 @@ export PYTHONPATH=$PYTHONPATH:.
 
 ## Documentation
 
-### [Documentation](https://promptflow.org/en/latest/)
+Official docs website:
+
+#### [promptflow.org](https://www.promptflow.org/en/latest/)
 
 ### Building from source
 
@@ -49,4 +53,6 @@ Then open `docs/build/html/index.html` in your browser.
 
 ## Contributing
 
-TODO
+If you are interested in contributing to PromptFlow, you can do so through [building a node](https://www.promptflow.org/en/latest/development.html#starting-point-adding-a-node).
+
+If you find any bugs, do not hesitate to create an issue or open a PR or let us know in [Discord](https://discord.gg/EPfy9nye).
