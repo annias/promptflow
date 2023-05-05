@@ -74,7 +74,6 @@ Pillow==9.4.0
 pip-tools==6.13.0
 platformdirs==3.1.1
 prompt-toolkit==3.0.38
--e git+https://gitlab.apps.insurancetoolkits.com/itk/promptflow.git@f3f59bd10167ae217eed5f6d643b1bc62df29bf3#egg=promptflow
 psycopg2-binary==2.9.6
 ptyprocess==0.7.0
 pure-eval==0.2.2
