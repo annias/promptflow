@@ -17,9 +17,6 @@ if TYPE_CHECKING:
     from promptflow.src.flowchart import Flowchart
     from promptflow.src.connectors.connector import Connector
 
-openai.api_key = os.environ["OPENAI_API_KEY"]
-
-
 class NodeBase(Serializable, ABC):
     """
     Represents a node in the flowchart, which could be a prompt, an llm, traditional code, etc.

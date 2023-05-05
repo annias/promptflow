@@ -12,12 +12,18 @@ PromptFlow is based on a visual flowchart editor that allows you to create nodes
 
 When you run your flowchart, PromptFlow will execute each node in the order specified by the connections, passing data between nodes as needed. If a node returns a value, that value will be passed to the next node in the flow.
 
+## Initial Setup 
+
+Install the required dependencies. Python 3.8+ is required to run PromptFlow.
+
+`python -m pip install -r requirements.txt`
+
 ## Launching
 
 Promptflow can be run with Python from the commandline:
 
 ```bash
-python promptflow/main.py
+python run.py 
 ```
 
 If you're having trouble ensure your `PYTHONPATH` is set correctly:
