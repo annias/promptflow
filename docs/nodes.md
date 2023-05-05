@@ -187,7 +187,7 @@ Takes data from a node and puts it into an hnswlib index.
 
 ### EmbeddingQuery
 
-Queries an hnswlib index and returns the result. Double click to edit the nubmer of results returned, as well as as the separator between results.
+Queries an hnswlib index and returns the result. Double click to edit the number of results returned, as well as as the separator between results.
 
 (Http)=
 
@@ -214,7 +214,7 @@ Runs a regex on the `state.result`. Double-click the node to edit the regex. Ret
 
 ### Tag
 
-Like the [`Regex`](Regex) node, but extracts text inbetween tags. For example, if the `state.result` is `Hello <name>World</name>`, adding `start=<name>` and `end=</name>` would return `World`. Double-click the node to edit the start and end tags.
+Like the [`Regex`](Regex) node, but extracts text in-between tags. For example, if the `state.result` is `Hello <name>World</name>`, adding `start=<name>` and `end=</name>` would return `World`. Double-click the node to edit the start and end tags.
 
 (Test)=
 
@@ -240,7 +240,7 @@ Logs the output at a certain step. Useful for debugging. Double-click the node t
 
 ### Whisper Speech-to-Text
 
-Uses [Whisper](https://platform.openai.com/docs/guides/speech-to-text) to convert speech to text. Uses the OpenAI API. Simmilar to the [`Input`](Input) node.
+Uses [Whisper](https://platform.openai.com/docs/guides/speech-to-text) to convert speech to text. Uses the OpenAI API. Similar to the [`Input`](Input) node.
 
 ### ElevenLabs Text-to-Speech
 

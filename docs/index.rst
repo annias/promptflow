@@ -39,7 +39,7 @@ Check out the :doc:`usage` section for further information.
 
 Contribution
 ------------
-The biggest contriubtion you can make to PromptFlow is to create new :ref:`Node`.
+The biggest contribution you can make to PromptFlow is to create new :ref:`Node`.
 
 A walkthrough of how to create a new node can be found in the :doc:`development` section.
 

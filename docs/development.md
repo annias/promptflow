@@ -51,7 +51,7 @@ Creating a new [`Node`](Node) is a good starting point for understanding the cod
 
 ## Runtime Popups
 
-In order to add a runtime popup, such as a text input, to a node, you must must create a new tkinter `root` window, and `widthdraw()` it.
+In order to add a runtime popup, such as a text input, to a node, you must must create a new tkinter `root` window, and `withdraw()` it.
 
 As an example, let's look at the [`InputNode`](Input):
 
