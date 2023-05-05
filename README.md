@@ -6,7 +6,7 @@ PromptFlow is a tool that allows you to create executable flowcharts that link L
 
 ![screenshot](screenshots/readme/heroscreenshot.png)
 
-Join our Discord: [https://discord.gg/EPfy9nye](https://discord.gg/EPfy9nye)
+#### Join our Discord: [https://discord.gg/EPfy9nye](https://discord.gg/EPfy9nye)
 
 ## How it works
 
