@@ -16,6 +16,8 @@ conditional logic together. With PromptFlow, you can create complex
 workflows in a visual way, without having to write too much code or 
 deal with complicated logic.
 
+`View PromptFlow on GitHub here. <https://github.com/InsuranceToolkits/promptflow>`_
+
 How it works
 ------------
 PromptFlow is based on a visual flowchart editor that allows you to 
@@ -27,6 +29,10 @@ When you run your flowchart, PromptFlow will execute each node in the
 order specified by the connections, passing data between nodes as needed. 
 If a node returns a value, that value will be passed to the next node in 
 the flow.
+
+.. image:: ../screenshots/readme/heroscreenshot.png
+   :width: 100%
+   :alt: Hero Screenshot
 
 Check out the :doc:`usage` section for further information.
 
