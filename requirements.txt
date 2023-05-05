@@ -34,7 +34,6 @@ huggingface-hub==0.13.3
 idna==3.4
 imagesize==1.4.1
 InstructorEmbedding==1.0.0
-ipython==8.13.1
 jedi==0.18.2
 Jinja2==3.1.2
 joblib==1.2.0
