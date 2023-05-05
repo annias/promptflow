@@ -4,7 +4,7 @@
 
 PromptFlow is a tool that allows you to create executable flowcharts that link LLMs (Large Language Models), Prompts, Python functions, and conditional logic together. With PromptFlow, you can create complex workflows in a visual way, without having to write too much code or deal with complicated logic.
 
-![screenshot](screenshots/readme/hero_screenshot.png)
+![screenshot](screenshots/readme/heroscreenshot.png)
 
 ## How it works
 
